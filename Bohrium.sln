@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedFiles", "SharedFiles", "{81F19DAC-85A9-414F-9110-DFCCE150119E}"
+	ProjectSection(SolutionItems) = preProject
+		SharedFiles\BohriumSharedAssemblyInfo.cs = SharedFiles\BohriumSharedAssemblyInfo.cs
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bohrium.Core", "src\Bohrium.Core\Bohrium.Core.csproj", "{9475A692-FBDB-46EB-96CF-3DD7C11FB1DD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{FC309486-9E7D-4F62-B32C-890DFEEC6B5F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bohrium.Core.Test", "test\Bohrium.Core.Test\Bohrium.Core.Test.csproj", "{616D1656-8FB4-4E24-A4FB-67A6A392C4E1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{9C256471-5C6B-4350-B847-72AE2B59EF44}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9475A692-FBDB-46EB-96CF-3DD7C11FB1DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9475A692-FBDB-46EB-96CF-3DD7C11FB1DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9475A692-FBDB-46EB-96CF-3DD7C11FB1DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9475A692-FBDB-46EB-96CF-3DD7C11FB1DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{616D1656-8FB4-4E24-A4FB-67A6A392C4E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{616D1656-8FB4-4E24-A4FB-67A6A392C4E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{616D1656-8FB4-4E24-A4FB-67A6A392C4E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{616D1656-8FB4-4E24-A4FB-67A6A392C4E1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9475A692-FBDB-46EB-96CF-3DD7C11FB1DD} = {FC309486-9E7D-4F62-B32C-890DFEEC6B5F}
+		{616D1656-8FB4-4E24-A4FB-67A6A392C4E1} = {FC309486-9E7D-4F62-B32C-890DFEEC6B5F}
+	EndGlobalSection
+EndGlobal

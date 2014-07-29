@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">Any CPU</Platform>
+	<BuildFolder>$(MSBuildProjectDirectory)\Build</BuildFolder>
+	<BuildArtifactsFolder>$(BuildFolder)\BuildArtifacts</BuildArtifactsFolder>
+    <DeployArtifactsFolder>$(BuildFolder)\DeployArtifacts</DeployArtifactsFolder>
+    <NugetToolFolder>$(MSBuildProjectDirectory)\.nuget</NugetToolFolder>
+    <NuspecFilesFolder>$(BuildFolder)\NuspecFiles</NuspecFilesFolder>
+  </PropertyGroup>
+
+  <Target Name="clean-buildartifacts">
+    <ItemGroup>
+      <BuildArtifactsFilesToClean Include="$(BuildArtifactsFolder)\**\*.*"/>
+    </ItemGroup>
+
+    <Delete Files="@(BuildArtifactsFilesToClean)" />
+  </Target>
+
+  <Target Name="clean-deployartifacts">
+    <ItemGroup>
+      <DeployArtifactsFilesToClean Include="$(DeployArtifactsFolder)\**\*.*"/>
+    </ItemGroup>
+
+    <Delete Files="@(DeployArtifactsFilesToClean)" />
+  </Target>
+
+  <Target Name="clean" DependsOnTargets="clean-deployartifacts;clean-buildartifacts">
+  </Target>
+
+  <Target Name="compile" DependsOnTargets="clean-buildartifacts">
+    <MSBuild Projects="$(MSBuildProjectDirectory)\Bohrium.sln" Targets="Rebuild" Properties="Configuration=$(Configuration);Platform=$(Platform)" />
+  </Target>
+
+  <Target Name="deploy-compile" DependsOnTargets="clean">
+    <MSBuild Projects="$(MSBuildProjectDirectory)\Bohrium.sln" Targets="Rebuild" Properties="Configuration=Release;Platform=$(Platform)" />
+  </Target>
+
+  <Target Name="deploy" DependsOnTargets="clean-deployartifacts;deploy-compile">
+    
+    <MakeDir Condition="!Exists($(DeployArtifactsFolder))" Directories="$(DeployArtifactsFolder)" />
+
+    <!-- NuGet packaging -->
+    <Exec WorkingDirectory="$(NugetToolFolder)" Command="nuget.exe Pack $(NuspecFilesFolder)\Bohrium.Core.nuspec /o $(DeployArtifactsFolder)" />
+  </Target>
+</Project>
