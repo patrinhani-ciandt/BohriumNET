@@ -8,9 +8,11 @@
     <DeployArtifactsFolder>$(BuildFolder)\DeployArtifacts</DeployArtifactsFolder>
     <NugetToolFolder>$(MSBuildProjectDirectory)\.nuget</NugetToolFolder>
     <NuspecFilesFolder>$(BuildFolder)\NuspecFiles</NuspecFilesFolder>
+    <PatternMajorMinorVersion>(\d+)\.(\d+)</PatternMajorMinorVersion>
+    <CIBuildNumber Condition=" '$(CIBuildNumber)' == '' ">0</CIBuildNumber>
   </PropertyGroup>
 
-  <Target Name="clean-buildartifacts">
+  <Target Name="clean-build-artifacts">
     <ItemGroup>
       <BuildArtifactsFilesToClean Include="$(BuildArtifactsFolder)\**\*.*"/>
     </ItemGroup>
@@ -18,7 +20,7 @@
     <Delete Files="@(BuildArtifactsFilesToClean)" />
   </Target>
 
-  <Target Name="clean-deployartifacts">
+  <Target Name="clean-deploy-artifacts">
     <ItemGroup>
       <DeployArtifactsFilesToClean Include="$(DeployArtifactsFolder)\**\*.*"/>
     </ItemGroup>
@@ -26,10 +28,10 @@
     <Delete Files="@(DeployArtifactsFilesToClean)" />
   </Target>
 
-  <Target Name="clean" DependsOnTargets="clean-deployartifacts;clean-buildartifacts">
+  <Target Name="clean" DependsOnTargets="clean-deploy-artifacts;clean-build-artifacts">
   </Target>
 
-  <Target Name="compile" DependsOnTargets="clean-buildartifacts">
+  <Target Name="compile" DependsOnTargets="clean-build-artifacts">
     <MSBuild Projects="$(MSBuildProjectDirectory)\Bohrium.sln" Targets="Rebuild" Properties="Configuration=$(Configuration);Platform=$(Platform)" />
   </Target>
 
@@ -37,11 +39,25 @@
     <MSBuild Projects="$(MSBuildProjectDirectory)\Bohrium.sln" Targets="Rebuild" Properties="Configuration=Release;Platform=$(Platform)" />
   </Target>
 
-  <Target Name="deploy" DependsOnTargets="clean-deployartifacts;deploy-compile">
+  <Target Name="deploy" DependsOnTargets="clean-deploy-artifacts;deploy-compile">
     
     <MakeDir Condition="!Exists($(DeployArtifactsFolder))" Directories="$(DeployArtifactsFolder)" />
 
-    <!-- NuGet packaging -->
-    <Exec WorkingDirectory="$(NugetToolFolder)" Command="nuget.exe Pack $(NuspecFilesFolder)\Bohrium.Core.nuspec /o $(DeployArtifactsFolder)" />
+	<CallTarget Targets="deploy-generate-packages"/>
   </Target>
+
+  <Target Name="deploy-generate-packages">
+
+	<GetAssemblyIdentity AssemblyFiles="$(MSBuildProjectDirectory)\src\Bohrium.Core\bin\Release\Bohrium.Core.dll">
+		<Output TaskParameter="Assemblies" ItemName="BohriumCoreAssemblyInfo"/>
+	</GetAssemblyIdentity>
+
+	<PropertyGroup>
+        <MajorMinorVersionBohriumCore>$([System.Text.RegularExpressions.Regex]::Match(%(BohriumCoreAssemblyInfo.Version), $(PatternMajorMinorVersion)))</MajorMinorVersionBohriumCore>
+    </PropertyGroup>
+	
+    <!-- NuGet packaging -->
+    <Exec WorkingDirectory="$(NugetToolFolder)" Command="nuget.exe Pack -version $(MajorMinorVersionBohriumCore).$(CIBuildNumber).0 $(NuspecFilesFolder)\Bohrium.Core.nuspec /o $(DeployArtifactsFolder)" />
+  </Target>
+
 </Project>
