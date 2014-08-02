@@ -1,6 +1,6 @@
 # README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+Bohrium .NET NuGet Feed (http://tiny.cc/424ujx)
 
 ### What is this repository for? ###
 
