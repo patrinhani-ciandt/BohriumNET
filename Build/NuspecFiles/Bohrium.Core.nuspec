@@ -5,13 +5,13 @@
         <version>1.0.0.0</version>
         <title>Bohrium.Core</title>
         <authors>CI&amp;T</authors>
-        <owners />
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Bohrium.Core</description>
     </metadata>
     <files>
+        <file src="..\Doxygen\Output_BohriumCore\BohriumNET_BohriumCore_HtmlDoc.zip" target="Docs\BohriumNET_BohriumCore_HtmlDoc.zip" />
         <file src="..\..\src\Bohrium.Core\bin\Release\Bohrium.Core.dll" target="lib\net45\Bohrium.Core.dll" />
-        <file src="..\..\src\Bohrium.Core\bin\Release\Bohrium.Core.XML" target="lib\net45\Bohrium.Core.XML" />
         <file src="..\..\src\Bohrium.Core\bin\Release\Bohrium.Core.pdb" target="lib\net45\Bohrium.Core.pdb" />
+        <file src="..\..\src\Bohrium.Core\bin\Release\Bohrium.Core.XML" target="lib\net45\Bohrium.Core.XML" />
     </files>
 </package>

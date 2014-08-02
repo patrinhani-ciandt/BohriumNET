@@ -3,14 +3,20 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">Any CPU</Platform>
-	<BuildFolder>$(MSBuildProjectDirectory)\Build</BuildFolder>
-	<BuildArtifactsFolder>$(BuildFolder)\BuildArtifacts</BuildArtifactsFolder>
+    <BuildFolder>$(MSBuildProjectDirectory)\Build</BuildFolder>
+    <BuildArtifactsFolder>$(BuildFolder)\BuildArtifacts</BuildArtifactsFolder>
     <DeployArtifactsFolder>$(BuildFolder)\DeployArtifacts</DeployArtifactsFolder>
     <NugetToolFolder>$(MSBuildProjectDirectory)\.nuget</NugetToolFolder>
     <NuspecFilesFolder>$(BuildFolder)\NuspecFiles</NuspecFilesFolder>
     <PatternMajorMinorVersion>(\d+)\.(\d+)</PatternMajorMinorVersion>
     <CIBuildNumber Condition=" '$(CIBuildNumber)' == '' ">0</CIBuildNumber>
+    <DoxyGenPath>$(BuildFolder)\Doxygen</DoxyGenPath>
+    <DoxyGenBin>$(DoxyGenPath)\bin</DoxyGenBin>
+    <DoxyGenOutputBohriumCorePath>$(DoxyGenPath)\Output_BohriumCore</DoxyGenOutputBohriumCorePath>
+    <DoxyGenOutputBohriumCoreHtmlPath>$(DoxyGenOutputBohriumCorePath)\html</DoxyGenOutputBohriumCoreHtmlPath>
   </PropertyGroup>
+
+  <Import Project="$(MSBuildProjectDirectory)\Build\MSBuild\MSBuildExtensionPack_3.5.14.0\MSBuild.ExtensionPack.tasks" />
 
   <Target Name="clean-build-artifacts">
     <ItemGroup>
@@ -40,22 +46,40 @@
   </Target>
 
   <Target Name="deploy" DependsOnTargets="clean-deploy-artifacts;deploy-compile">
-    
+
     <MakeDir Condition="!Exists($(DeployArtifactsFolder))" Directories="$(DeployArtifactsFolder)" />
 
-	<CallTarget Targets="deploy-generate-packages"/>
+    <CallTarget Targets="deploy-generate-docs"/>
+
+    <CallTarget Targets="deploy-generate-packages"/>
+  </Target>
+
+  <Target Name="deploy-generate-docs">
+    
+    <Exec Command='$(DoxyGenPath)\runDoxygen.cmd ' WorkingDirectory='$(DoxyGenPath)' />
+
+    <ItemGroup>
+      <DoxyGenBohriumCoreHtmlFilesInclude Include="$(DoxyGenOutputBohriumCoreHtmlPath)\**" />
+    </ItemGroup>
+
+    <MSBuild.ExtensionPack.Compression.Zip
+                TaskAction="Create"
+                RemoveRoot="$(DoxyGenOutputBohriumCorePath)\html"
+                CompressFiles="@(DoxyGenBohriumCoreHtmlFilesInclude)"
+                ZipFileName="$(DoxyGenOutputBohriumCorePath)\BohriumNET_BohriumCore_HtmlDoc.zip" />
+
   </Target>
 
   <Target Name="deploy-generate-packages">
 
-	<GetAssemblyIdentity AssemblyFiles="$(MSBuildProjectDirectory)\src\Bohrium.Core\bin\Release\Bohrium.Core.dll">
-		<Output TaskParameter="Assemblies" ItemName="BohriumCoreAssemblyInfo"/>
-	</GetAssemblyIdentity>
+    <GetAssemblyIdentity AssemblyFiles="$(MSBuildProjectDirectory)\src\Bohrium.Core\bin\Release\Bohrium.Core.dll">
+      <Output TaskParameter="Assemblies" ItemName="BohriumCoreAssemblyInfo"/>
+    </GetAssemblyIdentity>
 
-	<PropertyGroup>
-        <MajorMinorVersionBohriumCore>$([System.Text.RegularExpressions.Regex]::Match(%(BohriumCoreAssemblyInfo.Version), $(PatternMajorMinorVersion)))</MajorMinorVersionBohriumCore>
+    <PropertyGroup>
+      <MajorMinorVersionBohriumCore>$([System.Text.RegularExpressions.Regex]::Match(%(BohriumCoreAssemblyInfo.Version), $(PatternMajorMinorVersion)))</MajorMinorVersionBohriumCore>
     </PropertyGroup>
-	
+
     <!-- NuGet packaging -->
     <Exec WorkingDirectory="$(NugetToolFolder)" Command="nuget.exe Pack -version $(MajorMinorVersionBohriumCore).$(CIBuildNumber).0 $(NuspecFilesFolder)\Bohrium.Core.nuspec /o $(DeployArtifactsFolder)" />
   </Target>
