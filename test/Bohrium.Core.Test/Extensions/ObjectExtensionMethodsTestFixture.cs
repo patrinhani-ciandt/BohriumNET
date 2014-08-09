@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace Bohrium.Core.Test.Extensions
 {
     [TestFixture]
-    public class ObjectExtensionMethodsTestFixture
+    public class ObjectExtensionMethodsTestFixture : TestFixtureBase
     {
         /* Test is covering the methods bellow:
          * byte[] ComputeMD5Hash(this object obj)
