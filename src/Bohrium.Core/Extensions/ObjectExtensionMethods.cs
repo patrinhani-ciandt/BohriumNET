@@ -1,4 +1,6 @@
-﻿namespace Bohrium.Core.Extensions
+﻿using System.Linq.Expressions;
+
+namespace Bohrium.Core.Extensions
 {
     using System;
     using System.Collections;
@@ -597,6 +599,64 @@
             this object value)
         {
             return value.CoalesceDBNull(default(T));
+        }
+
+        /// <summary>
+        /// Return as string the member name passed as a Lambda Expression.
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <param name="obj"></param>
+        /// <param name="fieldExpression"></param>
+        /// <returns></returns>
+        public static string GetMemberName<TSource>(this TSource obj, Expression<Func<TSource, object>> fieldExpression)
+        {
+            if (object.Equals(fieldExpression, null))
+            {
+                throw new NullReferenceException("Field is required");
+            }
+
+            MemberExpression expr = null;
+
+            var body = fieldExpression.Body as MemberExpression;
+
+            if (body != null)
+            {
+                expr = body;
+            }
+            else if (fieldExpression.Body is UnaryExpression)
+            {
+                var unaryBody = fieldExpression.Body as UnaryExpression;
+
+                expr = unaryBody.Operand as MemberExpression;
+            }
+            else
+            {
+                const string Format = "Expression '{0}' not supported.";
+                string message = string.Format(Format, fieldExpression);
+
+                throw new ArgumentException(message, "Field");
+            }
+
+            return expr.Member.Name;
+        }
+
+        /// <summary>
+        /// This method calls the MemberwiseClone method to perform a shallow copy operation creating a new object, 
+        /// and then copying the nonstatic fields of the current object to the new object. 
+        /// If a field is a value type, a bit-by-bit copy of the field is performed. 
+        /// If a field is a reference type, the reference is copied but the referred object is not; 
+        /// therefore, the original object and its clone refer to the same object.
+        /// </summary>
+        /// <param name="source">Object to be copied.</param>
+        /// <returns></returns>
+        public static object ShallowCopy(this object source)
+        {
+            if (source == null)
+            {
+                throw new ArgumentException("The source object cannot be null.");
+            }
+
+            return source.CallMethod("MemberwiseClone");
         }
     }
 }

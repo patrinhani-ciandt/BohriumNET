@@ -55,8 +55,10 @@
     <Compile Include="Extensions\IEnumerableExtensionMethods.cs" />
     <Compile Include="Extensions\IListExtensionMethods.cs" />
     <Compile Include="Extensions\ObjectExtensionMethods.cs" />
+    <Compile Include="Extensions\ReflectionExtensionMethods.cs" />
     <Compile Include="Extensions\RegexExtensionMethods.cs" />
     <Compile Include="Extensions\StringExtensionMethods.cs" />
+    <Compile Include="Extensions\TypeExtensionMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

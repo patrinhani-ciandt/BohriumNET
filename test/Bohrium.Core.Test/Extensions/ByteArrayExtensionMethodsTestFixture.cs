@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace Bohrium.Core.Test.Extensions
 {
     [TestFixture]
-    public class ByteArrayExtensionMethodsTestFixture
+    public class ByteArrayExtensionMethodsTestFixture : TestFixtureBase
     {
         /* Test is covering the methods bellow:
          * T ToObject<T>(this byte[] value)
