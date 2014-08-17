@@ -8,6 +8,39 @@ namespace Bohrium.Core.Test.Extensions
     public class ObjectExtensionMethodsTestFixture : TestFixtureBase
     {
         /* Test is covering the methods bellow:
+         * byte[] ToByteArray(this object value, bool compress = false)
+         */
+        [Test]
+        public void should_be_able_to_convert_an_object_to_byte_array()
+        {
+            var dataTestObject = DataTestObject.CreateDefault();
+
+            var byteArrayDataTestObject = dataTestObject.ToByteArray();
+
+            var dataTestObjectCompressed = dataTestObject.ToByteArray(true);
+
+            Assert.AreNotEqual(byteArrayDataTestObject, dataTestObjectCompressed);
+
+            Assert.IsTrue(dataTestObjectCompressed.Length < byteArrayDataTestObject.Length);
+        }
+
+        /*
+         * bool IsNull(this object value)
+         * bool IsNotNull(this object value)
+         */
+        [Test]
+        public void test_for_IsNull_IsNotNull()
+        {
+            DataTestObject dataTestObject = null;
+
+            Assert.AreEqual((dataTestObject.IsNull()), (dataTestObject == null));
+
+            dataTestObject = DataTestObject.CreateDefault();
+
+            Assert.AreEqual((dataTestObject.IsNotNull()), (dataTestObject != null));
+        }
+
+        /* Test is covering the methods bellow:
          * byte[] ComputeMD5Hash(this object obj)
          */
         [Test]

@@ -8,10 +8,19 @@ namespace Bohrium.Core.Extensions
 #if !SILVERLIGHT
 #endif
 
+    /// <summary>
+    /// Class with extension methods for byte[]
+    /// </summary>
     public static class ByteArrayExtensionMethods
     {
 
 #if !SILVERLIGHT
+        /// <summary>
+        /// Deserialize a byte[] to an object.
+        /// </summary>
+        /// <typeparam name="T">Target type of the object.</typeparam>
+        /// <param name="value">byte[] to be deserialized</param>
+        /// <returns>Deserialized object</returns>
         public static T ToObject<T>(this byte[] value)
         {
             MemoryStream m = null;

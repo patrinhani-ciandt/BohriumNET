@@ -4,6 +4,9 @@
     using System.IO;
     using System.IO.Compression;
 
+    /// <summary>
+    /// Class with helper methods for compression.
+    /// </summary>
     public class CompressionUtils
     {
         /// <summary>
@@ -23,8 +26,6 @@
 
             ms.Position = 0;
 
-            var outStream = new MemoryStream();
-
             var compressed = new byte[ms.Length];
 
             ms.Read(compressed, 0, compressed.Length);
@@ -41,7 +42,7 @@
         /// <summary>
         /// Decompress a byte[].
         /// </summary>
-        /// <param name="buffer">byte[] to be decompressed.</param>
+        /// <param name="gzBuffer"></param>
         /// <returns>byte array decompressed.</returns>
         public static byte[] Decompress(byte[] gzBuffer)
         {
