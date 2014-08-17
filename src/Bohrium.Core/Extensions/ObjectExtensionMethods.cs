@@ -7,7 +7,6 @@ namespace Bohrium.Core.Extensions
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.IO;
-    using System.IO.Compression;
     using System.Linq;
     using System.Reflection;
     using System.Runtime.Serialization;
@@ -17,39 +16,31 @@ namespace Bohrium.Core.Extensions
 #if !SILVERLIGHT
 
 #endif
-    
+    /// <summary>
+    /// Class with extension methods for an object
+    /// </summary>
     public static class ObjectExtensionMethods
     {
 #if !SILVERLIGHT
-        public static byte[] ToByteArray(this object value)
-        {
-            return ToByteArray(value, false);
-        }
-
-        public static byte[] ToByteArray(this object value, bool compress)
+        /// <summary>
+        /// Can convert a serializable object to an simple byte[] or to a compressed one
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="compress"></param>
+        /// <returns></returns>
+        public static byte[] ToByteArray(this object value, bool compress = false)
         {
             byte[] ret;
-            using (MemoryStream m = new MemoryStream())
+            using (var m = new MemoryStream())
             {
-                BinaryFormatter bf = new BinaryFormatter();
+                var bf = new BinaryFormatter();
                 bf.Serialize(m, value);
+
+                ret = m.ToArray();
 
                 if (compress)
                 {
-                    using (MemoryStream mc = new MemoryStream())
-                    {
-                        using (DeflateStream ds = new DeflateStream(mc, CompressionMode.Compress))
-                        {
-                            byte[] objBytes = m.ToArray();
-                            ds.Write(objBytes, 0, objBytes.Length);
-                        }
-
-                        ret = mc.ToArray();
-                    }
-                }
-                else
-                {
-                    ret = m.ToArray();
+                    ret = ret.Compress();
                 }
             }
 
@@ -405,46 +396,39 @@ namespace Bohrium.Core.Extensions
         /// <remarks>The source and target objects must be of the same type.</remarks>
         /// <param name="target">The target object</param>
         /// <param name="source">The source object</param>
-        /// <param name="ignoreProperty">A single property name to ignore</param>
-        public static void CopyPropertiesFrom(this object target, object source, string ignoreProperty)
-        {
-            CopyPropertiesFrom(target, source, new[] { ignoreProperty });
-        }
-
-        /// <summary>
-        /// Copies the readable and writable public property values from the source object to the target
-        /// </summary>
-        /// <remarks>The source and target objects must be of the same type.</remarks>
-        /// <param name="target">The target object</param>
-        /// <param name="source">The source object</param>
         /// <param name="ignoreProperties">An array of property names to ignore</param>
-        public static void CopyPropertiesFrom(this object target, object source, string[] ignoreProperties)
+        public static void CopyPropertiesFrom(this object target, object source, params string[] ignoreProperties)
         {
             // Get and check the object types
-            Type type = source.GetType();
+            var type = source.GetType();
             if (target.GetType() != type)
             {
                 throw new ArgumentException("The source type must be the same as the target");
             }
 
             // Build a clean list of property names to ignore
-            List<string> ignoreList = new List<string>();
-            foreach (string item in ignoreProperties)
+            var ignoreList = new List<string>();
+
+            if (ignoreProperties.IsNotNull())
             {
-                if (!string.IsNullOrEmpty(item) && !ignoreList.Contains(item))
+                foreach (string item in ignoreProperties)
                 {
-                    ignoreList.Add(item);
+                    if (!string.IsNullOrEmpty(item) && !ignoreList.Contains(item))
+                    {
+                        ignoreList.Add(item);
+                    }
                 }
             }
 
             // Copy the properties
-            foreach (PropertyInfo property in type.GetProperties())
+            foreach (var property in type.GetProperties())
             {
                 if (property.CanWrite
                     && property.CanRead
                     && !ignoreList.Contains(property.Name))
                 {
-                    object val = property.GetValue(source, null);
+                    var val = property.GetValue(source, null);
+
                     property.SetValue(target, val, null);
                 }
             }

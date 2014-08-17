@@ -75,6 +75,7 @@
     <Compile Include="Extensions\ByteArrayExtensionMethodsTestFixture.cs" />
     <Compile Include="Extensions\ObjectExtensionMethodsTestFixture.cs" />
     <Compile Include="Extensions\ReflectionExtensionMethodsTestFixture.cs" />
+    <Compile Include="Extensions\DateTimeExtensionMethodsTestFixture.cs" />
     <Compile Include="TestHelpers\DataTestObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestFixtureBase.cs" />

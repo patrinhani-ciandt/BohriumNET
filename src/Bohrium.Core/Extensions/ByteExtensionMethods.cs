@@ -1,5 +1,8 @@
 ﻿namespace Bohrium.Core.Extensions
 {
+    /// <summary>
+    /// Class with extension methods for byte
+    /// </summary>
     public static class ByteExtensionMethods
     {
         /// <summary>
