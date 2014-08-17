@@ -14,9 +14,19 @@
     <DoxyGenBin>$(DoxyGenPath)\bin</DoxyGenBin>
     <DoxyGenOutputBohriumCorePath>$(DoxyGenPath)\Output_BohriumCore</DoxyGenOutputBohriumCorePath>
     <DoxyGenOutputBohriumCoreHtmlPath>$(DoxyGenOutputBohriumCorePath)\html</DoxyGenOutputBohriumCoreHtmlPath>
+    <NUnitToolHomePath>$(MSBuildProjectDirectory)\packages\NUnit.Runners.2.6.3\tools</NUnitToolHomePath>
+    <NUnitConsoleTool>$(NUnitToolHomePath)\nunit-console.exe</NUnitConsoleTool>
+    <OpenCoverMSBuildTasksPath>$(MSBuildProjectDirectory)\packages\OpenCover.4.5.2506\MSBuild</OpenCoverMSBuildTasksPath>
+    <OpenCoverHomePath>$(MSBuildProjectDirectory)\packages\OpenCover.4.5.2506</OpenCoverHomePath>
+    <OpenCoverConsoleTool>$(OpenCoverHomePath)\OpenCover.Console.exe</OpenCoverConsoleTool>
+    <OpenCoverReportGeneratorHomePath>$(MSBuildProjectDirectory)\packages\ReportGenerator.1.9.1.0</OpenCoverReportGeneratorHomePath>
+    <OpenCoverReportGeneratorTool>$(OpenCoverReportGeneratorHomePath)\ReportGenerator.exe</OpenCoverReportGeneratorTool>
   </PropertyGroup>
 
   <Import Project="$(MSBuildProjectDirectory)\Build\MSBuild\MSBuildExtensionPack_3.5.14.0\MSBuild.ExtensionPack.tasks" />
+  <Import Project="$(MSBuildProjectDirectory)\packages\OpenCover.4.5.2506\MSBuild\OpenCover.targets" />
+  
+  <UsingTask TaskName="ReportGenerator" AssemblyFile="$(OpenCoverReportGeneratorTool)" />
 
   <Target Name="clean-build-artifacts">
     <ItemGroup>
@@ -37,6 +47,24 @@
   <Target Name="clean" DependsOnTargets="clean-deploy-artifacts;clean-build-artifacts">
   </Target>
 
+  <Target Name="run-code-coverage" DependsOnTargets="deploy-compile">
+  
+    <MakeDir Condition="!Exists($(BuildArtifactsFolder))" Directories="$(BuildArtifactsFolder)" />
+    
+    <OpenCover ToolPath="$(OpenCoverHomePath)"
+               ToolExe="$(OpenCoverConsoleTool)"
+               Target="$(NUnitConsoleTool)"
+               TargetArgs="$(MSBuildProjectDirectory)\test\Bohrium.Core.Test\bin\Release\Bohrium.Core.Test.dll /xml=$(BuildArtifactsFolder)\NUnitReport.xml /noshadow"
+               MergeByHash="True"
+               Filter="+[Bohrium.Core*]*
+                       -[Bohrium.Core.Test*]*" 
+               Output="$(BuildArtifactsFolder)\CoverageReport.xml" />
+  
+    <ReportGenerator ReportFiles="$(BuildArtifactsFolder)\CoverageReport.xml"
+                     TargetDirectory="$(BuildArtifactsFolder)\CoverageReport"
+                     ReportTypes="Html;XmlSummary" />
+  </Target>
+  
   <Target Name="compile" DependsOnTargets="clean-build-artifacts">
     <MSBuild Projects="$(MSBuildProjectDirectory)\Bohrium.sln" Targets="Rebuild" Properties="Configuration=$(Configuration);Platform=$(Platform)" />
   </Target>
@@ -49,12 +77,18 @@
 
     <MakeDir Condition="!Exists($(DeployArtifactsFolder))" Directories="$(DeployArtifactsFolder)" />
 
-    <CallTarget Targets="deploy-generate-docs"/>
+    <CallTarget Targets="deploy-docs"/>
 
     <CallTarget Targets="deploy-generate-packages"/>
   </Target>
+	
+  <Target Name="generate-docs">
+    
+    <Exec Command='$(DoxyGenPath)\runDoxygen.cmd ' WorkingDirectory='$(DoxyGenPath)' />
 
-  <Target Name="deploy-generate-docs">
+  </Target>
+
+  <Target Name="deploy-docs" DependsOnTargets="generate-docs">
     
     <Exec Command='$(DoxyGenPath)\runDoxygen.cmd ' WorkingDirectory='$(DoxyGenPath)' />
 
