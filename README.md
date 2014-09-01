@@ -5,6 +5,8 @@ This is the main reporitory for the framework Bohrium .NET, which the responsibi
 * Version
   * You can get current release version by our NuGet Feed (http://tiny.cc/424ujx)
 
+Bohrium .NET Site: http://patrinhani-ciandt.github.io/BohriumNET.
+
 You can access our CI (Continuous Integration) environment on address:
 https://ci.appveyor.com/project/patrinhani-ciandt/bohriumnet
 
