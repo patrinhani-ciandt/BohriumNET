@@ -1,6 +1,6 @@
 # README #
 
-This is the main reporitory for the framework Bohrium .NET, which the responsibility is to provide a bunch of modularized development framework classes to be reusable increasing the team productivity into the .NET platform.
+This is the main repository for the framework Bohrium .NET, which the responsibility is to provide a bunch of modularized development framework classes to be reusable increasing the team productivity into the .NET platform.
 
 * Version
   * You can get current release version by our NuGet Feed (http://tiny.cc/424ujx)
