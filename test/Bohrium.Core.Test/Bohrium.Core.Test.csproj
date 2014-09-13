@@ -73,6 +73,7 @@
   <ItemGroup>
     <Compile Include="Compression\CompressionUtilsTestFixture.cs" />
     <Compile Include="Extensions\ByteArrayExtensionMethodsTestFixture.cs" />
+    <Compile Include="Extensions\StringExtensionMethodsTestFixture.cs" />
     <Compile Include="Extensions\ObjectExtensionMethodsTestFixture.cs" />
     <Compile Include="Extensions\ReflectionExtensionMethodsTestFixture.cs" />
     <Compile Include="Extensions\DateTimeExtensionMethodsTestFixture.cs" />

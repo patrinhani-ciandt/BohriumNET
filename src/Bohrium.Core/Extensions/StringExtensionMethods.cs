@@ -97,6 +97,29 @@
         }
 
         /// <summary>
+        /// Replaces a specified string from the current string by regular expression.
+        /// </summary>
+        /// <param name="value">Value to modify</param>
+        /// <param name="regularExpr">regular expression, which will be search from value</param>
+        /// <param name="replaceValue">Replace string value</param>
+        /// <returns>Modified string</returns>
+        public static String RegexReplace(this String value, string regularExpr, string replaceValue)
+        {
+            return Regex.Replace(value, regularExpr, replaceValue);
+        }
+
+        /// <summary>
+        /// Delete a specified string from the current string by regular expression.
+        /// </summary>
+        /// <param name="value">Value to modify</param>
+        /// <param name="regularExpr">regular expression, which will be deleted from value</param>
+        /// <returns>Modified string</returns>
+        public static String RegexDelete(this String value, string regularExpr)
+        {
+            return value.RegexReplace(regularExpr, String.Empty);
+        }
+
+        /// <summary>
         /// Delete a specified string from the current string
         /// </summary>
         /// <param name="value">Value to modify</param>
