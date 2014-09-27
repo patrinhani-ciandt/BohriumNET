@@ -1,0 +1,1 @@
+..\..\packages\ilmerge.2.13.0307\ILMerge.exe ..\ILSpy\ILSpy.exe ..\ILSpy\ICSharpCode.Decompiler.dll ..\ILSpy\ICSharpCode.NRefactory.dll ..\ILSpy\ICSharpCode.NRefactory.CSharp.dll /t:library /out:ILSpy.Bundle.dll

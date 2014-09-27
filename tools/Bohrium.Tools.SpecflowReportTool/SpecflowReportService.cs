@@ -25,23 +25,55 @@ namespace Bohrium.Tools.SpecflowReportTool
             var loadAssembly = testAssemblyLoader.LoadAssembly(inputAssembly);
 
             var specflowUnitTests = getSpecflowFeatureUnitTests(loadAssembly);
+
+            Console.WriteLine();
         }
 
-        private IEnumerable<Type> getSpecflowFeatureUnitTests(Assembly loadAssembly)
+        private IEnumerable<FeatureUnitTestClass> getSpecflowFeatureUnitTests(Assembly loadAssembly)
         {
-            var types = new List<Type>();
+            var featureUnitTests = new List<FeatureUnitTestClass>();
 
-            types = loadAssembly.GetTypes()
-                .Where(t => t.GetCustomAttributes<GeneratedCodeAttribute>().Any(a => a.Tool == "TechTalk.SpecFlow"))
+            var featureUnitTestTypes = loadAssembly.GetTypes()
+                .Where(t => 
+                    (t.GetCustomAttributes<TestFixtureAttribute>().Any()) 
+                    && (t.GetCustomAttributes<GeneratedCodeAttribute>().Any(a => a.Tool == "TechTalk.SpecFlow")))
                 .ToList();
 
+            foreach (var featureUnitTestType in featureUnitTestTypes.AsParallel())
+            {
+                var featureUnitTestClass = new FeatureUnitTestClass();
+
+                var descriptionAttribute = featureUnitTestType.GetCustomAttributes<DescriptionAttribute>().FirstOrDefault();
+
+                featureUnitTestClass.Description = (descriptionAttribute != null)
+                    ? descriptionAttribute.Description
+                    : null;
+
+                var categoryAttributes = featureUnitTestType.GetCustomAttributes<CategoryAttribute>();
+
+                if (categoryAttributes != null)
+                {
+                    foreach (var categoryAttribute in categoryAttributes)
+                    {
+                        featureUnitTestClass.Tags.Add(categoryAttribute.Name);
+                    }
+                }
+
+                var methodScenarios = getScenarioUnitTestsFromFeatureTestFixture(loadAssembly, featureUnitTestType);
+
+                featureUnitTests.Add(featureUnitTestClass);
+            }
+
+            return featureUnitTests;
+        }
+
+        private List<MethodInfo> getScenarioUnitTestsFromFeatureTestFixture(Assembly loadAssembly, Type featureUnitTestTypes)
+        {
             var methodScenarios = new List<MethodInfo>();
 
-            foreach (var typeFeatureUnit in types)
-            {
-                var methodInfos = typeFeatureUnit.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                methodScenarios.AddRange(methodInfos.Where(methodInfo => methodInfo.GetCustomAttributes<TestAttribute>().Any()));
-            }
+            var methodInfos =
+                featureUnitTestTypes.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            methodScenarios.AddRange(methodInfos.Where(methodInfo => methodInfo.GetCustomAttributes<TestAttribute>().Any()));
 
             foreach (var methodScenario in methodScenarios)
             {
@@ -58,7 +90,7 @@ namespace Bohrium.Tools.SpecflowReportTool
                 Console.WriteLine();
             }
 
-            return types;
+            return methodScenarios;
         }
 
         public string getSourceCode(MethodDefinition methodDefinition)
@@ -117,5 +149,28 @@ namespace Bohrium.Tools.SpecflowReportTool
         }
 
         #endregion IDisposable Implementation
+    }
+
+    public class BaseObjectDataClass
+    {
+        public Guid ObjectID { get; set; }
+
+        public BaseObjectDataClass()
+        {
+            ObjectID = Guid.NewGuid();
+        }
+    }
+
+    public class FeatureUnitTestClass : BaseObjectDataClass
+    {
+        private IList<string> _tags = new List<string>();
+
+        public string Description { get; set; }
+
+        public IList<string> Tags
+        {
+            get { return _tags; }
+            set { _tags = value; }
+        }
     }
 }
