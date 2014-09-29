@@ -11,6 +11,12 @@ namespace Bohrium.Tools.Sample.SpecflowTests.StepDefinitions
     {
         // For additional details on SpecFlow step definitions see http://go.specflow.org/doc-stepdef
 
+        [Given(@"I am logged as SA")]
+        public void GivenIAmLoggedAsSA()
+        {
+            ScenarioContext.Current.Pending();
+        }
+
         [Given("I have entered (.*) into the calculator")]
         public void GivenIHaveEnteredSomethingIntoTheCalculator(int number)
         {
@@ -57,5 +63,10 @@ namespace Bohrium.Tools.Sample.SpecflowTests.StepDefinitions
             ScenarioContext.Current.Pending();
         }
 
+        [Then(@"I check the value Z")]
+        public void ThenICheckTheValueZ(string multilineText)
+        {
+            ScenarioContext.Current.Pending();
+        }
     }
 }

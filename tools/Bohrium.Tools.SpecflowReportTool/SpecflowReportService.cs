@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Text.RegularExpressions;
 using Bohrium.Tools.SpecflowReportTool.Utils;
 using System.CodeDom.Compiler;
@@ -112,11 +113,11 @@ namespace Bohrium.Tools.SpecflowReportTool
 
                     string methodBodySourceCode = getSourceCode(methodDefinition);
 
-                    var scenarioMethodSourceSyntaxParser = new ScenarioMethodSourceSyntaxParser(methodBodySourceCode);
+                    IList<GivenStatementClass> givenStatements;
+                    IList<WhenStatementClass> whenStatements;
+                    IList<ThenStatementClass> thenStatements;
 
-                    var matchesGiven = scenarioMethodSourceSyntaxParser.ParseGiven();
-                    var matchesWhen = scenarioMethodSourceSyntaxParser.ParseWhen();
-                    var matchesThen = scenarioMethodSourceSyntaxParser.ParseThen();
+                    parseGivenWhenThenStatements(methodBodySourceCode, out givenStatements, out whenStatements, out thenStatements);
 
                     methodScenarios.Add(scenarioUnitTestClass);
 
@@ -125,6 +126,58 @@ namespace Bohrium.Tools.SpecflowReportTool
             }
 
             return methodScenarios;
+        }
+
+        private void parseGivenWhenThenStatements(string methodBodySourceCode,
+            out IList<GivenStatementClass> givenStatements, 
+            out IList<WhenStatementClass> whenStatements,
+            out IList<ThenStatementClass> thenStatements)
+        {
+            givenStatements = new List<GivenStatementClass>();
+            whenStatements = new List<WhenStatementClass>();
+            thenStatements = new List<ThenStatementClass>();
+
+            var scenarioMethodSourceSyntaxParser = new ScenarioMethodSourceSyntaxParser(methodBodySourceCode);
+
+            var matchesGiven = scenarioMethodSourceSyntaxParser.ParseGiven();
+            var matchesWhen = scenarioMethodSourceSyntaxParser.ParseWhen();
+            var matchesThen = scenarioMethodSourceSyntaxParser.ParseThen();
+
+            foreach (Match givenMatch in matchesGiven)
+            {
+                if (givenMatch.Success)
+                {
+                    var givenStatementClass = new GivenStatementClass();
+
+                    givenStatementClass.FillFromMatch(givenMatch, scenarioMethodSourceSyntaxParser);
+
+                    givenStatements.Add(givenStatementClass);
+                }
+            }
+
+            foreach (Match whenMatch in matchesWhen)
+            {
+                if (whenMatch.Success)
+                {
+                    var whenStatementClass = new WhenStatementClass();
+
+                    whenStatementClass.FillFromMatch(whenMatch, scenarioMethodSourceSyntaxParser);
+                    
+                    whenStatements.Add(whenStatementClass);
+                }
+            }
+
+            foreach (Match thenMatch in matchesThen)
+            {
+                if (thenMatch.Success)
+                {
+                    var thenStatementClass = new ThenStatementClass();
+
+                    thenStatementClass.FillFromMatch(thenMatch, scenarioMethodSourceSyntaxParser);
+
+                    thenStatements.Add(thenStatementClass);
+                }
+            }
         }
 
         public string getSourceCode(MethodDefinition methodDefinition)
@@ -180,7 +233,7 @@ namespace Bohrium.Tools.SpecflowReportTool
 
     public class ScenarioMethodSourceSyntaxParser
     {
-        private const string GivenWhenThenParamDescriptionRegex = "([\"](?<description>([^,]|[.])+)[\"])";
+        private const string GivenWhenThenParamDescriptionRegex = "([\"](?<statement>([^,]|[.])+)[\"])";
         private const string GivenWhenThenParamMultilineTextArgRegex = "([,](?<multilineTextArg>([^,]|[.])+))?";
         private const string GivenWhenThenParamTableArgRegex = "([,](?<tableArg>([^,]|[.])+))?";
         private const string GivenWhenThenParamKeywordRegex = "([,](?<keyword>([^,]|[.])+))?";
@@ -213,9 +266,14 @@ namespace Bohrium.Tools.SpecflowReportTool
             return "(testRunner[.]" + beginStatement + ")((.|\n)*(?=" + endStatement + "))";
         }
 
-        private Match matchTableDeclaration(string tableVarName)
+        public MatchCollection ParseTableDeclaration(string tableVarName)
         {
-            return Regex.Match(_methodSourceCode, "((?<varTableCreation>" + tableVarName + "\\s+=\\s+new\\s+TechTalk[.]SpecFlow[.]Table[(])|(?<varTableAddRow>" + tableVarName + ".AddRow(.)))" + CSharpEndOfStatement);
+            return Regex.Matches(_methodSourceCode, "((?<varTableCreation>" + tableVarName + @"\s+=\s+new\s+(TechTalk[.]SpecFlow[.])?Table[(](.*))|(?<varTableAddRow>" + tableVarName + "[.]AddRow(.*)))" + CSharpEndOfStatement, RegexOptions.Multiline);
+        }
+
+        public MatchCollection ParseTableRows(string tableDeclarationSource)
+        {
+            return Regex.Matches(_methodSourceCode, "([{])(.*)(([^);].|\n)*[;])" + CSharpEndOfStatement, RegexOptions.Multiline);
         }
 
         public MatchCollection ParseGiven()
@@ -256,6 +314,54 @@ namespace Bohrium.Tools.SpecflowReportTool
         }
     }
 
+    public class GherkinBaseStatementClass : BaseObjectDataClass
+    {
+        public string Keyword { get; set; }
+        public string Statement { get; set; }
+        public string MultilineTextParameter { get; set; }
+        public string TableParameter { get; set; }
+
+        public void FillFromMatch(Match matchRegex, ScenarioMethodSourceSyntaxParser methodSourceParser)
+        {
+            Keyword = matchRegex.Groups["keyword"].Value.Trim();
+
+            Statement = matchRegex.Groups["statement"].Value.Trim();
+            
+            MultilineTextParameter =
+                (!matchRegex.Groups["multilineTextArg"].Value.Trim()
+                    .Equals("null", StringComparison.InvariantCultureIgnoreCase))
+                    ? matchRegex.Groups["multilineTextArg"].Value.Trim()
+                    : null;
+
+            if (!matchRegex.Groups["tableArg"].Value.Trim()
+                .Equals("null", StringComparison.InvariantCultureIgnoreCase))
+            {
+                var tableDeclaration = methodSourceParser.ParseTableDeclaration(matchRegex.Groups["tableArg"].Value.Trim());
+
+                var strBuilder = new StringBuilder();
+
+                foreach (Match tableDecla in tableDeclaration)
+                {
+                    strBuilder.AppendLine(tableDecla.Value);
+                }
+
+                TableParameter = strBuilder.ToString();
+            }
+        }
+    }
+
+    public class GivenStatementClass : GherkinBaseStatementClass
+    {
+    }
+
+    public class WhenStatementClass : GherkinBaseStatementClass
+    {
+    }
+
+    public class ThenStatementClass : GherkinBaseStatementClass
+    {
+    }
+
     public class FeatureUnitTestClass : BaseObjectDataClass
     {
         private IList<string> _tags = new List<string>();
@@ -268,7 +374,15 @@ namespace Bohrium.Tools.SpecflowReportTool
         {
             get { return _tags; }
         }
+
+        public BackgroundFeatureClass Background { get; set; }
     }
+
+    public class BackgroundFeatureClass : BaseObjectDataClass
+    {
+        public Guid ParentFeature { get; set; }
+    }
+
 
     public class ScenarioUnitTestClass : BaseObjectDataClass
     {

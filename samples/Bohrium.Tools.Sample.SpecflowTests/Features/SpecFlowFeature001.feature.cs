@@ -67,6 +67,14 @@ namespace Bohrium.Tools.Sample.SpecflowTests.Features
             testRunner.CollectScenarioErrors();
         }
         
+        public virtual void FeatureBackground()
+        {
+#line 7
+#line 8
+ testRunner.Given("I am logged as SA", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+        }
+        
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Add two numbers")]
         [NUnit.Framework.CategoryAttribute("uspl8080")]
@@ -76,11 +84,13 @@ namespace Bohrium.Tools.Sample.SpecflowTests.Features
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Add two numbers", new string[] {
                         "uspl8080",
                         "mytag"});
-#line 8
+#line 11
 this.ScenarioSetup(scenarioInfo);
-#line 9
+#line 7
+this.FeatureBackground();
+#line 12
  testRunner.Given("I have entered 50 into the calculator", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 10
+#line 13
  testRunner.And("I have entered 70 into the calculator", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
@@ -89,15 +99,59 @@ this.ScenarioSetup(scenarioInfo);
             table1.AddRow(new string[] {
                         "1",
                         "My Description Test"});
-#line 11
- testRunner.And("I have the following records", ((string)(null)), table1, "And ");
+            table1.AddRow(new string[] {
+                        "2",
+                        "Mysdfsdfsdfiption Test"});
 #line 14
+ testRunner.And("I have the following records", ((string)(null)), table1, "And ");
+#line 18
  testRunner.When("I press add", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 15
+#line 19
  testRunner.And("I Go to the next when step", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 16
+#line 20
  testRunner.Then("the result should be 120 on the screen", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 17
+#line hidden
+#line 21
+ testRunner.And("I check the value Z", "tESTE\r\nHKSJGSDF\r\n GSD \r\n GFSD FGSDFG\r\n SD FG\r\n SDFGSDFG\r\n\t", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Add three numbers")]
+        [NUnit.Framework.CategoryAttribute("uspl8081")]
+        [NUnit.Framework.CategoryAttribute("mytag")]
+        public virtual void AddThreeNumbers()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Add three numbers", new string[] {
+                        "uspl8081",
+                        "mytag"});
+#line 32
+this.ScenarioSetup(scenarioInfo);
+#line 7
+this.FeatureBackground();
+#line 33
+ testRunner.Given("I have entered 50 into the calculator", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 34
+ testRunner.And("I have entered 70 into the calculator", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 35
+ testRunner.And("I have entered 120 into the calculator", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Id",
+                        "Test Description"});
+            table2.AddRow(new string[] {
+                        "1",
+                        "My Description Test"});
+#line 36
+ testRunner.And("I have the following records", ((string)(null)), table2, "And ");
+#line 39
+ testRunner.When("I press add", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 40
+ testRunner.And("I Go to the next when step", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 41
+ testRunner.Then("the result should be 120 on the screen", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 42
  testRunner.And("I check the value x", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
