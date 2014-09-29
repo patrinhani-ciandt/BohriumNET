@@ -180,7 +180,15 @@ namespace Bohrium.Tools.SpecflowReportTool
 
     public class ScenarioMethodSourceSyntaxParser
     {
-        private const string GivenWhenThenParamsRegex = "(?<params>(?<description>[\"](.+)[\"])(,(?<multilineTextArg>(.+)))?(,(?<tableArg>(.+)))?(,(?<keyword>(.+)))?)";
+        private const string GivenWhenThenParamDescriptionRegex = "([\"](?<description>([^,]|[.])+)[\"])";
+        private const string GivenWhenThenParamMultilineTextArgRegex = "([,](?<multilineTextArg>([^,]|[.])+))?";
+        private const string GivenWhenThenParamTableArgRegex = "([,](?<tableArg>([^,]|[.])+))?";
+        private const string GivenWhenThenParamKeywordRegex = "([,](?<keyword>([^,]|[.])+))?";
+        private const string GivenWhenThenParamsRegex = "(" 
+            + GivenWhenThenParamDescriptionRegex 
+            + GivenWhenThenParamMultilineTextArgRegex
+            + GivenWhenThenParamTableArgRegex 
+            + GivenWhenThenParamKeywordRegex + ")";
         private const string GivenRegex = "Given[(]" + GivenWhenThenParamsRegex + "[)][;]";
         private const string WhenRegex = "When[(]" + GivenWhenThenParamsRegex + "[)][;]";
         private const string ThenRegex = "Then[(]" + GivenWhenThenParamsRegex + "[)][;]";
@@ -216,7 +224,7 @@ namespace Bohrium.Tools.SpecflowReportTool
 
             string givenSourceBlock = match.Value;
 
-            return Regex.Matches(givenSourceBlock, "(" + createRegexStatement(GivenRegex) + "|" + createRegexStatement(AndRegex) + ")");
+            return Regex.Matches(givenSourceBlock, "(" + createRegexStatement(GivenRegex) + "|" + createRegexStatement(AndRegex) + ")", RegexOptions.ExplicitCapture);
         }
 
         public MatchCollection ParseWhen()
@@ -225,7 +233,7 @@ namespace Bohrium.Tools.SpecflowReportTool
 
             string givenSourceBlock = match.Value;
 
-            return Regex.Matches(givenSourceBlock, "(" + createRegexStatement(WhenRegex) + "|" + createRegexStatement(AndRegex) + ")");
+            return Regex.Matches(givenSourceBlock, "(" + createRegexStatement(WhenRegex) + "|" + createRegexStatement(AndRegex) + ")", RegexOptions.ExplicitCapture);
         }
 
         public MatchCollection ParseThen()
@@ -234,7 +242,7 @@ namespace Bohrium.Tools.SpecflowReportTool
 
             string givenSourceBlock = match.Value;
 
-            return Regex.Matches(givenSourceBlock, "(" + createRegexStatement(ThenRegex) + "|" + createRegexStatement(AndRegex) + ")");
+            return Regex.Matches(givenSourceBlock, "(" + createRegexStatement(ThenRegex) + "|" + createRegexStatement(AndRegex) + ")", RegexOptions.ExplicitCapture);
         }
     }
 
