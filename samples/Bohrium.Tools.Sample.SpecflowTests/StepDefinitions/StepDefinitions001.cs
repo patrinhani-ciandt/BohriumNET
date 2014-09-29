@@ -38,5 +38,24 @@ namespace Bohrium.Tools.Sample.SpecflowTests.StepDefinitions
 
             ScenarioContext.Current.Pending();
         }
+
+        [Given(@"I have the following records")]
+        public void GivenIHaveTheFollowingRecords(Table table)
+        {
+            ScenarioContext.Current.Pending();
+        }
+
+        [When(@"I Go to the next when step")]
+        public void WhenIGoToTheNextWhenStep()
+        {
+            ScenarioContext.Current.Pending();
+        }
+
+        [Then(@"I check the value x")]
+        public void ThenICheckTheValueX()
+        {
+            ScenarioContext.Current.Pending();
+        }
+
     }
 }
