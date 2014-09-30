@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Text.RegularExpressions;
+using Bohrium.Core.Extensions;
+using Bohrium.Tools.SpecflowReportTool.DataObjects;
+using Bohrium.Tools.SpecflowReportTool.Extensions;
+using Bohrium.Tools.SpecflowReportTool.ReportObjects;
 using Bohrium.Tools.SpecflowReportTool.Utils;
 using System.CodeDom.Compiler;
-using ICSharpCode.Decompiler;
-using ICSharpCode.ILSpy;
 using Mono.Cecil;
 using NUnit.Framework;
 
@@ -16,6 +18,8 @@ namespace Bohrium.Tools.SpecflowReportTool
     public class SpecflowReportService : IDisposable
     {
         private AssemblyLoader testAssemblyLoader;
+        private Assembly loadAssembly;
+        private AssemblyDefinition assemblyDefinition;
 
         public SpecflowReportService()
         {
@@ -24,29 +28,68 @@ namespace Bohrium.Tools.SpecflowReportTool
 
         public void ReadTestAssembly(string inputAssembly)
         {
-            var loadAssembly = testAssemblyLoader.LoadAssembly(inputAssembly);
-            var assemblyDefinition = AssemblyDefinition.ReadAssembly(loadAssembly.Location);
-
-            var specflowUnitTests = getSpecflowFeatureUnitTests(loadAssembly, assemblyDefinition);
-
-            var specflowTestScenarios = getScenarioUnitTestsFromFeatureTestFixture(specflowUnitTests, loadAssembly, assemblyDefinition);
-
-            Console.WriteLine();
+            this.loadAssembly = testAssemblyLoader.LoadAssembly(inputAssembly);
+            this.assemblyDefinition = AssemblyDefinition.ReadAssembly(loadAssembly.Location);
         }
 
-        private IEnumerable<FeatureUnitTestClass> getSpecflowFeatureUnitTests(Assembly loadAssembly, AssemblyDefinition assemblyDefinition)
+        private void chkLoadedAssembly()
         {
-            var featureUnitTests = new List<FeatureUnitTestClass>();
+            if ((loadAssembly == null) || (assemblyDefinition == null))
+                throw new InvalidOperationException("The Test assembly need to be loaded before running the method 'ReadTestAssembly'.");
+        }
+
+        public SpecflowReport ExtractSpecflowReport()
+        {
+            var specflowReport = new SpecflowReport();
+
+            specflowReport.FeaturesReport = ExtractFeaturesReport();
+
+            specflowReport.ScenariosReport = ExtractScenariosReport(specflowReport.FeaturesReport);
+
+            return specflowReport;
+        }
+
+        public FeaturesReport ExtractFeaturesReport()
+        {
+            chkLoadedAssembly();
+
+            var specflowUnitTests = getSpecflowFeatureUnitTests(loadAssembly);
+
+            var featuresReport = new FeaturesReport();
+
+            featuresReport.Features = specflowUnitTests.ToList();
+
+            return featuresReport;
+        }
+
+        public ScenariosReport ExtractScenariosReport(FeaturesReport featuresReport)
+        {
+            chkLoadedAssembly();
+
+            if (featuresReport == null) throw new ArgumentNullException("featuresReport");
+
+            var specflowTestScenarios = getScenarioUnitTestsFromFeatureTestFixture(featuresReport.Features, assemblyDefinition);
+
+            var scenariosReport = new ScenariosReport();
+
+            scenariosReport.Scenarios = specflowTestScenarios.ToList();
+
+            return scenariosReport;
+        }
+
+        private IEnumerable<FeatureUnitTestDO> getSpecflowFeatureUnitTests(Assembly loadAssembly)
+        {
+            var featureUnitTests = new List<FeatureUnitTestDO>();
 
             var featureUnitTestTypes = loadAssembly.GetTypes()
-                .Where(t => 
-                    (t.GetCustomAttributes<TestFixtureAttribute>().Any()) 
+                .Where(t =>
+                    (t.GetCustomAttributes<TestFixtureAttribute>().Any())
                     && (t.GetCustomAttributes<GeneratedCodeAttribute>().Any(a => a.Tool == "TechTalk.SpecFlow")))
                 .ToList();
 
             foreach (var featureUnitTestType in featureUnitTestTypes.AsParallel())
             {
-                var featureUnitTestClass = new FeatureUnitTestClass();
+                var featureUnitTestClass = new FeatureUnitTestDO();
 
                 featureUnitTestClass.TargetType = featureUnitTestType;
 
@@ -72,9 +115,9 @@ namespace Bohrium.Tools.SpecflowReportTool
             return featureUnitTests;
         }
 
-        private List<ScenarioUnitTestClass> getScenarioUnitTestsFromFeatureTestFixture(IEnumerable<FeatureUnitTestClass> featureUnitTestClasses, Assembly loadAssembly, AssemblyDefinition assemblyDefinition)
+        private List<ScenarioUnitTestDO> getScenarioUnitTestsFromFeatureTestFixture(IEnumerable<FeatureUnitTestDO> featureUnitTestClasses, AssemblyDefinition assemblyDefinition)
         {
-            var methodScenarios = new List<ScenarioUnitTestClass>();
+            var methodScenarios = new List<ScenarioUnitTestDO>();
 
             foreach (var featureUnitTestClass in featureUnitTestClasses)
             {
@@ -86,9 +129,9 @@ namespace Bohrium.Tools.SpecflowReportTool
 
                 foreach (var methodScenario in methodInfos.Where(methodInfo => methodInfo.GetCustomAttributes<TestAttribute>().Any()))
                 {
-                    var scenarioUnitTestClass = new ScenarioUnitTestClass();
+                    var scenarioUnitTestClass = new ScenarioUnitTestDO();
 
-                    scenarioUnitTestClass.ParentFeature = featureUnitTestClass.ObjectID;
+                    scenarioUnitTestClass.ParentFeature = featureUnitTestClass.ObjectId;
                     scenarioUnitTestClass.TargetType = methodScenario;
 
                     var descriptionAttribute = methodScenario.GetCustomAttributes<DescriptionAttribute>().FirstOrDefault();
@@ -111,17 +154,19 @@ namespace Bohrium.Tools.SpecflowReportTool
                         .Where(m => m.Name == methodScenario.Name)
                         .SingleOrDefault();
 
-                    string methodBodySourceCode = getSourceCode(methodDefinition);
+                    string methodBodySourceCode = methodDefinition.GetSourceCode();
 
-                    IList<GivenStatementClass> givenStatements;
-                    IList<WhenStatementClass> whenStatements;
-                    IList<ThenStatementClass> thenStatements;
+                    IList<GivenStatementDO> givenStatements;
+                    IList<WhenStatementDO> whenStatements;
+                    IList<ThenStatementDO> thenStatements;
 
                     parseGivenWhenThenStatements(methodBodySourceCode, out givenStatements, out whenStatements, out thenStatements);
 
-                    methodScenarios.Add(scenarioUnitTestClass);
+                    scenarioUnitTestClass.GivenStatements = givenStatements.ToList();
+                    scenarioUnitTestClass.WhenStatements = whenStatements.ToList();
+                    scenarioUnitTestClass.ThenStatements = thenStatements.ToList();
 
-                    Console.WriteLine();
+                    methodScenarios.Add(scenarioUnitTestClass);
                 }
             }
 
@@ -129,13 +174,13 @@ namespace Bohrium.Tools.SpecflowReportTool
         }
 
         private void parseGivenWhenThenStatements(string methodBodySourceCode,
-            out IList<GivenStatementClass> givenStatements, 
-            out IList<WhenStatementClass> whenStatements,
-            out IList<ThenStatementClass> thenStatements)
+            out IList<GivenStatementDO> givenStatements,
+            out IList<WhenStatementDO> whenStatements,
+            out IList<ThenStatementDO> thenStatements)
         {
-            givenStatements = new List<GivenStatementClass>();
-            whenStatements = new List<WhenStatementClass>();
-            thenStatements = new List<ThenStatementClass>();
+            givenStatements = new List<GivenStatementDO>();
+            whenStatements = new List<WhenStatementDO>();
+            thenStatements = new List<ThenStatementDO>();
 
             var scenarioMethodSourceSyntaxParser = new ScenarioMethodSourceSyntaxParser(methodBodySourceCode);
 
@@ -147,7 +192,7 @@ namespace Bohrium.Tools.SpecflowReportTool
             {
                 if (givenMatch.Success)
                 {
-                    var givenStatementClass = new GivenStatementClass();
+                    var givenStatementClass = new GivenStatementDO();
 
                     givenStatementClass.FillFromMatch(givenMatch, scenarioMethodSourceSyntaxParser);
 
@@ -159,10 +204,10 @@ namespace Bohrium.Tools.SpecflowReportTool
             {
                 if (whenMatch.Success)
                 {
-                    var whenStatementClass = new WhenStatementClass();
+                    var whenStatementClass = new WhenStatementDO();
 
                     whenStatementClass.FillFromMatch(whenMatch, scenarioMethodSourceSyntaxParser);
-                    
+
                     whenStatements.Add(whenStatementClass);
                 }
             }
@@ -171,30 +216,12 @@ namespace Bohrium.Tools.SpecflowReportTool
             {
                 if (thenMatch.Success)
                 {
-                    var thenStatementClass = new ThenStatementClass();
+                    var thenStatementClass = new ThenStatementDO();
 
                     thenStatementClass.FillFromMatch(thenMatch, scenarioMethodSourceSyntaxParser);
 
                     thenStatements.Add(thenStatementClass);
                 }
-            }
-        }
-
-        public string getSourceCode(MethodDefinition methodDefinition)
-        {
-            try
-            {
-                var csharpLanguage = new CSharpLanguage();
-                var textOutput = new PlainTextOutput();
-                var decompilationOptions = new DecompilationOptions();
-                decompilationOptions.FullDecompilation = true;
-                csharpLanguage.DecompileMethod(methodDefinition, textOutput, decompilationOptions);
-
-                return textOutput.ToString();
-            }
-            catch (Exception exception)
-            {
-                return ("Error in creating source code from IL: " + exception.Message);
             }
         }
 
@@ -229,172 +256,5 @@ namespace Bohrium.Tools.SpecflowReportTool
         }
 
         #endregion IDisposable Implementation
-    }
-
-    public class ScenarioMethodSourceSyntaxParser
-    {
-        private const string GivenWhenThenParamDescriptionRegex = "([\"](?<statement>([^,]|[.])+)[\"])";
-        private const string GivenWhenThenParamMultilineTextArgRegex = "([,](?<multilineTextArg>([^,]|[.])+))?";
-        private const string GivenWhenThenParamTableArgRegex = "([,](?<tableArg>([^,]|[.])+))?";
-        private const string GivenWhenThenParamKeywordRegex = "([,](?<keyword>([^,]|[.])+))?";
-        private const string GivenWhenThenParamsRegex = "(" 
-            + GivenWhenThenParamDescriptionRegex 
-            + GivenWhenThenParamMultilineTextArgRegex
-            + GivenWhenThenParamTableArgRegex 
-            + GivenWhenThenParamKeywordRegex + ")";
-        private const string GivenRegex = "Given[(]" + GivenWhenThenParamsRegex + "[)][;]";
-        private const string WhenRegex = "When[(]" + GivenWhenThenParamsRegex + "[)][;]";
-        private const string ThenRegex = "Then[(]" + GivenWhenThenParamsRegex + "[)][;]";
-        private const string AndRegex = "And[(]" + GivenWhenThenParamsRegex + "[)][;]";
-        private const string ScenarioMethodEndRegex = "ScenarioCleanup[(](.*)[)][;]";
-        private const string CSharpEndOfStatement = "(([^;].|\\n)*[;])";
-
-        private readonly string _methodSourceCode;
-
-        public ScenarioMethodSourceSyntaxParser(string methodSourceCode)
-        {
-            _methodSourceCode = methodSourceCode;
-        }
-
-        private string createRegexStatement(string statementRegex)
-        {
-            return "(testRunner[.]" + statementRegex + ")";
-        }
-
-        private string createRegexStatementBlock(string beginStatement, string endStatement)
-        {
-            return "(testRunner[.]" + beginStatement + ")((.|\n)*(?=" + endStatement + "))";
-        }
-
-        public MatchCollection ParseTableDeclaration(string tableVarName)
-        {
-            return Regex.Matches(_methodSourceCode, "((?<varTableCreation>" + tableVarName + @"\s+=\s+new\s+(TechTalk[.]SpecFlow[.])?Table[(](.*))|(?<varTableAddRow>" + tableVarName + "[.]AddRow(.*)))" + CSharpEndOfStatement, RegexOptions.Multiline);
-        }
-
-        public MatchCollection ParseTableRows(string tableDeclarationSource)
-        {
-            return Regex.Matches(_methodSourceCode, "([{])(.*)(([^);].|\n)*[;])" + CSharpEndOfStatement, RegexOptions.Multiline);
-        }
-
-        public MatchCollection ParseGiven()
-        {
-            var match = Regex.Match(_methodSourceCode, createRegexStatementBlock(GivenRegex, WhenRegex));
-
-            string givenSourceBlock = match.Value;
-
-            return Regex.Matches(givenSourceBlock, "(" + createRegexStatement(GivenRegex) + "|" + createRegexStatement(AndRegex) + ")", RegexOptions.ExplicitCapture);
-        }
-
-        public MatchCollection ParseWhen()
-        {
-            var match = Regex.Match(_methodSourceCode, createRegexStatementBlock(WhenRegex, ThenRegex));
-
-            string givenSourceBlock = match.Value;
-
-            return Regex.Matches(givenSourceBlock, "(" + createRegexStatement(WhenRegex) + "|" + createRegexStatement(AndRegex) + ")", RegexOptions.ExplicitCapture);
-        }
-
-        public MatchCollection ParseThen()
-        {
-            var match = Regex.Match(_methodSourceCode, createRegexStatementBlock(ThenRegex, ScenarioMethodEndRegex));
-
-            string givenSourceBlock = match.Value;
-
-            return Regex.Matches(givenSourceBlock, "(" + createRegexStatement(ThenRegex) + "|" + createRegexStatement(AndRegex) + ")", RegexOptions.ExplicitCapture);
-        }
-    }
-
-    public class BaseObjectDataClass
-    {
-        public Guid ObjectID { get; set; }
-
-        public BaseObjectDataClass()
-        {
-            ObjectID = Guid.NewGuid();
-        }
-    }
-
-    public class GherkinBaseStatementClass : BaseObjectDataClass
-    {
-        public string Keyword { get; set; }
-        public string Statement { get; set; }
-        public string MultilineTextParameter { get; set; }
-        public string TableParameter { get; set; }
-
-        public void FillFromMatch(Match matchRegex, ScenarioMethodSourceSyntaxParser methodSourceParser)
-        {
-            Keyword = matchRegex.Groups["keyword"].Value.Trim();
-
-            Statement = matchRegex.Groups["statement"].Value.Trim();
-            
-            MultilineTextParameter =
-                (!matchRegex.Groups["multilineTextArg"].Value.Trim()
-                    .Equals("null", StringComparison.InvariantCultureIgnoreCase))
-                    ? matchRegex.Groups["multilineTextArg"].Value.Trim()
-                    : null;
-
-            if (!matchRegex.Groups["tableArg"].Value.Trim()
-                .Equals("null", StringComparison.InvariantCultureIgnoreCase))
-            {
-                var tableDeclaration = methodSourceParser.ParseTableDeclaration(matchRegex.Groups["tableArg"].Value.Trim());
-
-                var strBuilder = new StringBuilder();
-
-                foreach (Match tableDecla in tableDeclaration)
-                {
-                    strBuilder.AppendLine(tableDecla.Value);
-                }
-
-                TableParameter = strBuilder.ToString();
-            }
-        }
-    }
-
-    public class GivenStatementClass : GherkinBaseStatementClass
-    {
-    }
-
-    public class WhenStatementClass : GherkinBaseStatementClass
-    {
-    }
-
-    public class ThenStatementClass : GherkinBaseStatementClass
-    {
-    }
-
-    public class FeatureUnitTestClass : BaseObjectDataClass
-    {
-        private IList<string> _tags = new List<string>();
-
-        public Type TargetType { get; set; }
-
-        public string Description { get; set; }
-
-        public IList<string> Tags
-        {
-            get { return _tags; }
-        }
-
-        public BackgroundFeatureClass Background { get; set; }
-    }
-
-    public class BackgroundFeatureClass : BaseObjectDataClass
-    {
-        public Guid ParentFeature { get; set; }
-    }
-
-
-    public class ScenarioUnitTestClass : BaseObjectDataClass
-    {
-        private IList<string> _tags = new List<string>();
-
-        public MethodInfo TargetType { get; set; }
-        public Guid ParentFeature { get; set; }
-        public string Description { get; set; }
-
-        public IList<string> Tags
-        {
-            get { return _tags; }
-        }
     }
 }

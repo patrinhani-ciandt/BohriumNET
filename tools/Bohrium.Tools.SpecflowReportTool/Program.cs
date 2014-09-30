@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Bohrium.Core.Extensions;
+using Bohrium.Tools.SpecflowReportTool.ReportObjects;
 
 namespace Bohrium.Tools.SpecflowReportTool
 {
@@ -29,6 +31,14 @@ namespace Bohrium.Tools.SpecflowReportTool
             using (var specflowRepostService = new SpecflowReportService())
             {
                 specflowRepostService.ReadTestAssembly(inputAssembly);
+
+                var extractSpecflowReport = specflowRepostService.ExtractSpecflowReport();
+
+                var xmlFeatures = extractSpecflowReport.FeaturesReport.ToXml();
+
+                var xmlScenarios = extractSpecflowReport.ScenariosReport.ToXml();
+
+                Console.WriteLine();
             }
         }
 
