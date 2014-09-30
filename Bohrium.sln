@@ -31,7 +31,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ICSharpCode", "ICSharpCode"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ILSpy", "ILSpy", "{8886C9CA-5698-494F-A821-96DB98C0494A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bohrium.Ext.ICSharpCode.ILSpy", "Bohrium.Ext.ICSharpCode.ILSpy\Bohrium.Ext.ICSharpCode.ILSpy.csproj", "{AE08F977-8041-459E-AD2A-E3A45625FACC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bohrium.Ext.ICSharpCode.ILSpy", "src\Bohrium.Ext.ICSharpCode.ILSpy\Bohrium.Ext.ICSharpCode.ILSpy.csproj", "{AE08F977-8041-459E-AD2A-E3A45625FACC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
