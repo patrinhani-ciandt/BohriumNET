@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Web.Script.Serialization;
 using System.Xml.Serialization;
 
 namespace Bohrium.Tools.SpecflowReportTool.DataObjects
@@ -10,6 +11,7 @@ namespace Bohrium.Tools.SpecflowReportTool.DataObjects
         private List<string> _tags = new List<string>();
 
         [XmlIgnore]
+        [ScriptIgnore]
         public Type TargetType { get; set; }
         
         [XmlAttribute]

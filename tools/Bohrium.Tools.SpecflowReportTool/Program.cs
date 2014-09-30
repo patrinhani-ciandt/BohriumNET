@@ -5,7 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Bohrium.Core.Extensions;
+using Bohrium.Tools.SpecflowReportTool.Extensions;
 using Bohrium.Tools.SpecflowReportTool.ReportObjects;
 
 namespace Bohrium.Tools.SpecflowReportTool
@@ -34,11 +36,47 @@ namespace Bohrium.Tools.SpecflowReportTool
 
                 var extractSpecflowReport = specflowRepostService.ExtractSpecflowReport();
 
+                string outputFolder = Path.Combine(AppDomain.CurrentDomain.SetupInformation.ApplicationBase, "output");
+
+                if (!Directory.Exists(outputFolder))
+                {
+                    Directory.CreateDirectory(outputFolder);
+                }
+
+                string assemblyOutputFolder = Path.Combine(outputFolder, Path.GetFileNameWithoutExtension(inputAssembly));
+
+                if (!Directory.Exists(assemblyOutputFolder))
+                {
+                    Directory.CreateDirectory(assemblyOutputFolder);
+                }
+
                 var xmlFeatures = extractSpecflowReport.FeaturesReport.ToXml();
+
+                var xDocFeatures = XDocument.Parse(xmlFeatures);
+
+                xDocFeatures.Save(Path.Combine(assemblyOutputFolder, "features-report.xml"));
+
+                var jsonFeatures = extractSpecflowReport.FeaturesReport.ToJSon();
+
+                saveToJSonFile(Path.Combine(assemblyOutputFolder, "features-report.json"), jsonFeatures);
 
                 var xmlScenarios = extractSpecflowReport.ScenariosReport.ToXml();
 
-                Console.WriteLine();
+                var xDocScenarios = XDocument.Parse(xmlScenarios);
+
+                xDocScenarios.Save(Path.Combine(assemblyOutputFolder, "scenarios-report.xml"));
+
+                var jsonScenarios = extractSpecflowReport.ScenariosReport.ToJSon();
+
+                saveToJSonFile(Path.Combine(assemblyOutputFolder, "scenarios-report.json"), jsonScenarios);
+            }
+        }
+
+        private static void saveToJSonFile(string outputFilePath, string jsonContent)
+        {
+            using (var jsonWriter = new StreamWriter(outputFilePath, false, Encoding.UTF8))
+            {
+                jsonWriter.Write(jsonContent);
             }
         }
 
