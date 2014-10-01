@@ -28,16 +28,8 @@ namespace Bohrium.Tools.SpecflowReportTool.DataObjects
             get { return _tags; }
         }
 
-        [XmlArray("GivenStatements")]
-        [XmlArrayItem("Given")]
-        public List<GivenStatementDO> GivenStatements { get; set; }
-
-        [XmlArray("WhenStatements")]
-        [XmlArrayItem("When")]
-        public List<WhenStatementDO> WhenStatements { get; set; }
-
-        [XmlArray("ThenStatements")]
-        [XmlArrayItem("Then")]
-        public List<ThenStatementDO> ThenStatements { get; set; }
+        [XmlArray("Statements")]
+        [XmlArrayItem("Statement")]
+        public List<GherkinBaseStatementDO> Statements { get; set; }
     }
 }

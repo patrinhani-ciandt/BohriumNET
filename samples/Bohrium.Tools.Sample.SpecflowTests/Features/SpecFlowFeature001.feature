@@ -40,3 +40,22 @@ Scenario: Add three numbers
 	And I Go to the next when step
 	Then the result should be 120 on the screen
 	And I check the value x
+	Given I have entered 80 into the calculator
+	When I am logged as SA
+	Then the result should be 80 on the screen
+	And I check the value Z
+	"""
+	tESTE
+	HKSJGSDF
+	 GSD 
+	 GFSD FGSDFG
+	 SD FG
+	 SDFGSDFG
+		
+	"""
+	Given I have the following records
+	| Id | Test Description    |
+	| 10  | My Description Test1 |
+	Then the result should be 81 on the screen
+	Given I have entered 80 into the calculator
+	Then the result should be 80 on the screen

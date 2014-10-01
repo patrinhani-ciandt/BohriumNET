@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace Bohrium.Tools.SpecflowReportTool.DataObjects
 {
@@ -10,6 +11,8 @@ namespace Bohrium.Tools.SpecflowReportTool.DataObjects
 
         public SpecflowTableHeaderDataDO Header { get; set; }
 
+        [XmlArray("Rows")]
+        [XmlArrayItem("Row")]
         public List<SpecflowTableRowDataDO> Rows
         {
             get { return _rows; }

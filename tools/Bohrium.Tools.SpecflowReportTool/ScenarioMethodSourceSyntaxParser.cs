@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace Bohrium.Tools.SpecflowReportTool
@@ -32,12 +33,14 @@ namespace Bohrium.Tools.SpecflowReportTool
 
         private string createRegexStatement(string statementRegex)
         {
-            return "(testRunner[.]" + statementRegex + ")";
+            return "([.]" + statementRegex + ")";
         }
 
-        private string createRegexStatementBlock(string beginStatement, string endStatement)
+        private string createRegexStatementBlock(string beginStatement, string endStatement, string intermadiateNeg = "")
         {
-            return "(testRunner[.]" + beginStatement + ")((.|\n)*(?=" + endStatement + "))";
+            string regexIntermadiateNeg = (!string.IsNullOrWhiteSpace(intermadiateNeg)) ? "(?!" + intermadiateNeg + ")|" : String.Empty;
+
+            return "([.]" + beginStatement + ")((" + regexIntermadiateNeg + ".|\n)*(?=" + endStatement + "))";
         }
 
         public MatchCollection ParseTableDeclaration(string tableVarName)
@@ -67,31 +70,28 @@ namespace Bohrium.Tools.SpecflowReportTool
             return cellValues;
         }
 
-        public MatchCollection ParseGiven()
+        public MatchCollection ParseGroupStatements()
         {
-            var match = Regex.Match(_methodSourceCode, createRegexStatementBlock(GivenRegex, WhenRegex));
+            var regexGiven = "(?<given>" + createRegexStatementBlock(GivenRegex, "[.](When|Then|ScenarioCleanup)", "Given") + ")";
+            var regexWhen = "(?<when>" + createRegexStatementBlock(WhenRegex, "[.](Given|Then|ScenarioCleanup)", "When") + ")";
+            var regexThen = "(?<then>" + createRegexStatementBlock(ThenRegex, "[.](Given|When|ScenarioCleanup)", "Then") + ")";
 
-            string givenSourceBlock = match.Value;
-
-            return Regex.Matches(givenSourceBlock, "(" + createRegexStatement(GivenRegex) + "|" + createRegexStatement(AndRegex) + ")", RegexOptions.ExplicitCapture);
+            return Regex.Matches(_methodSourceCode, regexGiven + "|" + regexWhen + "|" + regexThen, RegexOptions.ExplicitCapture);
         }
 
-        public MatchCollection ParseWhen()
+        public MatchCollection ParseGroupGiven(string givenSourceGroup)
         {
-            var match = Regex.Match(_methodSourceCode, createRegexStatementBlock(WhenRegex, ThenRegex));
-
-            string givenSourceBlock = match.Value;
-
-            return Regex.Matches(givenSourceBlock, "(" + createRegexStatement(WhenRegex) + "|" + createRegexStatement(AndRegex) + ")", RegexOptions.ExplicitCapture);
+            return Regex.Matches(givenSourceGroup, "(" + createRegexStatement(GivenRegex) + "|" + createRegexStatement(AndRegex) + ")", RegexOptions.ExplicitCapture);
         }
 
-        public MatchCollection ParseThen()
+        public MatchCollection ParseGroupWhen(string whenSourceGroup)
         {
-            var match = Regex.Match(_methodSourceCode, createRegexStatementBlock(ThenRegex, ScenarioMethodEndRegex));
+            return Regex.Matches(whenSourceGroup, "(" + createRegexStatement(WhenRegex) + "|" + createRegexStatement(AndRegex) + ")", RegexOptions.ExplicitCapture);
+        }
 
-            string givenSourceBlock = match.Value;
-
-            return Regex.Matches(givenSourceBlock, "(" + createRegexStatement(ThenRegex) + "|" + createRegexStatement(AndRegex) + ")", RegexOptions.ExplicitCapture);
+        public MatchCollection ParseGroupThen(string thenSourceGroup)
+        {
+            return Regex.Matches(thenSourceGroup, "(" + createRegexStatement(ThenRegex) + "|" + createRegexStatement(AndRegex) + ")", RegexOptions.ExplicitCapture);
         }
 
         public string ParseStringValue(string strDeclaration)
@@ -100,6 +100,5 @@ namespace Bohrium.Tools.SpecflowReportTool
 
             return match.Groups["value"].Value;
         }
-
     }
 }

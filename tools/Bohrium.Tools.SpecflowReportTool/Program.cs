@@ -69,6 +69,16 @@ namespace Bohrium.Tools.SpecflowReportTool
                 var jsonScenarios = extractSpecflowReport.ScenariosReport.ToJSon();
 
                 saveToJSonFile(Path.Combine(assemblyOutputFolder, "scenarios-report.json"), jsonScenarios);
+
+                var xmlStepDefinitions = extractSpecflowReport.StepDefinitionsReport.ToXml();
+
+                var xDocStepDefinitions = XDocument.Parse(xmlStepDefinitions);
+
+                xDocStepDefinitions.Save(Path.Combine(assemblyOutputFolder, "stepdefinitions-report.xml"));
+
+                var jsonStepDefinitions = extractSpecflowReport.StepDefinitionsReport.ToJSon();
+
+                saveToJSonFile(Path.Combine(assemblyOutputFolder, "stepdefinitions-report.json"), jsonStepDefinitions);
             }
         }
 

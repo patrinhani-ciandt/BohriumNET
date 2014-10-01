@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="DataObjects\BackgroundFeatureDO.cs" />
     <Compile Include="DataObjects\BaseObjectDataDO.cs" />
+    <Compile Include="DataObjects\StepDefinitionDO.cs" />
     <Compile Include="Extensions\CecilILSpyExtensions.cs" />
     <Compile Include="DataObjects\FeatureUnitTestDO.cs" />
     <Compile Include="DataObjects\GherkinBaseStatementDO.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="ReportObjects\ScenariosReport.cs" />
     <Compile Include="ReportObjects\FeaturesReport.cs" />
     <Compile Include="ReportObjects\SpecflowReport.cs" />
+    <Compile Include="ReportObjects\StepDefinitionsReport.cs" />
     <Compile Include="ScenarioMethodSourceSyntaxParser.cs" />
     <Compile Include="DataObjects\ScenarioUnitTestDO.cs" />
     <Compile Include="SpecflowReportService.cs" />

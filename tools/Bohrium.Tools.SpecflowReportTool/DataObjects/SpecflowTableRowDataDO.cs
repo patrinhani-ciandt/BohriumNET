@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace Bohrium.Tools.SpecflowReportTool.DataObjects
 {
     [Serializable]
     public class SpecflowTableRowDataDO
     {
-        private List<SpecflowTableCellDataDO> _cells = new List<SpecflowTableCellDataDO>();
+        private List<SpecflowTableRowCellDataDo> _cells = new List<SpecflowTableRowCellDataDo>();
 
-        public List<SpecflowTableCellDataDO> Cells
+        [XmlArray("Cells")]
+        [XmlArrayItem("Cell")]
+        public List<SpecflowTableRowCellDataDo> Cells
         {
             get { return _cells; }
             set { _cells = value; }

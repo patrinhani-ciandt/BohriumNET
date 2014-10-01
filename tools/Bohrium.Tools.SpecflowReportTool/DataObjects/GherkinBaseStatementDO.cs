@@ -6,7 +6,10 @@ using System.Xml.Serialization;
 namespace Bohrium.Tools.SpecflowReportTool.DataObjects
 {
     [Serializable]
-    public class GherkinBaseStatementDO : BaseObjectDataDO
+    [XmlInclude(typeof(GivenStatementDO))]
+    [XmlInclude(typeof(WhenStatementDO))]
+    [XmlInclude(typeof(ThenStatementDO))]
+    public abstract class GherkinBaseStatementDO : BaseObjectDataDO
     {
         [XmlAttribute]
         public string Keyword { get; set; }
@@ -40,13 +43,13 @@ namespace Bohrium.Tools.SpecflowReportTool.DataObjects
                 {
                     if (tableDecla.Success)
                     {
-                        var tableRowCells = methodSourceParser.ParseTableRowCellValues(tableDecla.Value.Trim());
-
-                        var specflowTableCellData = tableRowCells.Select(i => new SpecflowTableCellDataDO() { Value = i }).ToList();
+                        var tableRowCells = methodSourceParser.ParseTableRowCellValues(tableDecla.Value.Trim()).ToList();
 
                         if (tableDecla.Groups["varTableCreation"].Success)
                         {
                             TableParameter.Header = new SpecflowTableHeaderDataDO();
+
+                            var specflowTableCellData = tableRowCells.Select(i => new SpecflowTableHeaderColumnDataDo() { Value = i }).ToList();
 
                             TableParameter.Header.Columns = specflowTableCellData;
                         }
@@ -54,7 +57,20 @@ namespace Bohrium.Tools.SpecflowReportTool.DataObjects
                         {
                             var specflowTableRowData = new SpecflowTableRowDataDO();
 
-                            specflowTableRowData.Cells = specflowTableCellData;
+                            for (int i = 0; i < tableRowCells.Count(); i++)
+                            {
+                                var tableHeaderColumnData = TableParameter.Header.Columns.Skip(i).FirstOrDefault();
+
+                                var tableRowCellValue = tableRowCells[i];
+
+                                var specflowTableRowCellDataDo = new SpecflowTableRowCellDataDo()
+                                {
+                                    HeaderColumnId = (tableHeaderColumnData != null) ? tableHeaderColumnData.ObjectId : Guid.Empty,
+                                    Value = tableRowCellValue 
+                                };
+
+                                specflowTableRowData.Cells.Add(specflowTableRowCellDataDo);
+                            }
 
                             TableParameter.Rows.Add(specflowTableRowData);
                         }

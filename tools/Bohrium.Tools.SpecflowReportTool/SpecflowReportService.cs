@@ -12,6 +12,7 @@ using Bohrium.Tools.SpecflowReportTool.Utils;
 using System.CodeDom.Compiler;
 using Mono.Cecil;
 using NUnit.Framework;
+using TechTalk.SpecFlow;
 
 namespace Bohrium.Tools.SpecflowReportTool
 {
@@ -46,6 +47,10 @@ namespace Bohrium.Tools.SpecflowReportTool
 
             specflowReport.ScenariosReport = ExtractScenariosReport(specflowReport.FeaturesReport);
 
+            specflowReport.StepDefinitionsReport = ExtractStepDefinitionsReport();
+
+            specflowReport.MapStepDefinitionsUsage();
+
             return specflowReport;
         }
 
@@ -53,7 +58,7 @@ namespace Bohrium.Tools.SpecflowReportTool
         {
             chkLoadedAssembly();
 
-            var specflowUnitTests = getSpecflowFeatureUnitTests(loadAssembly);
+            var specflowUnitTests = getSpecflowFeatureUnitTests();
 
             var featuresReport = new FeaturesReport();
 
@@ -68,7 +73,7 @@ namespace Bohrium.Tools.SpecflowReportTool
 
             if (featuresReport == null) throw new ArgumentNullException("featuresReport");
 
-            var specflowTestScenarios = getScenarioUnitTestsFromFeatureTestFixture(featuresReport.Features, assemblyDefinition);
+            var specflowTestScenarios = getScenarioUnitTestsFromFeatureTestFixture(featuresReport.Features);
 
             var scenariosReport = new ScenariosReport();
 
@@ -77,7 +82,59 @@ namespace Bohrium.Tools.SpecflowReportTool
             return scenariosReport;
         }
 
-        private IEnumerable<FeatureUnitTestDO> getSpecflowFeatureUnitTests(Assembly loadAssembly)
+        public StepDefinitionsReport ExtractStepDefinitionsReport()
+        {
+            chkLoadedAssembly();
+
+            var specflowStepDefinitions = getStepDefinitions();
+
+            var scenariosReport = new StepDefinitionsReport();
+
+            scenariosReport.StepDefinitions = specflowStepDefinitions.ToList();
+
+            return scenariosReport;
+        }
+
+        private IEnumerable<StepDefinitionDO> getStepDefinitions()
+        {
+            var stepDefinitions = new List<StepDefinitionDO>();
+
+            var stepDefinitionsBindTypes = loadAssembly.GetTypes()
+                .Where(t => t.GetCustomAttributes<BindingAttribute>().Any())
+                .ToList();
+
+            foreach (var stepDefinitionsBindType in stepDefinitionsBindTypes)
+            {
+                var stepDefinitionsBindTypeDefinition = assemblyDefinition.MainModule.Types
+                    .SingleOrDefault(t => t.FullName == stepDefinitionsBindType.FullName);
+
+                var stepDefinitionMethodInfos = stepDefinitionsBindType.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+                    .Where(methodInfo => methodInfo.GetCustomAttributes<StepDefinitionBaseAttribute>().Any());
+
+                foreach (var stepDefinitionMethodInfo in stepDefinitionMethodInfos)
+                {
+                    var methodDefinition = stepDefinitionsBindTypeDefinition.Methods
+                        .SingleOrDefault(m => m.Name == stepDefinitionMethodInfo.Name);
+
+                    var stepDefinitionDO = new StepDefinitionDO();
+
+                    stepDefinitionDO.StepDefinitionMethodName = stepDefinitionMethodInfo.Name;
+
+                    var stepDefinitionBaseAttributes = stepDefinitionMethodInfo.GetCustomAttributes<StepDefinitionBaseAttribute>();
+
+                    foreach (var stepDefinitionBaseAttribute in stepDefinitionBaseAttributes)
+                    {
+                        stepDefinitionDO.StepDefinitionTypes.Add(stepDefinitionBaseAttribute.GetStepDefinitionTypeDO());
+                    }
+
+                    stepDefinitions.Add(stepDefinitionDO);
+                }
+            }
+
+            return stepDefinitions;
+        }
+
+        private IEnumerable<FeatureUnitTestDO> getSpecflowFeatureUnitTests()
         {
             var featureUnitTests = new List<FeatureUnitTestDO>();
 
@@ -115,15 +172,14 @@ namespace Bohrium.Tools.SpecflowReportTool
             return featureUnitTests;
         }
 
-        private List<ScenarioUnitTestDO> getScenarioUnitTestsFromFeatureTestFixture(IEnumerable<FeatureUnitTestDO> featureUnitTestClasses, AssemblyDefinition assemblyDefinition)
+        private List<ScenarioUnitTestDO> getScenarioUnitTestsFromFeatureTestFixture(IEnumerable<FeatureUnitTestDO> featureUnitTestClasses)
         {
             var methodScenarios = new List<ScenarioUnitTestDO>();
 
             foreach (var featureUnitTestClass in featureUnitTestClasses)
             {
                 var featureUnitTestTypeDefinition = assemblyDefinition.MainModule.Types
-                    .Where(t => t.FullName == featureUnitTestClass.TargetType.FullName)
-                    .SingleOrDefault();
+                    .SingleOrDefault(t => t.FullName == featureUnitTestClass.TargetType.FullName);
 
                 var methodInfos = featureUnitTestClass.TargetType.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
 
@@ -151,20 +207,15 @@ namespace Bohrium.Tools.SpecflowReportTool
                     }
 
                     var methodDefinition = featureUnitTestTypeDefinition.Methods
-                        .Where(m => m.Name == methodScenario.Name)
-                        .SingleOrDefault();
+                        .SingleOrDefault(m => m.Name == methodScenario.Name);
 
                     string methodBodySourceCode = methodDefinition.GetSourceCode();
 
-                    IList<GivenStatementDO> givenStatements;
-                    IList<WhenStatementDO> whenStatements;
-                    IList<ThenStatementDO> thenStatements;
+                    IList<GherkinBaseStatementDO> statements;
 
-                    parseGivenWhenThenStatements(methodBodySourceCode, out givenStatements, out whenStatements, out thenStatements);
+                    parseGivenWhenThenStatements(methodBodySourceCode, out statements);
 
-                    scenarioUnitTestClass.GivenStatements = givenStatements.ToList();
-                    scenarioUnitTestClass.WhenStatements = whenStatements.ToList();
-                    scenarioUnitTestClass.ThenStatements = thenStatements.ToList();
+                    scenarioUnitTestClass.Statements = statements.ToList();
 
                     methodScenarios.Add(scenarioUnitTestClass);
                 }
@@ -174,53 +225,60 @@ namespace Bohrium.Tools.SpecflowReportTool
         }
 
         private void parseGivenWhenThenStatements(string methodBodySourceCode,
-            out IList<GivenStatementDO> givenStatements,
-            out IList<WhenStatementDO> whenStatements,
-            out IList<ThenStatementDO> thenStatements)
+            out IList<GherkinBaseStatementDO> statements)
         {
-            givenStatements = new List<GivenStatementDO>();
-            whenStatements = new List<WhenStatementDO>();
-            thenStatements = new List<ThenStatementDO>();
+            statements = new List<GherkinBaseStatementDO>();
 
             var scenarioMethodSourceSyntaxParser = new ScenarioMethodSourceSyntaxParser(methodBodySourceCode);
 
-            var matchesGiven = scenarioMethodSourceSyntaxParser.ParseGiven();
-            var matchesWhen = scenarioMethodSourceSyntaxParser.ParseWhen();
-            var matchesThen = scenarioMethodSourceSyntaxParser.ParseThen();
+            var matchGroupStatements = scenarioMethodSourceSyntaxParser.ParseGroupStatements();
 
-            foreach (Match givenMatch in matchesGiven)
+            foreach (Match matchGroupStatement in matchGroupStatements)
             {
-                if (givenMatch.Success)
+                if (matchGroupStatement.Groups["given"].Success)
                 {
-                    var givenStatementClass = new GivenStatementDO();
+                    var matchesGiven = scenarioMethodSourceSyntaxParser.ParseGroupGiven(matchGroupStatement.Groups["given"].Value);
+                    foreach (Match givenMatch in matchesGiven)
+                    {
+                        if (givenMatch.Success)
+                        {
+                            var givenStatementClass = new GivenStatementDO();
 
-                    givenStatementClass.FillFromMatch(givenMatch, scenarioMethodSourceSyntaxParser);
+                            givenStatementClass.FillFromMatch(givenMatch, scenarioMethodSourceSyntaxParser);
 
-                    givenStatements.Add(givenStatementClass);
+                            statements.Add(givenStatementClass);
+                        }
+                    }
                 }
-            }
-
-            foreach (Match whenMatch in matchesWhen)
-            {
-                if (whenMatch.Success)
+                else if (matchGroupStatement.Groups["when"].Success)
                 {
-                    var whenStatementClass = new WhenStatementDO();
+                    var matchesWhen = scenarioMethodSourceSyntaxParser.ParseGroupWhen(matchGroupStatement.Groups["when"].Value);
+                    foreach (Match whenMatch in matchesWhen)
+                    {
+                        if (whenMatch.Success)
+                        {
+                            var whenStatementClass = new WhenStatementDO();
 
-                    whenStatementClass.FillFromMatch(whenMatch, scenarioMethodSourceSyntaxParser);
+                            whenStatementClass.FillFromMatch(whenMatch, scenarioMethodSourceSyntaxParser);
 
-                    whenStatements.Add(whenStatementClass);
+                            statements.Add(whenStatementClass);
+                        }
+                    }
                 }
-            }
-
-            foreach (Match thenMatch in matchesThen)
-            {
-                if (thenMatch.Success)
+                else if (matchGroupStatement.Groups["then"].Success)
                 {
-                    var thenStatementClass = new ThenStatementDO();
+                    var matchesThen = scenarioMethodSourceSyntaxParser.ParseGroupThen(matchGroupStatement.Groups["then"].Value);
+                    foreach (Match thenMatch in matchesThen)
+                    {
+                        if (thenMatch.Success)
+                        {
+                            var thenStatementClass = new ThenStatementDO();
 
-                    thenStatementClass.FillFromMatch(thenMatch, scenarioMethodSourceSyntaxParser);
+                            thenStatementClass.FillFromMatch(thenMatch, scenarioMethodSourceSyntaxParser);
 
-                    thenStatements.Add(thenStatementClass);
+                            statements.Add(thenStatementClass);
+                        }
+                    }
                 }
             }
         }
