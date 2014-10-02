@@ -17,6 +17,7 @@ Scenario: Add two numbers
 	| 2  | Mysdfsdfsdfiption Test |
 	When I press add
 	And I Go to the next when step
+	And I have a no bidding statement
 	Then the result should be 120 on the screen
 	And I check the value Z
 	"""
