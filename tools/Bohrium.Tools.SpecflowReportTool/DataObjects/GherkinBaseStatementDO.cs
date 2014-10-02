@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 using Bohrium.Tools.SpecflowReportTool.DataObjects.Warnings;
+using Bohrium.Tools.SpecflowReportTool.Parsers;
 
 namespace Bohrium.Tools.SpecflowReportTool.DataObjects
 {

@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="DataObjects\BackgroundFeatureDO.cs" />
     <Compile Include="DataObjects\BaseObjectDataDO.cs" />
+    <Compile Include="DataObjects\BaseStatementContainerDO.cs" />
     <Compile Include="DataObjects\StepDefinitionReferenceDO.cs" />
     <Compile Include="DataObjects\StepDefinitionDO.cs" />
     <Compile Include="DataObjects\StepDefinitionTypeReferenceDO.cs" />
@@ -80,7 +81,7 @@
     <Compile Include="ReportObjects\FeaturesReport.cs" />
     <Compile Include="ReportObjects\SpecflowReport.cs" />
     <Compile Include="ReportObjects\StepDefinitionsReport.cs" />
-    <Compile Include="ScenarioMethodSourceSyntaxParser.cs" />
+    <Compile Include="Parsers\ScenarioMethodSourceSyntaxParser.cs" />
     <Compile Include="DataObjects\ScenarioUnitTestDO.cs" />
     <Compile Include="SpecflowReportService.cs" />
     <Compile Include="DataObjects\SpecflowTableCellDataDO.cs" />

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace Bohrium.Tools.SpecflowReportTool
+namespace Bohrium.Tools.SpecflowReportTool.Parsers
 {
     public class ScenarioMethodSourceSyntaxParser
     {

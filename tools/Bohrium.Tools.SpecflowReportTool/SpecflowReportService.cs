@@ -3,16 +3,21 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Reflection.Emit;
 using System.Text.RegularExpressions;
 using Bohrium.Core.Extensions;
 using Bohrium.Tools.SpecflowReportTool.DataObjects;
 using Bohrium.Tools.SpecflowReportTool.Extensions;
+using Bohrium.Tools.SpecflowReportTool.Parsers;
 using Bohrium.Tools.SpecflowReportTool.ReportObjects;
 using Bohrium.Tools.SpecflowReportTool.Utils;
 using System.CodeDom.Compiler;
+using ICSharpCode.Decompiler;
 using Mono.Cecil;
+using Mono.Cecil.Cil;
 using NUnit.Framework;
 using TechTalk.SpecFlow;
+using OpCodes = Mono.Cecil.Cil.OpCodes;
 
 namespace Bohrium.Tools.SpecflowReportTool
 {
@@ -148,6 +153,9 @@ namespace Bohrium.Tools.SpecflowReportTool
 
             foreach (var featureUnitTestType in featureUnitTestTypes.AsParallel())
             {
+                var featureUnitTestTypeDefinition = assemblyDefinition.MainModule.Types
+                    .SingleOrDefault(t => t.FullName == featureUnitTestType.FullName);
+
                 var featureUnitTestClass = new FeatureUnitTestDO();
 
                 featureUnitTestClass.TargetType = featureUnitTestType;
@@ -169,12 +177,42 @@ namespace Bohrium.Tools.SpecflowReportTool
                 }
 
                 featureUnitTests.Add(featureUnitTestClass);
+
+                var featureBackgroundMethodInfo = featureUnitTestType.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+                    .FirstOrDefault(m => m.Name.Equals("FeatureBackground", StringComparison.InvariantCulture));
+
+                if (featureBackgroundMethodInfo != null)
+                {
+                    var methodDefinition = featureUnitTestTypeDefinition.Methods
+                        .SingleOrDefault(m => m.Name == featureBackgroundMethodInfo.Name);
+
+                    var backgroundFeatureDO = new BackgroundFeatureDO()
+                    {
+                        ParentFeature = featureUnitTestClass.ObjectId
+                    };
+
+                    string methodBodySourceCode = methodDefinition.GetSourceCode();
+
+                    IList<GherkinBaseStatementDO> statements;
+
+                    int lastIndexOf = methodBodySourceCode.LastIndexOf("}");
+                    if (lastIndexOf > 0)
+                    {
+                        methodBodySourceCode = methodBodySourceCode.Insert(lastIndexOf - 1, "this.ScenarioCleanup();");
+
+                        parseGivenWhenThenStatements(methodBodySourceCode, out statements);
+
+                        backgroundFeatureDO.Statements = statements.ToList();
+                    }
+
+                    featureUnitTestClass.Background = backgroundFeatureDO;
+                }
             }
 
             return featureUnitTests;
         }
 
-        private List<ScenarioUnitTestDO> getScenarioUnitTestsFromFeatureTestFixture(IEnumerable<FeatureUnitTestDO> featureUnitTestClasses)
+        private IEnumerable<ScenarioUnitTestDO> getScenarioUnitTestsFromFeatureTestFixture(IEnumerable<FeatureUnitTestDO> featureUnitTestClasses)
         {
             var methodScenarios = new List<ScenarioUnitTestDO>();
 

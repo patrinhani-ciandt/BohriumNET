@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 namespace Bohrium.Tools.SpecflowReportTool.DataObjects
 {
     [Serializable]
-    public class ScenarioUnitTestDO : BaseObjectDataDO
+    public class ScenarioUnitTestDO : BaseStatementContainerDO
     {
         private List<string> _tags = new List<string>();
 
@@ -27,9 +27,5 @@ namespace Bohrium.Tools.SpecflowReportTool.DataObjects
         {
             get { return _tags; }
         }
-
-        [XmlArray("Statements")]
-        [XmlArrayItem("Statement")]
-        public List<GherkinBaseStatementDO> Statements { get; set; }
     }
 }
