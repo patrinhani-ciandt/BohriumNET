@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
+using Bohrium.Tools.SpecflowReportTool.DataObjects.Warnings;
 
 namespace Bohrium.Tools.SpecflowReportTool.DataObjects
 {
@@ -11,6 +13,8 @@ namespace Bohrium.Tools.SpecflowReportTool.DataObjects
     [XmlInclude(typeof(ThenStatementDO))]
     public abstract class GherkinBaseStatementDO : BaseObjectDataDO
     {
+        private List<WarningDO> _warnings = null;
+
         [XmlAttribute]
         public string Keyword { get; set; }
         [XmlAttribute]
@@ -19,6 +23,17 @@ namespace Bohrium.Tools.SpecflowReportTool.DataObjects
         public string MultilineTextParameter { get; set; }
         
         public SpecflowTableDataDO TableParameter { get; set; }
+
+        [XmlElement("StepDefinitionReference")]
+        public StepDefinitionReferenceDO StatementStepDefinitionReference { get; set; }
+
+        [XmlArray("Warnings")]
+        [XmlArrayItem("Warning")]
+        public List<WarningDO> Warnings
+        {
+            get { return _warnings; }
+            set { _warnings = value; }
+        }
 
         public void FillFromMatch(Match matchRegex, ScenarioMethodSourceSyntaxParser methodSourceParser)
         {

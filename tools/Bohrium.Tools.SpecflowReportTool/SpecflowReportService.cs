@@ -105,26 +105,28 @@ namespace Bohrium.Tools.SpecflowReportTool
 
             foreach (var stepDefinitionsBindType in stepDefinitionsBindTypes)
             {
-                var stepDefinitionsBindTypeDefinition = assemblyDefinition.MainModule.Types
-                    .SingleOrDefault(t => t.FullName == stepDefinitionsBindType.FullName);
-
                 var stepDefinitionMethodInfos = stepDefinitionsBindType.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
                     .Where(methodInfo => methodInfo.GetCustomAttributes<StepDefinitionBaseAttribute>().Any());
 
                 foreach (var stepDefinitionMethodInfo in stepDefinitionMethodInfos)
                 {
-                    var methodDefinition = stepDefinitionsBindTypeDefinition.Methods
-                        .SingleOrDefault(m => m.Name == stepDefinitionMethodInfo.Name);
-
                     var stepDefinitionDO = new StepDefinitionDO();
 
                     stepDefinitionDO.StepDefinitionMethodName = stepDefinitionMethodInfo.Name;
+                    stepDefinitionDO.StepDefinitionMethodSignature =
+                        stepDefinitionMethodInfo.GetMethodSignatureRepesentation();
 
                     var stepDefinitionBaseAttributes = stepDefinitionMethodInfo.GetCustomAttributes<StepDefinitionBaseAttribute>();
 
                     foreach (var stepDefinitionBaseAttribute in stepDefinitionBaseAttributes)
                     {
-                        stepDefinitionDO.StepDefinitionTypes.Add(stepDefinitionBaseAttribute.GetStepDefinitionTypeDO());
+                        var baseStepDefinitionTypeDO = stepDefinitionBaseAttribute.GetStepDefinitionTypeDO();
+
+                        baseStepDefinitionTypeDO.ParentStepDefinitionId = stepDefinitionDO.ObjectId;
+
+                        baseStepDefinitionTypeDO.ParentStepDefinition = stepDefinitionDO;
+
+                        stepDefinitionDO.StepDefinitionTypes.Add(baseStepDefinitionTypeDO);
                     }
 
                     stepDefinitions.Add(stepDefinitionDO);

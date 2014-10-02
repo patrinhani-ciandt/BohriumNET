@@ -13,13 +13,10 @@ namespace Bohrium.Tools.SpecflowReportTool.ReportObjects
         [XmlArrayItem("StepDefinition")]
         public List<StepDefinitionDO> StepDefinitions { get; set; }
 
-        public IEnumerable<StepDefinitionDO> FindBindableSteps(GherkinBaseStatementDO gherkinStatement)
+        public IEnumerable<BaseStepDefinitionTypeDO> FindBindableSteps(GherkinBaseStatementDO gherkinStatement)
         {
-            foreach (var stepDefinitionDO in StepDefinitions)
-            {
-                if (stepDefinitionDO.IsBindable(gherkinStatement))
-                    yield return stepDefinitionDO;
-            }
+            return StepDefinitions
+                .SelectMany(stepDefinitionDO => stepDefinitionDO.TestExpression(gherkinStatement));
         }
     }
 }

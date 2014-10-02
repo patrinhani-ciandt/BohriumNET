@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Bohrium.Tools.SpecflowReportTool.DataObjects
 {
     [Serializable]
-    public class SpecflowTableHeaderDataDO
+    public class SpecflowTableHeaderDataDO : BaseObjectDataDO
     {
         private List<SpecflowTableHeaderColumnDataDo> _columns = new List<SpecflowTableHeaderColumnDataDo>();
 

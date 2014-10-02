@@ -19,6 +19,12 @@ namespace Bohrium.Tools.SpecflowReportTool.DataObjects
         [XmlAttribute]
         public string StepDefinitionMethodName { get; set; }
 
+        [XmlAttribute]
+        public string StepDefinitionMethodSignature { get; set; }
+
+        [XmlAttribute]
+        public int CountUsages { get; set; }
+
         [XmlArray("StepDefinitionTypes")]
         [XmlArrayItem("StepDefinitionType")]
         public List<BaseStepDefinitionTypeDO> StepDefinitionTypes
@@ -39,9 +45,14 @@ namespace Bohrium.Tools.SpecflowReportTool.DataObjects
                 .Select(a => a)
                 .AsParallel())
             {
-                if (Regex.IsMatch(gherkinStatement.Statement, stepDefinitionType.Attribute.Regex))
+                if (Regex.IsMatch(gherkinStatement.Statement, @"\b" + stepDefinitionType.Attribute.Regex + @"\b$"))
                     yield return stepDefinitionType;
             }
+        }
+
+        public void PlusOneUsage()
+        {
+            CountUsages += 1;
         }
     }
 
@@ -90,8 +101,23 @@ namespace Bohrium.Tools.SpecflowReportTool.DataObjects
         [ScriptIgnore]
         public StepDefinitionBaseAttribute Attribute { get; set; }
 
+        [XmlIgnore]
+        [ScriptIgnore]
+        public StepDefinitionDO ParentStepDefinition { get; set; }
+
+        [XmlAttribute]
+        public Guid ParentStepDefinitionId { get; set; }
+
         [XmlAttribute]
         public string RegexExpression { get; set; }
+
+        [XmlAttribute]
+        public int CountUsages { get; set; }
+
+        public void PlusOneUsage()
+        {
+            CountUsages += 1;
+        }
     }
 
     [Serializable]

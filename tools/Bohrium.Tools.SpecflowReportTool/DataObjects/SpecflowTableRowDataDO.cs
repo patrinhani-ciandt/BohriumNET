@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Bohrium.Tools.SpecflowReportTool.DataObjects
 {
     [Serializable]
-    public class SpecflowTableRowDataDO
+    public class SpecflowTableRowDataDO : BaseObjectDataDO
     {
         private List<SpecflowTableRowCellDataDo> _cells = new List<SpecflowTableRowCellDataDo>();
 

@@ -15,7 +15,7 @@ namespace Bohrium.Tools.Sample.SpecflowTests.StepDefinitions
         [When(@"I am logged as SA")]
         public void GivenIAmLoggedAsSA()
         {
-            ScenarioContext.Current.Pending();
+            //ScenarioContext.Current.Pending();
         }
 
         [Given("I have entered (.*) into the calculator")]
@@ -27,7 +27,7 @@ namespace Bohrium.Tools.Sample.SpecflowTests.StepDefinitions
             // additional string/Table parameters can be defined on the step definition
             // method. 
 
-            ScenarioContext.Current.Pending();
+            //ScenarioContext.Current.Pending();
         }
 
         [When("I press add")]
@@ -35,39 +35,50 @@ namespace Bohrium.Tools.Sample.SpecflowTests.StepDefinitions
         {
             //TODO: implement act (action) logic
 
-            ScenarioContext.Current.Pending();
+            //ScenarioContext.Current.Pending();
         }
 
+        [Given("the result should be (.*) on the screen")]
         [Then("the result should be (.*) on the screen")]
-        public void ThenTheResultShouldBe(int result)
+        [Then("the result should be (.*) on the screen(\\s.*)?")]
+        public void ResultShouldBe(int result, string screen)
         {
             //TODO: implement assert (verification) logic
 
             ScenarioContext.Current.Pending();
         }
 
+        [Given("the result is (.*) on the screen")]
+        [Then("the result should be (.*) on the screen")]
+        public void ResultShouldBe(int result)
+        {
+            //TODO: implement assert (verification) logic
+
+            //ScenarioContext.Current.Pending();
+        }
+
         [Given(@"I have the following records")]
         public void GivenIHaveTheFollowingRecords(Table table)
         {
-            ScenarioContext.Current.Pending();
+            //ScenarioContext.Current.Pending();
         }
 
         [When(@"I Go to the next when step")]
         public void WhenIGoToTheNextWhenStep()
         {
-            ScenarioContext.Current.Pending();
+            //ScenarioContext.Current.Pending();
         }
 
         [Then(@"I check the value x")]
         public void ThenICheckTheValueX()
         {
-            ScenarioContext.Current.Pending();
+            //ScenarioContext.Current.Pending();
         }
 
         [Then(@"I check the value Z")]
         public void ThenICheckTheValueZ(string multilineText)
         {
-            ScenarioContext.Current.Pending();
+            //ScenarioContext.Current.Pending();
         }
     }
 }

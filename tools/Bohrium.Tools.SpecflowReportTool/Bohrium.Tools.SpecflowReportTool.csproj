@@ -63,12 +63,17 @@
   <ItemGroup>
     <Compile Include="DataObjects\BackgroundFeatureDO.cs" />
     <Compile Include="DataObjects\BaseObjectDataDO.cs" />
+    <Compile Include="DataObjects\StepDefinitionReferenceDO.cs" />
     <Compile Include="DataObjects\StepDefinitionDO.cs" />
+    <Compile Include="DataObjects\StepDefinitionTypeReferenceDO.cs" />
+    <Compile Include="DataObjects\Warnings\MultipleMatchStepDefinitionBindingsWarningDO.cs" />
+    <Compile Include="DataObjects\Warnings\WarningDO.cs" />
     <Compile Include="Extensions\CecilILSpyExtensions.cs" />
     <Compile Include="DataObjects\FeatureUnitTestDO.cs" />
     <Compile Include="DataObjects\GherkinBaseStatementDO.cs" />
     <Compile Include="DataObjects\GivenStatementDO.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
+    <Compile Include="Extensions\ReflectionExtensions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportObjects\ScenariosReport.cs" />

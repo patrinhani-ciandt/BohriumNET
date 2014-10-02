@@ -32,17 +32,18 @@ Scenario: Add two numbers
 Scenario: Add three numbers
 	Given I have entered 50 into the calculator
 	And I have entered 70 into the calculator
-	And I have entered 120 into the calculator
+	And the result is 10 on the screen
 	And I have the following records
 	| Id | Test Description    |
 	| 1  | My Description Test |
+	And the result should be 120 on the screen
 	When I press add
 	And I Go to the next when step
-	Then the result should be 120 on the screen
+	Then the result should be 120 on the screen A
 	And I check the value x
 	Given I have entered 80 into the calculator
 	When I am logged as SA
-	Then the result should be 80 on the screen
+	Then the result should be 80 on the screen B
 	And I check the value Z
 	"""
 	tESTE
