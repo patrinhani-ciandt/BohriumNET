@@ -56,9 +56,9 @@ namespace Bohrium.Tools.SpecflowReportTool
 
                 xDocFeatures.Save(Path.Combine(assemblyOutputFolder, "features-report.xml"));
 
-                var jsonFeatures = extractSpecflowReport.FeaturesReport.ToJSon();
+                //var jsonFeatures = extractSpecflowReport.FeaturesReport.ToJSon();
 
-                saveToJSonFile(Path.Combine(assemblyOutputFolder, "features-report.json"), jsonFeatures);
+                //saveToJSonFile(Path.Combine(assemblyOutputFolder, "features-report.json"), jsonFeatures);
 
                 var xmlScenarios = extractSpecflowReport.ScenariosReport.ToXml();
 
@@ -66,9 +66,9 @@ namespace Bohrium.Tools.SpecflowReportTool
 
                 xDocScenarios.Save(Path.Combine(assemblyOutputFolder, "scenarios-report.xml"));
 
-                var jsonScenarios = extractSpecflowReport.ScenariosReport.ToJSon();
+                //var jsonScenarios = extractSpecflowReport.ScenariosReport.ToJSon();
 
-                saveToJSonFile(Path.Combine(assemblyOutputFolder, "scenarios-report.json"), jsonScenarios);
+                //saveToJSonFile(Path.Combine(assemblyOutputFolder, "scenarios-report.json"), jsonScenarios);
 
                 var xmlStepDefinitions = extractSpecflowReport.StepDefinitionsReport.ToXml();
 
@@ -76,9 +76,9 @@ namespace Bohrium.Tools.SpecflowReportTool
 
                 xDocStepDefinitions.Save(Path.Combine(assemblyOutputFolder, "stepdefinitions-report.xml"));
 
-                var jsonStepDefinitions = extractSpecflowReport.StepDefinitionsReport.ToJSon();
+                //var jsonStepDefinitions = extractSpecflowReport.StepDefinitionsReport.ToJSon();
 
-                saveToJSonFile(Path.Combine(assemblyOutputFolder, "stepdefinitions-report.json"), jsonStepDefinitions);
+                //saveToJSonFile(Path.Combine(assemblyOutputFolder, "stepdefinitions-report.json"), jsonStepDefinitions);
             }
         }
 

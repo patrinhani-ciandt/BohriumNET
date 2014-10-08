@@ -2,6 +2,7 @@
 using ICSharpCode.Decompiler;
 using ICSharpCode.ILSpy;
 using Mono.Cecil;
+using TechTalk.SpecFlow;
 
 namespace Bohrium.Tools.SpecflowReportTool.Extensions
 {

@@ -16,9 +16,11 @@ namespace Bohrium.Tools.SpecflowReportTool.ReportObjects
 
         public void MapStepDefinitionsUsage()
         {
+            Console.Write("Mapping StepDefinition usages ... ");
+
             var scenariosStatements = ScenariosReport.Scenarios.SelectMany(a => a.Statements.OfType<GherkinBaseStatementDO>());
 
-            foreach (var gherkinBaseStatementDo in scenariosStatements)
+            foreach (var gherkinBaseStatementDo in scenariosStatements.AsParallel())
             {
                var bindableStepDefinitions = StepDefinitionsReport.FindBindableSteps(gherkinBaseStatementDo);
 
@@ -71,6 +73,8 @@ namespace Bohrium.Tools.SpecflowReportTool.ReportObjects
                     gherkinBaseStatementDo.Warnings.Add(warningDO);
                 }
             }
+
+            Console.WriteLine("[DONE]");
         }
     }
 }

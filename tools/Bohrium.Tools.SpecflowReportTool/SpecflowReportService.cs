@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
@@ -35,7 +36,15 @@ namespace Bohrium.Tools.SpecflowReportTool
         public void ReadTestAssembly(string inputAssembly)
         {
             this.loadAssembly = testAssemblyLoader.LoadAssembly(inputAssembly);
-            this.assemblyDefinition = AssemblyDefinition.ReadAssembly(loadAssembly.Location);
+
+            var resolver = new DefaultAssemblyResolver();
+            resolver.AddSearchDirectory(Path.GetDirectoryName(loadAssembly.Location));
+            var parameters = new ReaderParameters
+            {
+                AssemblyResolver = resolver,
+            };
+
+            this.assemblyDefinition = AssemblyDefinition.ReadAssembly(loadAssembly.Location, parameters);
         }
 
         private void chkLoadedAssembly()
@@ -63,11 +72,15 @@ namespace Bohrium.Tools.SpecflowReportTool
         {
             chkLoadedAssembly();
 
+            Console.Write("Looking for Features ... ");
+
             var specflowUnitTests = getSpecflowFeatureUnitTests();
 
             var featuresReport = new FeaturesReport();
 
             featuresReport.Features = specflowUnitTests.ToList();
+
+            Console.WriteLine("{0} Features found.", featuresReport.Features.Count);
 
             return featuresReport;
         }
@@ -78,11 +91,15 @@ namespace Bohrium.Tools.SpecflowReportTool
 
             if (featuresReport == null) throw new ArgumentNullException("featuresReport");
 
+            Console.Write("Looking for Scenarios ... ");
+
             var specflowTestScenarios = getScenarioUnitTestsFromFeatureTestFixture(featuresReport.Features);
 
             var scenariosReport = new ScenariosReport();
 
             scenariosReport.Scenarios = specflowTestScenarios.ToList();
+
+            Console.WriteLine("{0} Scenarios found.", scenariosReport.Scenarios.Count);
 
             return scenariosReport;
         }
@@ -91,11 +108,15 @@ namespace Bohrium.Tools.SpecflowReportTool
         {
             chkLoadedAssembly();
 
+            Console.Write("Looking for StepDefinitions ... ");
+
             var specflowStepDefinitions = getStepDefinitions();
 
             var scenariosReport = new StepDefinitionsReport();
 
             scenariosReport.StepDefinitions = specflowStepDefinitions.ToList();
+
+            Console.WriteLine("{0} StepDefinitions found.", scenariosReport.StepDefinitions.Count);
 
             return scenariosReport;
         }
@@ -216,14 +237,14 @@ namespace Bohrium.Tools.SpecflowReportTool
         {
             var methodScenarios = new List<ScenarioUnitTestDO>();
 
-            foreach (var featureUnitTestClass in featureUnitTestClasses)
+            foreach (var featureUnitTestClass in featureUnitTestClasses.AsParallel())
             {
                 var featureUnitTestTypeDefinition = assemblyDefinition.MainModule.Types
                     .SingleOrDefault(t => t.FullName == featureUnitTestClass.TargetType.FullName);
 
                 var methodInfos = featureUnitTestClass.TargetType.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
 
-                foreach (var methodScenario in methodInfos.Where(methodInfo => methodInfo.GetCustomAttributes<TestAttribute>().Any()))
+                foreach (var methodScenario in methodInfos.Where(methodInfo => methodInfo.GetCustomAttributes<TestAttribute>().Any()).AsParallel())
                 {
                     var scenarioUnitTestClass = new ScenarioUnitTestDO();
 
