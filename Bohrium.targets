@@ -101,7 +101,7 @@
   </Target>
 
   <Target Name="deploy-compile" DependsOnTargets="clean">
-    <MSBuild Projects="$(MSBuildProjectDirectory)$(BohriumBuildTargetSolution)" Targets="Rebuild" Properties="Configuration=Release;Platform=$(Platform)" />
+    <MSBuild Projects="$(MSBuildProjectDirectory)\$(BohriumBuildTargetSolution)" Targets="Rebuild" Properties="Configuration=Release;Platform=$(Platform)" />
   </Target>
   
 </Project>
