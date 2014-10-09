@@ -1,0 +1,821 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Bohrium.Core</name>
+    </assembly>
+    <members>
+        <member name="T:Bohrium.Core.Compression.CompressionUtils">
+            <summary>
+            Class with helper methods for compression.
+            </summary>
+        </member>
+        <member name="M:Bohrium.Core.Compression.CompressionUtils.Compress(System.Byte[])">
+            <summary>
+            Compress a byte[].
+            </summary>
+            <param name="buffer">byte[] to be compressed.</param>
+            <returns>byte array compressed.</returns>
+        </member>
+        <member name="M:Bohrium.Core.Compression.CompressionUtils.Decompress(System.Byte[])">
+            <summary>
+            Decompress a byte[].
+            </summary>
+            <param name="gzBuffer"></param>
+            <returns>byte array decompressed.</returns>
+        </member>
+        <member name="T:Bohrium.Core.Extensions.ByteArrayExtensionMethods">
+            <summary>
+            Class with extension methods for byte[]
+            </summary>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.ByteArrayExtensionMethods.ToObject``1(System.Byte[])">
+            <summary>
+            Deserialize a byte[] to an object.
+            </summary>
+            <typeparam name="T">Target type of the object.</typeparam>
+            <param name="value">byte[] to be deserialized</param>
+            <returns>Deserialized object</returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.ByteArrayExtensionMethods.Compress(System.Byte[])">
+            <summary>
+            Compress a serializable object to byte[] using the <see cref="T:Bohrium.Core.Compression.CompressionUtils"/>
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.ByteArrayExtensionMethods.Decompress(System.Byte[])">
+            <summary>
+            Decompress a serialized byte[] using the <see cref="T:Bohrium.Core.Compression.CompressionUtils"/>
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.ByteArrayExtensionMethods.ToHex(System.Byte[])">
+            <summary>
+            Converts a byte array into a hex string
+            </summary>      
+        </member>
+        <member name="T:Bohrium.Core.Extensions.ByteExtensionMethods">
+            <summary>
+            Class with extension methods for byte
+            </summary>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.ByteExtensionMethods.ToHex(System.Byte)">
+            <summary>
+            Converts a single byte to a hex string
+            </summary>      
+        </member>
+        <member name="M:Bohrium.Core.Extensions.DateTimeExtensionMethods.FirstDayOfMonth(System.DateTime)">
+            <summary>
+            Returns the first day of the month for the specified date
+            </summary>
+            <param name="date">The DateTime to be processed</param>
+            <returns>The first day of the month for the specified date</returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.DateTimeExtensionMethods.FirstWeekDayOfMonth(System.DateTime)">
+            <summary>
+            Returns the first week day of the month for the specified date
+            </summary>
+            <param name="date">The DateTime to be processed</param>
+            <returns>The first week day of the month for the specified date</returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.DateTimeExtensionMethods.NextWeekDayOfMonth(System.DateTime)">
+            <summary>
+            Returns the next week day of the month for the specified date
+            </summary>
+            <param name="date">The DateTime to be processed</param>
+            <returns>The next week day of the month for the specified date</returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.DateTimeExtensionMethods.PreviousWeekDayOfMonth(System.DateTime)">
+            <summary>
+            Returns the previous week day of the month for the specified date
+            </summary>
+            <param name="date">The DateTime to be processed</param>
+            <returns>The previous week day of the month for the specified date</returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.DateTimeExtensionMethods.LastDayOfMonth(System.DateTime)">
+            <summary>
+            Returns the last day of the month for the specified date
+            </summary>
+            <param name="date">The DateTime to be processed</param>
+            <returns>The last day of the month for the specified date</returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.DateTimeExtensionMethods.LastWeekDayOfMonth(System.DateTime)">
+            <summary>
+            Returns the last week day of the month for the specified date
+            </summary>
+            <param name="date">The DateTime to be processed</param>
+            <returns>The last week day of the month for the specified date</returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.DateTimeExtensionMethods.FirstDayOfWeek(System.DateTime)">
+            <summary>
+            Returns the first day of the week for the specified date
+            </summary>
+            <param name="date">The DateTime to be processed</param>
+            <returns>The first day of the week for the specified date</returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.DateTimeExtensionMethods.LastDayOfWeek(System.DateTime)">
+            <summary>
+            Returns the last day of the week for the specified date
+            </summary>
+            <param name="date">The DateTime to be processed</param>
+            <returns>The last day of the week for the specified date</returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.DateTimeExtensionMethods.GetEndOfDay(System.DateTime)">
+            <summary>
+            Returns the date at 23:59.59.999 for the specified DateTime
+            </summary>
+            <param name="date">The DateTime to be processed</param>
+            <returns>The date at 23:50.59.999</returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.DateTimeExtensionMethods.SetTime(System.DateTime,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Returns a new DateTime instance with the time specified
+            </summary>
+            <param name="date"></param>
+            <param name="hours"></param>
+            <param name="minutes"></param>
+            <param name="seconds"></param>
+            <param name="miliseconds"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.DateTimeExtensionMethods.IsWeekend(System.DateTime)">
+            <summary>
+            Returns whether the DateTime falls on a weekend day
+            </summary>
+            <param name="date">The date to be processed</param>
+            <returns>Whether the specified date occurs on a weekend</returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.DateTimeExtensionMethods.IsWeekDay(System.DateTime)">
+            <summary>
+            Returns whether the DateTime falls on a weekday
+            </summary>
+            <param name="date">The date to be processed</param>
+            <returns>Whether the specified date occurs on a weekday</returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.DirectoryInfoExtensionMethods.CopyTo(System.IO.DirectoryInfo,System.String,System.Boolean)">
+            <summary>
+            Copies all files from one directory to another.
+            <remarks>
+            Contributed by Christian Liensberger, 
+            http://www.liensberger.it/
+            </remarks>
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Bohrium.Core.Extensions.EventHandlerExtensionMethods.RaiseEvent``1(System.EventHandler{``0},System.Object,``0)" -->
+        <!-- Badly formed XML comment ignored for member "M:Bohrium.Core.Extensions.EventHandlerExtensionMethods.RaiseEventOnUIThread``1(System.EventHandler{``0},System.Object,``0)" -->
+        <member name="M:Bohrium.Core.Extensions.GenericExtensionMethods.In``1(``0,``0[])">
+            <summary>
+            Check if a value is present into a array.
+            </summary>
+            <typeparam name="T">Type of the object which will be compared.</typeparam>
+            <param name="value">object which will be compared.</param>
+            <param name="tCompareValues">array which will be the comparable list.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.GenericExtensionMethods.AsArray``1(``0)">
+            <summary>
+            Converts the current value into array with single element
+            </summary>
+            <typeparam name="T">Type of the array</typeparam>
+            <param name="value"></param>
+            <returns>Array with single element</returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.GenericExtensionMethods.IsDefault``1(``0)">
+            <summary>
+            Returns value indicating that the current value is a default
+            value for it type
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value"></param>
+            <returns>Value indicating that the current value is a default
+            value for it type</returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.GenericExtensionMethods.DefaultIfNull``1(``0,``0)">
+            <summary>
+            Retorna o valor passado como parâmetro caso o objeto do tipo informado for 
+            nulo.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value"></param>
+            <param name="defaultValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.IDictionaryExtensionMethods.ContainsValue``2(System.Collections.Generic.IDictionary{``0,``1},``1)">
+            <summary>
+            returns true if the value is in the dictionary
+            </summary>      
+        </member>
+        <member name="M:Bohrium.Core.Extensions.IDictionaryExtensionMethods.TryGetKey``2(System.Collections.Generic.IDictionary{``0,``1},``1,``0@)">
+            <summary>
+            Gets the first key with the matching value. Returns true if the value is found, false if not.
+            </summary>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.IDictionaryExtensionMethods.TryGetKeys``2(System.Collections.Generic.IDictionary{``0,``1},``1,``0[]@)">
+            <summary>
+            Gets all of th ekeys with the matching value. Returns true if the value is found, false if not.
+            </summary>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.IEnumerableExtensionMethods.Each``1(System.Collections.Generic.IEnumerable{``0},System.Action{``0})">
+            <summary>
+            Performs the specified action on each element of the list
+            </summary>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.IEnumerableExtensionMethods.EachIndex``1(System.Collections.Generic.IEnumerable{``0},System.Action{``0,System.Int32})">
+            <summary>
+            Performs the specified action on each element of the list and includes
+            an index value (starting at 0)
+            </summary>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.IEnumerableExtensionMethods.TrueForAll``1(System.Collections.Generic.IEnumerable{``0},System.Predicate{``0})">
+            <summary>
+            Validates that the predicate is true for each element of the list
+            </summary>      
+        </member>
+        <member name="M:Bohrium.Core.Extensions.IEnumerableExtensionMethods.FindAll``1(System.Collections.Generic.IEnumerable{``0},System.Predicate{``0})">
+            <summary>
+            Retuns a list of all items matching the predicate
+            </summary>      
+        </member>
+        <member name="M:Bohrium.Core.Extensions.IEnumerableExtensionMethods.Find``1(System.Collections.Generic.IEnumerable{``0},System.Predicate{``0})">
+            <summary>
+            Retuns the first matching item
+            </summary>      
+        </member>
+        <member name="M:Bohrium.Core.Extensions.IEnumerableExtensionMethods.Index``1(System.Collections.Generic.IEnumerable{``0},System.Predicate{``0})">
+            <summary>
+            Finds the index of an item
+            </summary>      
+        </member>
+        <member name="M:Bohrium.Core.Extensions.IEnumerableExtensionMethods.Exists``1(System.Collections.Generic.IEnumerable{``0},System.Predicate{``0})">
+            <summary>
+            Determines whether or not the item exists
+            </summary>      
+        </member>
+        <member name="M:Bohrium.Core.Extensions.IEnumerableExtensionMethods.IsNullOrEmpty(System.Collections.IEnumerable)">
+            <summary>
+            new
+            </summary>
+            <param name="list"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.IEnumerableExtensionMethods.IsEmpty(System.Collections.IEnumerable)">
+            <summary>
+            new
+            </summary>
+            <param name="list"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="T:Bohrium.Core.Extensions.ObjectExtensionMethods">
+            <summary>
+            Class with extension methods for an object
+            </summary>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.ObjectExtensionMethods.ToByteArray(System.Object,System.Boolean)">
+            <summary>
+            Can convert a serializable object to an simple byte[] or to a compressed one
+            </summary>
+            <param name="value"></param>
+            <param name="compress"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.ObjectExtensionMethods.IsNull(System.Object)">
+            <summary>
+            Indicates that the specified reference is a null reference
+            </summary>
+            <param name="value">Reference to be tested</param>
+            <returns>true, if specified value is a null reference, otherwise false</returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.ObjectExtensionMethods.IsNotNull(System.Object)">
+            <summary>
+            Indicates that the specified reference is not a null reference
+            </summary>
+            <param name="value">Reference to be tested</param>
+            <returns>true, if specified value is not a null reference, otherwise false</returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.ObjectExtensionMethods.UnsafeCast``1(System.Object)">
+            <summary>
+            Cast specified object to another object
+            </summary>
+            <typeparam name="T">Type of the casting result</typeparam>
+            <param name="value">Value to be casted</param>
+            <returns>Casting result</returns>
+            <exception cref="T:System.InvalidCastException">The exception that is thrown if value could not be casted to specified type</exception>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.ObjectExtensionMethods.SafeCast``1(System.Object)">
+            <summary>
+            Cast specified object to another object
+            </summary>
+            <typeparam name="T">Type of the casting result</typeparam>
+            <param name="value">Value to be castd</param>
+            <returns>Casting result or null if it it impossible</returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.ObjectExtensionMethods.CastTo``1(System.Object)">
+            <summary>
+            Executa um cast forçando conversão de tipo caso necessário.
+            </summary>
+            <typeparam name="T">Tipo de destino</typeparam>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.ObjectExtensionMethods.InstanceOf``1(System.Object)">
+            <summary>
+            Checks if an object is compatible with a given type.
+            </summary>
+            <typeparam name="T">Type for compatibility checking</typeparam>
+            <param name="value">Value for testing</param>
+            <returns>true, if specified object can be converted to the specified type</returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.ObjectExtensionMethods.ToDictionary(System.Object)">
+            <summary>
+            Takes an object and turns it into a dictionary. Each public property is
+            added to the dictionary, with the name of the property being the dictionary key,
+            and its value being the dictionary value.      
+            </summary>
+            <remarks>
+            Particularly useful for dealing with anonymous type decleration passed as objects
+            to a method.
+            </remarks>      
+        </member>
+        <member name="M:Bohrium.Core.Extensions.ObjectExtensionMethods.ToEnum``1(System.Object)">
+            <summary>
+            Obtém o enumerador correspondente ao tipo informado.
+            </summary>
+            <typeparam name="T">Tipo do Enumerador de Retorno.</typeparam>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.ObjectExtensionMethods.ToGuid(System.Object)">
+            <summary>
+            Converte um valor para Guid se possível
+            </summary>
+            <param name="value">Valor a ser convertido</param>
+            <returns>Guid convertido</returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.ObjectExtensionMethods.ComputeMD5Hash(System.Object)">
+            <summary>
+            Computes the MD5 hash data for an object.
+            </summary>
+            <param name="obj"></param>
+            <returns>MD5 hash data</returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.ObjectExtensionMethods.ToMD5HashString(System.Object)">
+            <summary>
+            Computes the MD5 hash data for an object and return the string representation into hexadecimal string characteres.
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.ObjectExtensionMethods.ToStringDescriptionDetails(System.Object)">
+            <summary>
+            Retorno os detalhes do objeto em formato de 
+            string para gerações de Log, Debug, etc...
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.ObjectExtensionMethods.ToStringDescriptionDetails(System.Object,System.Int32)">
+            <summary>
+            Retorno os detalhes do objeto em formato de 
+            string para gerações de Log, Debug, etc...
+            </summary>
+            <param name="obj"></param>
+            <param name="maxLevels">Número máximo de níveis de encadeamento de objetos.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.ObjectExtensionMethods.CopyPropertiesFrom(System.Object,System.Object)">
+            <summary>
+            Copies the readable and writable public property values from the source object to the target
+            </summary>
+            <remarks>The source and target objects must be of the same type.</remarks>
+            <param name="target">The target object</param>
+            <param name="source">The source object</param>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.ObjectExtensionMethods.CopyPropertiesFrom(System.Object,System.Object,System.String[])">
+            <summary>
+            Copies the readable and writable public property values from the source object to the target
+            </summary>
+            <remarks>The source and target objects must be of the same type.</remarks>
+            <param name="target">The target object</param>
+            <param name="source">The source object</param>
+            <param name="ignoreProperties">An array of property names to ignore</param>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.ObjectExtensionMethods.ToPropertiesString(System.Object)">
+            <summary>
+            Returns a string representation of the objects property values
+            </summary>
+            <param name="source">The object for the string representation</param>
+            <returns>A string</returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.ObjectExtensionMethods.ToPropertiesString(System.Object,System.String)">
+            <summary>
+            Returns a string representation of the objects property values
+            </summary>
+            <param name="source">The object for the string representation</param>
+            <param name="delimiter">The line terminstor string to use between properties</param>
+            <returns>A string</returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.ObjectExtensionMethods.DeepClone(System.Object)">
+            <summary>
+            Creates a deep clone of the specified object using XML serialization
+            </summary>
+            <remarks>
+            The object to be cloned should be decorated with the 
+            <see cref="T:System.SerializableAttribute"/>, or implement the <see cref="T:System.Runtime.Serialization.ISerializable"/> interface.
+            </remarks>
+            <param name="source">The object to deep clone</param>
+            <returns>A copy of the source object</returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.ObjectExtensionMethods.ToXml(System.Object)">
+            <summary>
+            Serializes the object into an XML string, using the encoding method specified in
+            <see>
+                <cref>ExtensionMethodsSettings.DefaultEncoding</cref>
+            </see>
+            </summary>
+            <remarks>
+            The object to be serialized should be decorated with the 
+            <see cref="T:System.SerializableAttribute"/>, or implement the <see cref="T:System.Runtime.Serialization.ISerializable"/> interface.
+            </remarks>
+            <param name="source">The object to serialize</param>
+            <returns>An XML encoded string representation of the source object</returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.ObjectExtensionMethods.ToXml(System.Object,System.Text.Encoding)">
+            <summary>
+            Serializes the object into an XML string
+            </summary>
+            <remarks>
+            The object to be serialized should be decorated with the 
+            <see cref="T:System.SerializableAttribute"/>, or implement the <see cref="T:System.Runtime.Serialization.ISerializable"/> interface.
+            </remarks>
+            <param name="source">The object to serialize</param>
+            <param name="encoding">The Encoding scheme to use when serializing the data to XML</param>
+            <returns>An XML encoded string representation of the source object</returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.ObjectExtensionMethods.CoalesceDBNull``1(System.Object,``0)">
+            <summary>
+            Returns the supplied alternative value
+            if the source is DBNull.Value.
+            </summary>
+            <typeparam name="T">Type to return.</typeparam>
+            <param name="value">Source value.</param>
+            <param name="alternative">Alternate value.</param>
+            <returns>Source value or alternate value if source 
+            is DBNull.Value.</returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.ObjectExtensionMethods.CoalesceDBNull``1(System.Object)">
+            <summary>
+            Returns default(T) if the source is
+            DBNull.Value.
+            </summary>
+            <typeparam name="T">Type to return.</typeparam>
+            <param name="value">Source value.</param>
+            <returns>Source value or default(T) if source 
+            is DBNull.Value.</returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.ObjectExtensionMethods.GetMemberName``1(``0,System.Linq.Expressions.Expression{System.Func{``0,System.Object}})">
+            <summary>
+            Return as string the member name passed as a Lambda Expression.
+            </summary>
+            <typeparam name="TSource"></typeparam>
+            <param name="obj"></param>
+            <param name="fieldExpression"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.ObjectExtensionMethods.ShallowCopy(System.Object)">
+            <summary>
+            This method calls the MemberwiseClone method to perform a shallow copy operation creating a new object, 
+            and then copying the nonstatic fields of the current object to the new object. 
+            If a field is a value type, a bit-by-bit copy of the field is performed. 
+            If a field is a reference type, the reference is copied but the referred object is not; 
+            therefore, the original object and its clone refer to the same object.
+            </summary>
+            <param name="source">Object to be copied.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Bohrium.Core.Extensions.ReflectionExtensionMethods">
+            <summary>
+            Class with extension methods to perform reflection operations.
+            </summary>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.ReflectionExtensionMethods.GetPropertyInfo(System.Object,System.String,System.Reflection.BindingFlags)">
+            <summary>
+            Search a specific property with specific binding into the object type.
+            </summary>
+            <param name="obj"></param>
+            <param name="propertyName"></param>
+            <param name="bindingFlags"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.ReflectionExtensionMethods.GetStaticPropertyValue(System.Object,System.String,System.Reflection.BindingFlags)">
+            <summary>
+            
+            </summary>
+            <param name="obj"></param>
+            <param name="propertyName"></param>
+            <param name="bindingFlags"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.ReflectionExtensionMethods.GetPropertyValue(System.Object,System.String,System.Reflection.BindingFlags)">
+            <summary>
+            Get value from a property by reflection.
+            </summary>
+            <param name="obj"></param>
+            <param name="propertyName"></param>
+            <param name="bindingFlags"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.ReflectionExtensionMethods.SetPropertyValue(System.Object,System.String,System.Object,System.Reflection.BindingFlags)">
+            <summary>
+            Set value to a property by reflection.
+            </summary>
+            <param name="obj"></param>
+            <param name="propertyName"></param>
+            <param name="propValue"></param>
+            <param name="bindingFlags"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.ReflectionExtensionMethods.GetFieldInfo(System.Object,System.String,System.Reflection.BindingFlags)">
+            <summary>
+            Search a specific field with specific binding into the object type.
+            </summary>
+            <param name="obj"></param>
+            <param name="fieldName"></param>
+            <param name="bindingFlags"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.ReflectionExtensionMethods.GetStaticFieldValue(System.Object,System.String,System.Reflection.BindingFlags)">
+            <summary>
+            
+            </summary>
+            <param name="obj"></param>
+            <param name="fieldName"></param>
+            <param name="bindingFlags"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.ReflectionExtensionMethods.GetFieldValue(System.Object,System.String,System.Reflection.BindingFlags)">
+            <summary>
+            
+            </summary>
+            <param name="obj"></param>
+            <param name="fieldName"></param>
+            <param name="bindingFlags"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.ReflectionExtensionMethods.SetFieldValue(System.Object,System.String,System.Object,System.Reflection.BindingFlags)">
+            <summary>
+            Set value to a field by reflection.
+            </summary>
+            <param name="obj"></param>
+            <param name="fieldName"></param>
+            <param name="fieldValue"></param>
+            <param name="bindingFlags"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.ReflectionExtensionMethods.GetMethodInfo(System.Object,System.String,System.Reflection.BindingFlags)">
+            <summary>
+            Search a specific method with specific method binding into the object type.
+            </summary>
+            <param name="obj"></param>
+            <param name="methodName"></param>
+            <param name="bindingFlags"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.ReflectionExtensionMethods.GetMethodParameters(System.Object,System.String,System.Reflection.BindingFlags)">
+            <summary>
+            Search all parameters for a specific method with specific method binding into the object type.
+            </summary>
+            <param name="obj"></param>
+            <param name="methodName"></param>
+            <param name="bindingFlags"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.ReflectionExtensionMethods.CallStaticMethod(System.Object,System.String,System.Reflection.BindingFlags,System.Object[])">
+            <summary>
+            
+            </summary>
+            <param name="obj"></param>
+            <param name="methodName"></param>
+            <param name="bindingFlags"></param>
+            <param name="objParams"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.ReflectionExtensionMethods.CallMethod(System.Object,System.String,System.Reflection.BindingFlags,System.Object[])">
+            <summary>
+            
+            </summary>
+            <param name="obj"></param>
+            <param name="methodName"></param>
+            <param name="bindingFlags"></param>
+            <param name="objParams"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.RegexExtensionMethods.Matches(System.String,System.String)">
+            <summary>
+            Performs a 
+            <see cref="T:System.Text.RegularExpressions.Regex"/>
+            match against the source string
+            using the supplied pattern that
+            returns all matches.
+            </summary>
+            <param name="source">The string to parse.</param>
+            <param name="pattern">The pattern to match.</param>
+            <returns>A collection of matches.</returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.RegexExtensionMethods.Match(System.String,System.String)">
+            <summary>
+            Performs a 
+            <see cref="T:System.Text.RegularExpressions.Regex"/>
+            match against the source string
+            using the supplied pattern that
+            returns the first match.
+            </summary>
+            <param name="source">The string to parse.</param>
+            <param name="pattern">The pattern to match.</param>
+            <returns>The first matching substring.</returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.StringExtensionMethods.DefaultIfNull(System.String)">
+            <summary>
+            Returns an empty string if the current string object is null.
+            </summary>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.StringExtensionMethods.Capitalize(System.String)">
+            <summary>
+            Aplica Uppercase na primeira letra da string.
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.StringExtensionMethods.RegexReplace(System.String,System.String,System.String)">
+            <summary>
+            Replaces a specified string from the current string by regular expression.
+            </summary>
+            <param name="value">Value to modify</param>
+            <param name="regularExpr">regular expression, which will be search from value</param>
+            <param name="replaceValue">Replace string value</param>
+            <returns>Modified string</returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.StringExtensionMethods.RegexDelete(System.String,System.String)">
+            <summary>
+            Delete a specified string from the current string by regular expression.
+            </summary>
+            <param name="value">Value to modify</param>
+            <param name="regularExpr">regular expression, which will be deleted from value</param>
+            <returns>Modified string</returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.StringExtensionMethods.Delete(System.String,System.String)">
+            <summary>
+            Delete a specified string from the current string
+            </summary>
+            <param name="value">Value to modify</param>
+            <param name="strToDelete">Substring, which is deleted from value</param>
+            <returns>Modified string</returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.StringExtensionMethods.Split(System.String,System.String)">
+            <summary>
+            Returns a string array containing the substrings from the current string 
+            object that are delimited by the given separator.
+            </summary>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.StringExtensionMethods.ToDictionary(System.String)">
+            <summary>
+            Returns a Dictionary instance created from the current string 
+            object if it contains a format like "firstkey=value1|second=Val2|...".
+            </summary>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.StringExtensionMethods.ToDictionary(System.String,System.String)">
+            <summary>
+            Returns a Dictionary instance created from the current string 
+            object if it contains a format like 
+            "firstkey=value1[separator]second=Val2[separator]...".
+            </summary>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.StringExtensionMethods.ToNameValueCollection(System.String)">
+            <summary>
+            Returns a NameValueCollection instance created from the current string 
+            object if it contains a format like "firstkey=value1|second=Val2|...".
+            </summary>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.StringExtensionMethods.ToNameValueCollection(System.String,System.String)">
+            <summary>
+            Returns a NameValueCollection instance created from the current string 
+            object if it contains a format like 
+            "firstkey=value1[separator]second=Val2[separator]...".
+            </summary>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.StringExtensionMethods.ToList(System.String)">
+            <summary>
+            Returns a List(string) instance from the current |-separated string.
+            </summary>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.StringExtensionMethods.ToList(System.String,System.String)">
+            <summary>
+            Returns a List(string) instance from the current string.
+            </summary>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.StringExtensionMethods.ToMD5(System.String)">
+            <summary>
+            Returns a MD5 representation of the current string object.
+            </summary>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.StringExtensionMethods.ParseToEnum``1(System.String)">
+            <summary>
+            Obtém o enumerador correspondente ao tipo informado.
+            </summary>
+            <typeparam name="T">Tipo do Enumerador de Retorno.</typeparam>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.StringExtensionMethods.ContainsLike(System.String,System.String)">
+            <summary>
+            Pesquisa um padrão (compatível com o comando "LIKE" do SQL ANSI) não "CaseSensitive" na string.
+            </summary>
+            <param name="str"></param>
+            <param name="likePattern">Padrão (compatível com o comando "LIKE" do SQL ANSI)</param>
+            <returns>"true" casa o padrão requisitado seja encontrado, caso contrário retorna "false"</returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.StringExtensionMethods.StripHtml(System.String)">
+            <summary>
+            Removes all HTML markup tags from the supplied string.
+            </summary>
+            <param name="str">The text to strip</param>
+            <returns>The source sring stripped of all HTML markup</returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.StringExtensionMethods.ToLines(System.String,System.Boolean)">
+            <summary>
+            Splits the supplied string into an array of lines using the system default
+            line terminator.
+            </summary>
+            <param name="str">The string to split</param>
+            <param name="trimLines">If true, leading and trailing whitespace will be removed from each line.</param>
+            <returns>A string list representing each line of text</returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.StringExtensionMethods.ToObjectFromXml``1(System.String)">
+            <summary>
+            Deserializes an XML string into an object instance, using the encoding method specified in
+            <see>
+                <cref>ExtensionMethodsSettings.DefaultEncoding</cref>
+            </see>
+            </summary>
+            <typeparam name="T">The type of object to deserialize</typeparam>
+            <param name="str">The XML string representantion of the object</param>
+            <returns>An instance of T</returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.StringExtensionMethods.ToObjectFromXml``1(System.String,System.Text.Encoding)">
+            <summary>
+            Deserializes an XML string into an object instance
+            </summary>
+            <typeparam name="T">The type of object to deserialize</typeparam>
+            <param name="str">The XML string representantion of the object</param>
+            <param name="encoding">The encoding scheme to use when deserializing the object</param>
+            <returns>An instance of T</returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.StringExtensionMethods.ToStream(System.String)">
+            <summary>
+            Coneverts a string into a <see cref="T:System.IO.Stream"/>, using the encoding method specified in
+            </summary>
+            <param name="str">The string to convert</param>
+            <returns>A stream representation of the source string</returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.StringExtensionMethods.ToStream(System.String,System.Text.Encoding)">
+            <summary>
+            Coneverts a string into a <see cref="T:System.IO.Stream"/>
+            </summary>
+            <param name="str">The string to convert</param>
+            <param name="encoding">The encoding scheme to use for the conversion</param>
+            <returns>A stream representation of the source string</returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.StringExtensionMethods.ToByteArray(System.String)">
+            <summary>
+            Converts a string into a byte array, using the encoding method specified in
+            </summary>
+            <param name="str">The string to convert</param>
+            <returns>A byte array representation of the source string</returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.StringExtensionMethods.ToByteArray(System.String,System.Text.Encoding)">
+            <summary>
+            Converts a string into a byte array
+            </summary>
+            <param name="str">The string to convert</param>
+            <param name="encoding">The encoding scheme to use for the conversion</param>
+            <returns>A byte array representation of the source string</returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.StringExtensionMethods.NullIfEmpty(System.String)">
+            <summary>
+            Returns null if the string is either
+            null or empty.
+            </summary>
+            <param name="source">String to test.</param>
+            <returns>Value of the string, or null.</returns>
+        </member>
+        <member name="M:Bohrium.Core.Extensions.TypeExtensionMethods.GetDefaultValue(System.Type,System.Boolean)">
+            <summary>
+            Return a dafault value for a type, if the type is a class and has a constructor without parameters then will return a new instance of this class.
+            </summary>
+            <param name="type"></param>
+            <param name="contructIfClass"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">Any CPU</Platform>
+    <BuildFolder>$(MSBuildProjectDirectory)\Build</BuildFolder>
+    <BuildArtifactsFolder>$(BuildFolder)\BuildArtifacts</BuildArtifactsFolder>
+    <DeployArtifactsFolder>$(BuildFolder)\DeployArtifacts</DeployArtifactsFolder>
+    <NugetToolFolder>$(MSBuildProjectDirectory)\.nuget</NugetToolFolder>
+    <NuspecFilesFolder>$(BuildFolder)\NuspecFiles</NuspecFilesFolder>
+    <PatternMajorMinorVersion>(\d+)\.(\d+)</PatternMajorMinorVersion>
+    <CIBuildNumber Condition=" '$(CIBuildNumber)' == '' ">0</CIBuildNumber>
+    <DoxyGenPath>$(BuildFolder)\Doxygen</DoxyGenPath>
+    <DoxyGenBin>$(DoxyGenPath)\bin</DoxyGenBin>
+    <NUnitToolHomePath>$(MSBuildProjectDirectory)\packages\NUnit.Runners.2.6.3\tools</NUnitToolHomePath>
+    <NUnitConsoleTool>$(NUnitToolHomePath)\nunit-console.exe</NUnitConsoleTool>
+    <OpenCoverMSBuildTasksPath>$(MSBuildProjectDirectory)\packages\OpenCover.4.5.2506\MSBuild</OpenCoverMSBuildTasksPath>
+    <OpenCoverHomePath>$(MSBuildProjectDirectory)\packages\OpenCover.4.5.2506</OpenCoverHomePath>
+    <OpenCoverConsoleTool>$(OpenCoverHomePath)\OpenCover.Console.exe</OpenCoverConsoleTool>
+    <OpenCoverReportGeneratorHomePath>$(MSBuildProjectDirectory)\packages\ReportGenerator.1.9.1.0</OpenCoverReportGeneratorHomePath>
+    <OpenCoverReportGeneratorTool>$(OpenCoverReportGeneratorHomePath)\ReportGenerator.exe</OpenCoverReportGeneratorTool>
+    <DoxyGenBaseOutputPath>$(DoxyGenPath)\$(DoxyGenOutputPath)</DoxyGenBaseOutputPath>
+    <DoxyGenOutputHtmlPath>$(DoxyGenBaseOutputPath)\html</DoxyGenOutputHtmlPath>
+  </PropertyGroup>
+
+  <Import Project="$(MSBuildProjectDirectory)\Build\MSBuild\MSBuildExtensionPack_3.5.14.0\MSBuild.ExtensionPack.tasks" />
+  <Import Project="$(MSBuildProjectDirectory)\packages\OpenCover.4.5.2506\MSBuild\OpenCover.targets" />
+
+  <UsingTask TaskName="ReportGenerator" AssemblyFile="$(OpenCoverReportGeneratorTool)" />
+
+  <Target Name="run-code-coverage" DependsOnTargets="deploy-compile">
+  
+    <MakeDir Condition="!Exists($(BuildArtifactsFolder))" Directories="$(BuildArtifactsFolder)" />
+    
+    <OpenCover ToolPath="$(OpenCoverHomePath)"
+               ToolExe="$(OpenCoverConsoleTool)"
+               Target="$(NUnitConsoleTool)"
+               TargetArgs="$(MSBuildProjectDirectory)\test\Bohrium.Core.Test\bin\Release\Bohrium.Core.Test.dll /xml=$(BuildArtifactsFolder)\NUnitReport.xml /noshadow"
+               MergeByHash="True"
+               Filter="+[Bohrium.Core*]*
+                       -[Bohrium.Core.Test*]*" 
+               Output="$(BuildArtifactsFolder)\CoverageReport.xml" />
+  
+    <ReportGenerator ReportFiles="$(BuildArtifactsFolder)\CoverageReport.xml"
+                     TargetDirectory="$(BuildArtifactsFolder)\CoverageReport"
+                     ReportTypes="Html;XmlSummary" />
+  </Target>
+
+  <Target Name="generate-docs">
+    
+    <Exec Command='$(DoxyGenPath)\runDoxygen.cmd ' WorkingDirectory='$(DoxyGenPath)' />
+
+  </Target>
+
+  <Target Name="deploy-docs" DependsOnTargets="generate-docs">
+    
+    <Exec Command='$(DoxyGenPath)\runDoxygen.cmd ' WorkingDirectory='$(DoxyGenPath)' />
+
+    <ItemGroup>
+      <DoxyGenBohriumCoreHtmlFilesInclude Include="$(DoxyGenOutputHtmlPath)\**" />
+    </ItemGroup>
+
+    <MSBuild.ExtensionPack.Compression.Zip
+                TaskAction="Create"
+                RemoveRoot="$(DoxyGenBaseOutputPath)\html"
+                CompressFiles="@(DoxyGenBohriumCoreHtmlFilesInclude)"
+                ZipFileName="$(DoxyGenBaseOutputPath)\BohriumNET_BohriumCore_HtmlDoc.zip" />
+
+  </Target>
+
+  <Target Name="clean-build-artifacts">
+    <ItemGroup>
+      <BuildArtifactsFilesToClean Include="$(BuildArtifactsFolder)\**\*.*"/>
+    </ItemGroup>
+
+    <Delete Files="@(BuildArtifactsFilesToClean)" />
+  </Target>
+
+  <Target Name="clean-deploy-artifacts">
+    <ItemGroup>
+      <DeployArtifactsFilesToClean Include="$(DeployArtifactsFolder)\**\*.*"/>
+    </ItemGroup>
+
+    <Delete Files="@(DeployArtifactsFilesToClean)" />
+  </Target>
+
+  <Target Name="clean" DependsOnTargets="clean-deploy-artifacts;clean-build-artifacts">
+  </Target>
+
+  <Target Name="deploy" DependsOnTargets="clean-deploy-artifacts;deploy-compile">
+
+    <MakeDir Condition="!Exists($(DeployArtifactsFolder))" Directories="$(DeployArtifactsFolder)" />
+
+    <CallTarget Targets="deploy-docs"/>
+
+    <CallTarget Targets="deploy-generate-packages"/>
+  </Target>
+
+  <Target Name="compile" DependsOnTargets="clean-build-artifacts">
+    <MSBuild Projects="$(MSBuildProjectDirectory)\$(BohriumBuildTargetSolution)" Targets="Rebuild" Properties="Configuration=$(Configuration);Platform=$(Platform)" />
+  </Target>
+
+  <Target Name="deploy-compile" DependsOnTargets="clean">
+    <MSBuild Projects="$(MSBuildProjectDirectory)\$(BohriumBuildTargetSolution)" Targets="Rebuild" Properties="Configuration=Release;Platform=$(Platform)" />
+  </Target>
+  
+</Project>
