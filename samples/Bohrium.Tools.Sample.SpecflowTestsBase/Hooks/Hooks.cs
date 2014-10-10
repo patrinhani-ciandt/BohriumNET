@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using TechTalk.SpecFlow;
+﻿using TechTalk.SpecFlow;
 
-namespace Bohrium.Tools.Sample.SpecflowTests.Hooks
+namespace Bohrium.Tools.Sample.SpecflowTestsBase.Hooks
 {
     [Binding]
     public class Hooks
