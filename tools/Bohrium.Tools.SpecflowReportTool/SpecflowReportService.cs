@@ -57,11 +57,11 @@ namespace Bohrium.Tools.SpecflowReportTool
         {
             var specflowReport = new SpecflowReport();
 
+            specflowReport.StepDefinitionsReport = ExtractStepDefinitionsReport();
+
             specflowReport.FeaturesReport = ExtractFeaturesReport();
 
             specflowReport.ScenariosReport = ExtractScenariosReport(specflowReport.FeaturesReport);
-
-            specflowReport.StepDefinitionsReport = ExtractStepDefinitionsReport();
 
             specflowReport.MapStepDefinitionsUsage();
 
