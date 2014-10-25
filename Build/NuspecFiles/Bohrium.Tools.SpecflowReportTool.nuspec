@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>Bohrium.Tools.SpecflowReportTool</id>
+        <version>1.0.0.0</version>
+        <title>Bohrium.Tools.SpecflowReportTool</title>
+        <authors>CI&amp;T</authors>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Bohrium.Tools.SpecflowReportTool</description>
+    </metadata>
+    <files>
+        <file src="..\..\tools\Bohrium.Tools.SpecflowReportTool\bin\Release\Bohrium.Tools.SpecflowReportTool.exe" target="tools\Bohrium.Tools.SpecflowReportTool.exe" />
+        <file src="..\..\tools\Bohrium.Tools.SpecflowReportTool\bin\Release\Bohrium.Tools.SpecflowReportTool.exe.config" target="tools\Bohrium.Tools.SpecflowReportTool.exe.config" />
+        <file src="..\..\tools\Bohrium.Tools.SpecflowReportTool\bin\Release\Bohrium.Core.dll" target="tools\lib\Bohrium.Core.dll" />
+        <file src="..\..\tools\Bohrium.Tools.SpecflowReportTool\bin\Release\ILSpy.Bundle.dll" target="tools\lib\ILSpy.Bundle.dll" />
+        <file src="..\..\tools\Bohrium.Tools.SpecflowReportTool\bin\Release\Mono.Cecil.dll" target="tools\lib\Mono.Cecil.dll" />
+    </files>
+</package>
