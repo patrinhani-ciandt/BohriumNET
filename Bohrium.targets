@@ -87,7 +87,7 @@
   <Target Name="clean" DependsOnTargets="clean-deploy-artifacts;clean-build-artifacts">
   </Target>
 
-  <Target Name="deploy" DependsOnTargets="clean-deploy-artifacts;deploy-compile">
+  <Target Name="deploy" DependsOnTargets="deploy-compile">
 
     <MakeDir Condition="!Exists($(DeployArtifactsFolder))" Directories="$(DeployArtifactsFolder)" />
 
@@ -96,7 +96,7 @@
     <CallTarget Targets="deploy-generate-packages"/>
   </Target>
 
-  <Target Name="deploy-no-docs" DependsOnTargets="clean-deploy-artifacts;deploy-compile">
+  <Target Name="deploy-no-docs" DependsOnTargets="deploy-compile">
 
     <MakeDir Condition="!Exists($(DeployArtifactsFolder))" Directories="$(DeployArtifactsFolder)" />
 	
@@ -107,7 +107,7 @@
     <MSBuild Projects="$(MSBuildProjectDirectory)\$(BohriumBuildTargetSolution)" Targets="Rebuild" Properties="Configuration=$(Configuration);Platform=$(Platform)" />
   </Target>
 
-  <Target Name="deploy-compile" DependsOnTargets="clean">
+  <Target Name="deploy-compile" DependsOnTargets="clean-build-artifacts">
     <MSBuild Projects="$(MSBuildProjectDirectory)\$(BohriumBuildTargetSolution)" Targets="Rebuild" Properties="Configuration=Release;Platform=$(Platform)" />
   </Target>
   
