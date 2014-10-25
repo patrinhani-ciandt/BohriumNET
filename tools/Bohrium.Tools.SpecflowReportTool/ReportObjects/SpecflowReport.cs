@@ -18,9 +18,14 @@ namespace Bohrium.Tools.SpecflowReportTool.ReportObjects
         {
             Console.Write("Mapping StepDefinition usages ... ");
 
-            var featuresBackgroundStatements = FeaturesReport.Features.SelectMany(a => a.Background.Statements.OfType<GherkinBaseStatementDO>());
+            var featuresBackgroundStatements = FeaturesReport
+                .Features
+                .SelectMany(a => (a.Background != null) ? a.Background.Statements.OfType<GherkinBaseStatementDO>() : new List<GherkinBaseStatementDO>());
 
-            mapStepDefinitionsUsage(featuresBackgroundStatements);
+            if (featuresBackgroundStatements != null)
+            {
+                mapStepDefinitionsUsage(featuresBackgroundStatements);
+            }
 
             var scenariosStatements = ScenariosReport.Scenarios.SelectMany(a => a.Statements.OfType<GherkinBaseStatementDO>());
 

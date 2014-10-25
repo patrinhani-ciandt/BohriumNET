@@ -9,6 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bohrium.Tools.Sample.Specfl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bohrium.Tools.Sample.SpecflowTestsBase", "samples\Bohrium.Tools.Sample.SpecflowTestsBase\Bohrium.Tools.Sample.SpecflowTestsBase.csproj", "{D9CBCEE5-DC81-40FE-9B6C-CC173BE94137}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{3A66E070-497E-431C-A300-4E7965F0069B}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

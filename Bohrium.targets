@@ -19,8 +19,8 @@
     <OpenCoverConsoleTool>$(OpenCoverHomePath)\OpenCover.Console.exe</OpenCoverConsoleTool>
     <OpenCoverReportGeneratorHomePath>$(MSBuildProjectDirectory)\packages\ReportGenerator.1.9.1.0</OpenCoverReportGeneratorHomePath>
     <OpenCoverReportGeneratorTool>$(OpenCoverReportGeneratorHomePath)\ReportGenerator.exe</OpenCoverReportGeneratorTool>
-    <DoxyGenBaseOutputPath>$(DoxyGenPath)\$(DoxyGenOutputPath)</DoxyGenBaseOutputPath>
-    <DoxyGenOutputHtmlPath>$(DoxyGenBaseOutputPath)\html</DoxyGenOutputHtmlPath>
+    <DoxyGenBaseOutputPath>$(DoxyGenPath)\$(DocsOutputPath)</DoxyGenBaseOutputPath>
+    <DocOutputHtmlPath>$(DoxyGenBaseOutputPath)\html</DocOutputHtmlPath>
   </PropertyGroup>
 
   <Import Project="$(MSBuildProjectDirectory)\Build\MSBuild\MSBuildExtensionPack_3.5.14.0\MSBuild.ExtensionPack.tasks" />
@@ -57,14 +57,14 @@
     <Exec Command='$(DoxyGenPath)\runDoxygen.cmd ' WorkingDirectory='$(DoxyGenPath)' />
 
     <ItemGroup>
-      <DoxyGenBohriumCoreHtmlFilesInclude Include="$(DoxyGenOutputHtmlPath)\**" />
+      <DocOutputFilesInclude Include="$(DocOutputHtmlPath)\**" />
     </ItemGroup>
 
     <MSBuild.ExtensionPack.Compression.Zip
                 TaskAction="Create"
                 RemoveRoot="$(DoxyGenBaseOutputPath)\html"
-                CompressFiles="@(DoxyGenBohriumCoreHtmlFilesInclude)"
-                ZipFileName="$(DoxyGenBaseOutputPath)\BohriumNET_BohriumCore_HtmlDoc.zip" />
+                CompressFiles="@(DocOutputFilesInclude)"
+                ZipFileName="$(DoxyGenBaseOutputPath)\$(DocOutputHtmlZipFileName).zip" />
 
   </Target>
 
@@ -93,6 +93,13 @@
 
     <CallTarget Targets="deploy-docs"/>
 
+    <CallTarget Targets="deploy-generate-packages"/>
+  </Target>
+
+  <Target Name="deploy-no-docs" DependsOnTargets="clean-deploy-artifacts;deploy-compile">
+
+    <MakeDir Condition="!Exists($(DeployArtifactsFolder))" Directories="$(DeployArtifactsFolder)" />
+	
     <CallTarget Targets="deploy-generate-packages"/>
   </Target>
 
