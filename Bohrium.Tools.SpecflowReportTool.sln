@@ -14,6 +14,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{3A66E0
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".msbuild", ".msbuild", "{0F288188-448C-449D-8EEB-F96CF02434F4}"
+	ProjectSection(SolutionItems) = preProject
+		Bohrium.Tools.SpecflowReportTool.msbuild = Bohrium.Tools.SpecflowReportTool.msbuild
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuspec", ".nuspec", "{513C51D0-F926-49E6-9FB9-50C01B8D873E}"
+	ProjectSection(SolutionItems) = preProject
+		Build\NuspecFiles\Bohrium.Tools.SpecflowReportTool.nuspec = Build\NuspecFiles\Bohrium.Tools.SpecflowReportTool.nuspec
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

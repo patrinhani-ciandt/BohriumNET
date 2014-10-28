@@ -9,7 +9,6 @@
         <description>Bohrium.Core</description>
     </metadata>
     <files>
-        <file src="..\Doxygen\Output_BohriumCore\BohriumNET_BohriumCore_HtmlDoc.zip" target="Docs\BohriumNET_BohriumCore_HtmlDoc.zip" />
         <file src="..\..\src\Bohrium.Core\bin\Release\Bohrium.Core.dll" target="lib\net45\Bohrium.Core.dll" />
         <file src="..\..\src\Bohrium.Core\bin\Release\Bohrium.Core.pdb" target="lib\net45\Bohrium.Core.pdb" />
         <file src="..\..\src\Bohrium.Core\bin\Release\Bohrium.Core.XML" target="lib\net45\Bohrium.Core.XML" />

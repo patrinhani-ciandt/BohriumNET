@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>Bohrium.Ext.NHibernate.AutoMapper</id>
+        <version>1.0.0.0</version>
+        <title>Bohrium.Ext.NHibernate.AutoMapper</title>
+        <authors>CI&amp;T</authors>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Bohrium.Ext.NHibernate.AutoMapper</description>
+        <dependencies>
+            <dependency id="AutoMapper" version="3.2.1" />
+            <dependency id="NHibernate" version="3.1.0.4000" />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="..\..\src\Ext.NHibernate.AutoMapper\bin\Release\Bohrium.Ext.NHibernate.AutoMapper.dll" target="lib\net45\Bohrium.Ext.NHibernate.AutoMapper.dll" />
+        <file src="..\..\src\Ext.NHibernate.AutoMapper\bin\Release\Bohrium.Ext.NHibernate.AutoMapper.pdb" target="lib\net45\Bohrium.Ext.NHibernate.AutoMapper.pdb" />
+    </files>
+</package>

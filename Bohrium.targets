@@ -91,15 +91,6 @@
 
     <MakeDir Condition="!Exists($(DeployArtifactsFolder))" Directories="$(DeployArtifactsFolder)" />
 
-    <CallTarget Targets="deploy-docs"/>
-
-    <CallTarget Targets="deploy-generate-packages"/>
-  </Target>
-
-  <Target Name="deploy-no-docs" DependsOnTargets="deploy-compile">
-
-    <MakeDir Condition="!Exists($(DeployArtifactsFolder))" Directories="$(DeployArtifactsFolder)" />
-	
     <CallTarget Targets="deploy-generate-packages"/>
   </Target>
 
