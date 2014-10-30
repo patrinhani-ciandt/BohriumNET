@@ -33,6 +33,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ILSpy", "ILSpy", "{8886C9CA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bohrium.Ext.ICSharpCode.ILSpy", "src\Bohrium.Ext.ICSharpCode.ILSpy\Bohrium.Ext.ICSharpCode.ILSpy.csproj", "{AE08F977-8041-459E-AD2A-E3A45625FACC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".msbuild", ".msbuild", "{990AE4CD-20EE-4DAB-85A3-5312868FF424}"
+	ProjectSection(SolutionItems) = preProject
+		Bohrium.msbuild = Bohrium.msbuild
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuspec", ".nuspec", "{7495102D-A90A-4328-9DA5-22BD142704F5}"
+	ProjectSection(SolutionItems) = preProject
+		Build\NuspecFiles\Bohrium.Core.nuspec = Build\NuspecFiles\Bohrium.Core.nuspec
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
