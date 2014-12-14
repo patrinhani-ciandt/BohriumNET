@@ -5,7 +5,7 @@ This is the main repository for the framework Bohrium .NET, which the responsibi
 Site: http://patrinhani-ciandt.github.io/BohriumNET/
 
 * Version
-  * You can get current release version by our NuGet Feed (http://tiny.cc/424ujx)
+  * You can get current release version by our NuGet Feed (https://www.myget.org/F/bohriumnet/)
 
 Bohrium .NET Site: http://patrinhani-ciandt.github.io/BohriumNET.
 
