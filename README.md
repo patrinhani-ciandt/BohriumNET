@@ -5,7 +5,7 @@ This is the main repository for the framework Bohrium .NET, which the responsibi
 Bohrium .NET Site: http://patrinhani-ciandt.github.io/BohriumNET.
 
 [![AppVeyor](http://img.shields.io/appveyor/ci/patrinhani-ciandt/bohriumnet.svg?style=flat-square)](https://ci.appveyor.com/project/patrinhani-ciandt/bohriumnet)
-[![Codacy Badge](https://www.codacy.com/project/badge/237e64ec59e548ff996c014d3c1dac56)](https://www.codacy.com/public/patrinhani/BohriumNET)
+[![Codacy](http://img.shields.io/codacy/237e64ec59e548ff996c014d3c1dac56.svg?style=flat-square)](https://www.codacy.com/public/patrinhani/BohriumNET)
 [![MyGet](http://img.shields.io/myget/bohriumnet/v/Bohrium.Core.svg?style=flat-square&label=Bohrium.Core)](https://www.myget.org/F/bohriumnet/)
 [![MyGet](http://img.shields.io/myget/bohriumnet/v/Bohrium.Ext.NHibernate.AutoMapper.svg?style=flat-square&label=Bohrium.Ext.NHibernate.AutoMapper)](https://www.myget.org/F/bohriumnet/)
 [![MyGet](http://img.shields.io/myget/bohriumnet/v/Bohrium.Tools.SpecflowReportTool.svg?style=flat-square&label=Bohrium.Tools.SpecflowReportTool)](https://www.myget.org/F/bohriumnet/)
