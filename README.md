@@ -10,7 +10,7 @@ Site: http://patrinhani-ciandt.github.io/BohriumNET/
 Bohrium .NET Site: http://patrinhani-ciandt.github.io/BohriumNET.
 
 You can access our CI (Continuous Integration) environment on address:
-https://ci.appveyor.com/project/patrinhani-ciandt/bohriumnet
+[![Build status](https://ci.appveyor.com/api/projects/status/suvcj6ue5l63lnsc?svg=true)](https://ci.appveyor.com/project/patrinhani-ciandt/bohriumnet)
 
 ### How do I get set up? ###
 
