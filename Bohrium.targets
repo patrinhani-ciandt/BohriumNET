@@ -14,17 +14,17 @@
     <DoxyGenBin>$(DoxyGenPath)\bin</DoxyGenBin>
     <NUnitToolHomePath>$(MSBuildProjectDirectory)\packages\NUnit.Runners.2.6.3\tools</NUnitToolHomePath>
     <NUnitConsoleTool>$(NUnitToolHomePath)\nunit-console.exe</NUnitConsoleTool>
-    <OpenCoverMSBuildTasksPath>$(MSBuildProjectDirectory)\packages\OpenCover.4.5.2506\MSBuild</OpenCoverMSBuildTasksPath>
-    <OpenCoverHomePath>$(MSBuildProjectDirectory)\packages\OpenCover.4.5.2506</OpenCoverHomePath>
+    <OpenCoverMSBuildTasksPath>$(MSBuildProjectDirectory)\packages\OpenCover.4.5.3522\MSBuild</OpenCoverMSBuildTasksPath>
+    <OpenCoverHomePath>$(MSBuildProjectDirectory)\packages\OpenCover.4.5.3522</OpenCoverHomePath>
     <OpenCoverConsoleTool>$(OpenCoverHomePath)\OpenCover.Console.exe</OpenCoverConsoleTool>
-    <OpenCoverReportGeneratorHomePath>$(MSBuildProjectDirectory)\packages\ReportGenerator.1.9.1.0</OpenCoverReportGeneratorHomePath>
+    <OpenCoverReportGeneratorHomePath>$(MSBuildProjectDirectory)\packages\ReportGenerator.2.0.3.0</OpenCoverReportGeneratorHomePath>
     <OpenCoverReportGeneratorTool>$(OpenCoverReportGeneratorHomePath)\ReportGenerator.exe</OpenCoverReportGeneratorTool>
     <DoxyGenBaseOutputPath>$(DoxyGenPath)\$(DocsOutputPath)</DoxyGenBaseOutputPath>
     <DocOutputHtmlPath>$(DoxyGenBaseOutputPath)\html</DocOutputHtmlPath>
   </PropertyGroup>
 
   <Import Project="$(MSBuildProjectDirectory)\Build\MSBuild\MSBuildExtensionPack_3.5.14.0\MSBuild.ExtensionPack.tasks" />
-  <Import Project="$(MSBuildProjectDirectory)\packages\OpenCover.4.5.2506\MSBuild\OpenCover.targets" />
+  <Import Project="$(OpenCoverMSBuildTasksPath)\OpenCover.targets" />
 
   <UsingTask TaskName="ReportGenerator" AssemblyFile="$(OpenCoverReportGeneratorTool)" />
 

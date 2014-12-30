@@ -2,15 +2,13 @@
 
 This is the main repository for the framework Bohrium .NET, which the responsibility is to provide a bunch of modularized development framework classes to be reusable increasing the team productivity into the .NET platform.
 
-Site: http://patrinhani-ciandt.github.io/BohriumNET/
-
-* Version
-  * You can get current release version by our NuGet Feed (https://www.myget.org/F/bohriumnet/)
-
 Bohrium .NET Site: http://patrinhani-ciandt.github.io/BohriumNET.
 
-You can access our CI (Continuous Integration) environment on address:
-https://ci.appveyor.com/project/patrinhani-ciandt/bohriumnet
+[![AppVeyor](http://img.shields.io/appveyor/ci/patrinhani-ciandt/bohriumnet.svg?style=flat-square)](https://ci.appveyor.com/project/patrinhani-ciandt/bohriumnet)
+[![GitHub](http://img.shields.io/github/issues/patrinhani-ciandt/BohriumNET.svg?style=flat-square)](https://huboard.com/patrinhani-ciandt/BohriumNET)
+[![MyGet](http://img.shields.io/myget/bohriumnet/v/Bohrium.Core.svg?style=flat-square&label=Bohrium.Core)](https://www.myget.org/F/bohriumnet/)
+[![MyGet](http://img.shields.io/myget/bohriumnet/v/Bohrium.Ext.NHibernate.AutoMapper.svg?style=flat-square&label=Bohrium.Ext.NHibernate.AutoMapper)](https://www.myget.org/F/bohriumnet/)
+[![MyGet](http://img.shields.io/myget/bohriumnet/v/Bohrium.Tools.SpecflowReportTool.svg?style=flat-square&label=Bohrium.Tools.SpecflowReportTool)](https://www.myget.org/F/bohriumnet/)
 
 ### How do I get set up? ###
 
