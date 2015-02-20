@@ -7,7 +7,9 @@ Bohrium .NET Site: http://patrinhani-ciandt.github.io/BohriumNET.
 [![Join the chat at https://gitter.im/patrinhani-ciandt/BohriumNET](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/patrinhani-ciandt/BohriumNET?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 [![AppVeyor](http://img.shields.io/appveyor/ci/patrinhani-ciandt/bohriumnet.svg?style=flat-square)](https://ci.appveyor.com/project/patrinhani-ciandt/bohriumnet)
+
 [![GitHub](http://img.shields.io/github/issues/patrinhani-ciandt/BohriumNET.svg?style=flat-square)](https://huboard.com/patrinhani-ciandt/BohriumNET)
+
 [![MyGet](http://img.shields.io/myget/bohriumnet/v/Bohrium.Core.svg?style=flat-square&label=Bohrium.Core)](https://www.myget.org/F/bohriumnet/)
 [![MyGet](http://img.shields.io/myget/bohriumnet/v/Bohrium.Ext.NHibernate.AutoMapper.svg?style=flat-square&label=Bohrium.Ext.NHibernate.AutoMapper)](https://www.myget.org/F/bohriumnet/)
 [![MyGet](http://img.shields.io/myget/bohriumnet/v/Bohrium.Tools.SpecflowReportTool.svg?style=flat-square&label=Bohrium.Tools.SpecflowReportTool)](https://www.myget.org/F/bohriumnet/)
