@@ -1,5 +1,7 @@
 # README #
 
+[![Join the chat at https://gitter.im/patrinhani-ciandt/BohriumNET](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/patrinhani-ciandt/BohriumNET?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 This is the main repository for the framework Bohrium .NET, which the responsibility is to provide a bunch of modularized development framework classes to be reusable increasing the team productivity into the .NET platform.
 
 Bohrium .NET Site: http://patrinhani-ciandt.github.io/BohriumNET.
