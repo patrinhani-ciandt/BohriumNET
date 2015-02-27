@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <NUnitToolHomePath>$(MSBuildProjectDirectory)\packages\NUnit.Runners.2.6.3\tools</NUnitToolHomePath>
+    <NUnitConsoleTool>$(NUnitToolHomePath)\nunit-console.exe</NUnitConsoleTool>
+    <OpenCoverMSBuildTasksPath>$(MSBuildProjectDirectory)\packages\OpenCover.4.5.3522\MSBuild</OpenCoverMSBuildTasksPath>
+    <OpenCoverHomePath>$(MSBuildProjectDirectory)\packages\OpenCover.4.5.3522</OpenCoverHomePath>
+    <OpenCoverConsoleTool>$(OpenCoverHomePath)\OpenCover.Console.exe</OpenCoverConsoleTool>
+    <OpenCoverReportGeneratorHomePath>$(MSBuildProjectDirectory)\packages\ReportGenerator.2.0.3.0</OpenCoverReportGeneratorHomePath>
+    <OpenCoverReportGeneratorTool>$(OpenCoverReportGeneratorHomePath)\ReportGenerator.exe</OpenCoverReportGeneratorTool>
+  </PropertyGroup>
+
+  <Import Project="$(MSBuildProjectDirectory)\packages\MSBuild.Extension.Pack.1.5.0\tools\net40\MSBuild.ExtensionPack.tasks" />
+  <Import Project="$(OpenCoverMSBuildTasksPath)\OpenCover.targets" />
+  <Import Project="$(MSBuildProjectDirectory)\packages\StyleCop.MSBuild.4.7.49.1\build\StyleCop.MSBuild.Targets" />
+
+  <UsingTask TaskName="ReportGenerator" AssemblyFile="$(OpenCoverReportGeneratorTool)" />
+
+  <Target Name="run-code-coverage" DependsOnTargets="deploy-compile">
+
+    <MakeDir Condition="!Exists($(BuildArtifactsFolder))" Directories="$(BuildArtifactsFolder)" />
+
+    <OpenCover ToolPath="$(OpenCoverHomePath)"
+               ToolExe="$(OpenCoverConsoleTool)"
+               Target="$(NUnitConsoleTool)"
+               TargetArgs="$(MSBuildProjectDirectory)\test\Bohrium.Core.Test\bin\Release\Bohrium.Core.Test.dll /xml=$(BuildArtifactsFolder)\NUnitReport.xml /noshadow"
+               MergeByHash="True"
+               Filter="+[Bohrium.Core*]*
+                       -[Bohrium.Core.Test*]*"
+               Output="$(BuildArtifactsFolder)\CoverageReport.xml" />
+
+    <ReportGenerator ReportFiles="$(BuildArtifactsFolder)\CoverageReport.xml"
+                     TargetDirectory="$(BuildArtifactsFolder)\CoverageReport"
+                     ReportTypes="Html;XmlSummary" />
+  </Target>
+
+  <Target Name="run-quality-static-analysis">
+    <CreateItem Include="$(MSBuildProjectDirectory)\src\**\*.cs">
+      <Output TaskParameter="Include" ItemName="StyleCopFiles"/>
+    </CreateItem>
+    <StyleCopTask
+      ProjectFullPath="$(MSBuildProjectDirectory)"
+      SourceFiles="@(StyleCopFiles)"
+      CacheResults="true"
+      OverrideSettingsFile="$(MSBuildProjectDirectory)\CodeQuality\Bohrium.StyleCop\Bohrium.StyleCop"
+      OutputFile="$(MSBuildProjectDirectory)\BohriumStyleCopLog.txt"/>
+  </Target>
+  
+</Project>

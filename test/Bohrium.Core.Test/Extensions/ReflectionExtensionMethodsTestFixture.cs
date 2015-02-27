@@ -1,7 +1,7 @@
-﻿using System;
-using Bohrium.Core.Extensions;
+﻿using Bohrium.Core.Extensions;
 using Bohrium.Core.Test.TestHelpers;
 using NUnit.Framework;
+using System;
 
 namespace Bohrium.Core.Test.Extensions
 {
@@ -64,7 +64,7 @@ namespace Bohrium.Core.Test.Extensions
             var testObj = createDataTestObject();
 
             testObj.CallMethod("privateMethodSetBoolValueToTrue");
-            
+
             Assert.AreEqual(testObj.BoolValue, true);
         }
 

@@ -22,7 +22,7 @@ namespace Bohrium.Core.Extensions
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="obj"></param>
         /// <param name="propertyName"></param>
@@ -89,7 +89,7 @@ namespace Bohrium.Core.Extensions
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="obj"></param>
         /// <param name="fieldName"></param>
@@ -102,7 +102,7 @@ namespace Bohrium.Core.Extensions
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="obj"></param>
         /// <param name="fieldName"></param>
@@ -155,7 +155,6 @@ namespace Bohrium.Core.Extensions
             return obj.GetType().GetMethod(methodName, bindingFlags);
         }
 
-
         /// <summary>
         /// Search all parameters for a specific method with specific method binding into the object type.
         /// </summary>
@@ -182,7 +181,7 @@ namespace Bohrium.Core.Extensions
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="obj"></param>
         /// <param name="methodName"></param>
@@ -197,7 +196,7 @@ namespace Bohrium.Core.Extensions
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="obj"></param>
         /// <param name="methodName"></param>

@@ -5,7 +5,7 @@
     public static class RegexExtensionMethods
     {
         /// <summary>
-        /// Performs a 
+        /// Performs a
         /// <see cref="System.Text.RegularExpressions.Regex"/>
         /// match against the source string
         /// using the supplied pattern that
@@ -22,7 +22,7 @@
         }
 
         /// <summary>
-        /// Performs a 
+        /// Performs a
         /// <see cref="System.Text.RegularExpressions.Regex"/>
         /// match against the source string
         /// using the supplied pattern that

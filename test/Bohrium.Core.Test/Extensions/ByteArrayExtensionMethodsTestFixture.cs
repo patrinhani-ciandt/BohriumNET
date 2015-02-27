@@ -1,5 +1,4 @@
-﻿using System;
-using Bohrium.Core.Extensions;
+﻿using Bohrium.Core.Extensions;
 using Bohrium.Core.Test.TestHelpers;
 using NUnit.Framework;
 
@@ -11,6 +10,7 @@ namespace Bohrium.Core.Test.Extensions
         /* Test is covering the methods bellow:
          * T ToObject<T>(this byte[] value)
          */
+
         [Test]
         public void should_be_able_to_deserialize_a_byte_array_to_a_serializable_type()
         {
@@ -33,6 +33,7 @@ namespace Bohrium.Core.Test.Extensions
          * byte[] Compress(this byte[] value)
          * byte[] Decompress(this byte[] value)
          */
+
         [Test]
         public void should_be_able_to_compress_and_decompress_an_object()
         {
@@ -54,6 +55,7 @@ namespace Bohrium.Core.Test.Extensions
         /* Test is covering the methods bellow:
          * string ToHex(this byte[] bytes)
          */
+
         [Test]
         public void should_be_able_to_convert_a_byte_array_to_a_hex_string()
         {

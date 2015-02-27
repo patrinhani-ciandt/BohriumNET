@@ -5,6 +5,7 @@ namespace Bohrium.Core.Extensions
     using System.IO;
     using System.Runtime.Serialization.Formatters.Binary;
     using System.Text;
+
 #if !SILVERLIGHT
 #endif
 
@@ -13,8 +14,8 @@ namespace Bohrium.Core.Extensions
     /// </summary>
     public static class ByteArrayExtensionMethods
     {
-
 #if !SILVERLIGHT
+
         /// <summary>
         /// Deserialize a byte[] to an object.
         /// </summary>
@@ -37,7 +38,6 @@ namespace Bohrium.Core.Extensions
             {
                 if (m != null) m.Dispose();
             }
-
         }
 
         /// <summary>
@@ -59,11 +59,12 @@ namespace Bohrium.Core.Extensions
         {
             return CompressionUtils.Decompress(value);
         }
+
 #endif
 
         /// <summary>
         /// Converts a byte array into a hex string
-        /// </summary>      
+        /// </summary>
         public static string ToHex(this byte[] bytes)
         {
             var sb = new StringBuilder();

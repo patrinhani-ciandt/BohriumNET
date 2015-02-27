@@ -51,7 +51,7 @@
         }
 
         /// <summary>
-        /// Retorna o valor passado como parâmetro caso o objeto do tipo informado for 
+        /// Retorna o valor passado como parâmetro caso o objeto do tipo informado for
         /// nulo.
         /// </summary>
         /// <typeparam name="T"></typeparam>

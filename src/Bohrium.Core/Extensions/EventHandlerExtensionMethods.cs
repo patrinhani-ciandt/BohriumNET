@@ -6,7 +6,7 @@
     public static class EventHandlerExtensionMethods
     {
         /// <summary>
-        /// Raises an event of any type that implements the standard event signature 
+        /// Raises an event of any type that implements the standard event signature
         /// (object sender, :EventArgs e) on the current thread.
         /// </summary>
         /// <remarks>
@@ -32,10 +32,10 @@
         ///            set { msg = value; }
         ///        }
         ///    }
-        ///  //--------------------------------------------------------- 
+        ///  //---------------------------------------------------------
         ///   public class ClassWithACustomEvent
         ///   {
-        ///     // Declare an event of delegate type EventHandler of 
+        ///     // Declare an event of delegate type EventHandler of
         ///     // MyEventArgs.
         ///
         ///       public event EventHandler<MyEventArgs> SampleEvent;
@@ -96,17 +96,18 @@
         }
 
 #if !SILVERLIGHT
+
         /// <summary>
-        /// Raises an event of any type that implements the standard event signature 
+        /// Raises an event of any type that implements the standard event signature
         /// (object sender, :EventArgs e) on the event subscribers UI thread if possible.
         /// </summary>
         /// <remarks>
         /// Events are raised in a thread-safe manner, and will be raised on the subscribers thread
-        /// in cases where subscribers implement the <see cref="ISynchronizeInvoke"/> interface 
+        /// in cases where subscribers implement the <see cref="ISynchronizeInvoke"/> interface
         /// (i.e. WindowsForms controls), otherwise they will be raised on the current thread.
         /// </remarks>
         /// <example>
-        /// <code> 
+        /// <code>
         /// // This example demonstrates the usage of the extension methods
         /// using System;
         /// using Componax.ExtensionMethods;
@@ -126,10 +127,10 @@
         ///            set { msg = value; }
         ///        }
         ///    }
-        ///  //--------------------------------------------------------- 
+        ///  //---------------------------------------------------------
         ///   public class ClassWithACustomEvent
         ///   {
-        ///     // Declare an event of delegate type EventHandler of 
+        ///     // Declare an event of delegate type EventHandler of
         ///     // MyEventArgs.
         ///
         ///       public event EventHandler<MyEventArgs> SampleEvent;
@@ -202,6 +203,7 @@
                 }
             }
         }
+
 #endif
     }
 }

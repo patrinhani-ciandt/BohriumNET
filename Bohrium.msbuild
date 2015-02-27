@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <Import Project="$(MSBuildProjectDirectory)\Bohrium.targets" />
+  <Import Project="$(MSBuildProjectDirectory)\CodeQuality.targets" />
  
   <Target Name="deploy-generate-packages">
 
