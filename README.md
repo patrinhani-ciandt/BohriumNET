@@ -12,6 +12,7 @@ Bohrium .NET Site: http://patrinhani-ciandt.github.io/BohriumNET.
 
 [![MyGet](http://img.shields.io/myget/bohriumnet/v/Bohrium.Core.svg?style=flat-square&label=Bohrium.Core)](https://www.myget.org/F/bohriumnet/)
 [![MyGet](http://img.shields.io/myget/bohriumnet/v/Bohrium.Ext.NHibernate.AutoMapper.svg?style=flat-square&label=Bohrium.Ext.NHibernate.AutoMapper)](https://www.myget.org/F/bohriumnet/)
+[![MyGet](http://img.shields.io/myget/bohriumnet/v/Bohrium.Ext.ICSharpCode.ILSpy.svg?style=flat-square&label=Bohrium.Ext.ICSharpCode.ILSpy)](https://www.myget.org/F/bohriumnet/)
 [![MyGet](http://img.shields.io/myget/bohriumnet/v/Bohrium.Tools.SpecflowReportTool.svg?style=flat-square&label=Bohrium.Tools.SpecflowReportTool)](https://www.myget.org/F/bohriumnet/)
 
 ### How do I get set up? ###
