@@ -12,7 +12,6 @@
 
   <Import Project="$(MSBuildProjectDirectory)\packages\MSBuild.Extension.Pack.1.5.0\tools\net40\MSBuild.ExtensionPack.tasks" />
   <Import Project="$(OpenCoverMSBuildTasksPath)\OpenCover.targets" />
-  <Import Project="$(MSBuildProjectDirectory)\packages\StyleCop.MSBuild.4.7.49.1\build\StyleCop.MSBuild.Targets" />
 
   <UsingTask TaskName="ReportGenerator" AssemblyFile="$(OpenCoverReportGeneratorTool)" />
 
@@ -35,15 +34,6 @@
   </Target>
 
   <Target Name="run-quality-static-analysis">
-    <CreateItem Include="$(MSBuildProjectDirectory)\src\**\*.cs">
-      <Output TaskParameter="Include" ItemName="StyleCopFiles"/>
-    </CreateItem>
-    <StyleCopTask
-      ProjectFullPath="$(MSBuildProjectDirectory)"
-      SourceFiles="@(StyleCopFiles)"
-      CacheResults="true"
-      OverrideSettingsFile="$(MSBuildProjectDirectory)\CodeQuality\Bohrium.StyleCop\Bohrium.StyleCop"
-      OutputFile="$(MSBuildProjectDirectory)\BohriumStyleCopLog.txt"/>
   </Target>
   
 </Project>
