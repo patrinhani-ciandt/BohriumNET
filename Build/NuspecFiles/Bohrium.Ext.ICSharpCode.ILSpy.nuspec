@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>Bohrium.Ext.ICSharpCode.ILSpy</id>
+        <version>1.0.0.0</version>
+        <title>Bohrium.Ext.ICSharpCode.ILSpy</title>
+        <authors>CI&amp;T</authors>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Bohrium.Ext.ICSharpCode.ILSpy</description>
+        <dependencies>
+            <dependency id="Mono.Cecil" version="0.9.5.4" />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="..\..\src\Bohrium.Ext.ICSharpCode.ILSpy\bin\Release\Bohrium.Ext.ICSharpCode.ILSpy.dll" target="lib\net45\Bohrium.Ext.ICSharpCode.ILSpy.dll" />
+        <file src="..\..\src\Bohrium.Ext.ICSharpCode.ILSpy\bin\Release\Bohrium.Ext.ICSharpCode.ILSpy.pdb" target="lib\net45\Bohrium.Ext.ICSharpCode.ILSpy.pdb" />
+    </files>
+</package>
