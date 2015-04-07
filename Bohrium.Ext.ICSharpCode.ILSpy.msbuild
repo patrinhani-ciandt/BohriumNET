@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <BohriumBuildTargetSolution>Bohrium.Ext.ICSharpCode.ILSpy.sln</BohriumBuildTargetSolution>
+    <DocsOutputPath>Output_BohriumExtICSharpCodeILSpy</DocsOutputPath>
+	  <DocOutputHtmlZipFileName>BohriumNET_ExtICSharpCodeILSpy_HtmlDoc</DocOutputHtmlZipFileName>
+  </PropertyGroup>
+
+  <Import Project="$(MSBuildProjectDirectory)\Bohrium.targets" />
+ 
+  <Target Name="deploy-generate-packages">
+
+    <GetAssemblyIdentity AssemblyFiles="$(MSBuildProjectDirectory)\src\Bohrium.Ext.ICSharpCode.ILSpy\bin\Release\Bohrium.Ext.ICSharpCode.ILSpy.dll">
+      <Output TaskParameter="Assemblies" ItemName="BohriumCoreAssemblyInfo"/>
+    </GetAssemblyIdentity>
+
+    <PropertyGroup>
+      <MajorMinorVersionBohriumCore>$([System.Text.RegularExpressions.Regex]::Match(%(BohriumCoreAssemblyInfo.Version), $(PatternMajorMinorVersion)))</MajorMinorVersionBohriumCore>
+    </PropertyGroup>
+
+    <!-- NuGet packaging -->
+    <Exec WorkingDirectory="$(NugetToolFolder)" Command="nuget.exe Pack -version $(MajorMinorVersionBohriumCore).$(CIBuildNumber).0 $(NuspecFilesFolder)\Bohrium.Ext.ICSharpCode.ILSpy.nuspec /o $(DeployArtifactsFolder)" />
+  </Target>
+
+</Project>
