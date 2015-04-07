@@ -6,7 +6,7 @@
     {
         /// <summary>
         /// returns true if the value is in the dictionary
-        /// </summary>      
+        /// </summary>
         public static bool ContainsValue<TK, TV>(this IDictionary<TK, TV> instance, TV value)
         {
             return instance.Exists(kvp => kvp.Value.Equals(value));

@@ -1,6 +1,6 @@
-﻿using System;
-using Bohrium.Core.Extensions;
+﻿using Bohrium.Core.Extensions;
 using NUnit.Framework;
+using System;
 
 namespace Bohrium.Core.Test.Extensions
 {
@@ -10,6 +10,7 @@ namespace Bohrium.Core.Test.Extensions
         /* Test is covering the methods bellow:
          * DateTime FirstDayOfMonth(this DateTime date)
          */
+
         [Test]
         public void test_FirstDayOfMonth()
         {
@@ -23,6 +24,7 @@ namespace Bohrium.Core.Test.Extensions
         /* Test is covering the methods bellow:
          * DateTime LastDayOfMonth(this DateTime date)
          */
+
         [Test]
         public void test_LastDayOfMonth()
         {
@@ -36,6 +38,7 @@ namespace Bohrium.Core.Test.Extensions
         /* Test is covering the methods bellow:
          * DateTime FirstDayOfWeek(this DateTime date)
          */
+
         [Test]
         public void test_FirstDayOfWeek()
         {
@@ -49,6 +52,7 @@ namespace Bohrium.Core.Test.Extensions
         /* Test is covering the methods bellow:
          * DateTime FirstWeekDayOfMonth(this DateTime date)
          */
+
         [Test]
         public void test_FirstWeekDayOfMonth()
         {
@@ -68,6 +72,7 @@ namespace Bohrium.Core.Test.Extensions
         /* Test is covering the methods bellow:
          * DateTime LastWeekDayOfMonth(this DateTime date)
          */
+
         [Test]
         public void test_LastWeekDayOfMonth()
         {
@@ -81,6 +86,7 @@ namespace Bohrium.Core.Test.Extensions
         /* Test is covering the methods bellow:
          * DateTime NextWeekDayOfMonth(this DateTime date)
          */
+
         [Test]
         public void test_NextWeekDayOfMonth()
         {
@@ -94,6 +100,7 @@ namespace Bohrium.Core.Test.Extensions
         /* Test is covering the methods bellow:
          * DateTime PreviousWeekDayOfMonth(this DateTime date)
          */
+
         [Test]
         public void test_PreviousWeekDayOfMonth()
         {
@@ -107,6 +114,7 @@ namespace Bohrium.Core.Test.Extensions
         /* Test is covering the methods bellow:
          * DateTime LastDayOfWeek(this DateTime date)
          */
+
         [Test]
         public void test_LastDayOfWeek()
         {
@@ -120,6 +128,7 @@ namespace Bohrium.Core.Test.Extensions
         /* Test is covering the methods bellow:
          * DateTime GetEndOfDay(this DateTime date)
          */
+
         [Test]
         public void test_GetEndOfDay()
         {
@@ -135,6 +144,7 @@ namespace Bohrium.Core.Test.Extensions
         /* Test is covering the methods bellow:
          * DateTime SetTime(this DateTime date)
          */
+
         [Test]
         public void test_SetTime()
         {
@@ -150,6 +160,7 @@ namespace Bohrium.Core.Test.Extensions
         /* Test is covering the methods bellow:
          * DateTime IsWeekend(this DateTime date)
          */
+
         [Test]
         public void test_IsWeekend()
         {
@@ -178,6 +189,7 @@ namespace Bohrium.Core.Test.Extensions
         /* Test is covering the methods bellow:
          * DateTime IsWeekDay(this DateTime date)
          */
+
         [Test]
         public void test_IsWeekDay()
         {

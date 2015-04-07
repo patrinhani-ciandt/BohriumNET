@@ -9,6 +9,7 @@ namespace Bohrium.Core.Test.TestHelpers
         private string _strValue;
 
         public int Id { get; set; }
+
         public Guid ObjectId { get; set; }
 
         public string StrValue
@@ -18,10 +19,15 @@ namespace Bohrium.Core.Test.TestHelpers
         }
 
         public long LongValue { get; set; }
+
         public DateTime DateTimeValue { get; set; }
+
         public bool BoolValue { get; set; }
+
         public List<DateTime> ListDateTimeValue { get; set; }
+
         public DataTestObject RefTestObject { get; set; }
+
         public IList<DataTestObject> RefTestObjects { get; set; }
 
         public static DataTestObject CreateDefault()

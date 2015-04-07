@@ -1,7 +1,4 @@
-﻿using System;
-using System.Text.RegularExpressions;
-using Bohrium.Core.Extensions;
-using Bohrium.Core.Test.TestHelpers;
+﻿using Bohrium.Core.Extensions;
 using NUnit.Framework;
 
 namespace Bohrium.Core.Test.Extensions
@@ -12,6 +9,7 @@ namespace Bohrium.Core.Test.Extensions
         /* Test is covering the methods bellow:
          * T RegexDelete(this String value, string regularExpr)
          */
+
         [Test]
         public void should_be_able_to_replace_a_part_of_a_string_by_a_regular_expression()
         {
@@ -28,6 +26,7 @@ namespace Bohrium.Core.Test.Extensions
         /* Test is covering the methods bellow:
          * T RegexDelete(this String value, string regularExpr)
          */
+
         [Test]
         public void should_be_able_to_delete_a_part_of_a_string_by_a_regular_expression()
         {

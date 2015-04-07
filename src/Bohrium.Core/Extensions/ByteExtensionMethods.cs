@@ -7,7 +7,7 @@
     {
         /// <summary>
         /// Converts a single byte to a hex string
-        /// </summary>      
+        /// </summary>
         public static string ToHex(this byte byteValue)
         {
             return byteValue.ToString("x2");

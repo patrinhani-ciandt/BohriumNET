@@ -1,8 +1,8 @@
-﻿using System;
-using Bohrium.Core.Compression;
+﻿using Bohrium.Core.Compression;
+using Bohrium.Core.Extensions;
 using Bohrium.Core.Test.TestHelpers;
 using NUnit.Framework;
-using Bohrium.Core.Extensions;
+using System;
 
 namespace Bohrium.Core.Test.Compression
 {

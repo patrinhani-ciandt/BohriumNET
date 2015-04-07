@@ -17,7 +17,7 @@ namespace Bohrium.Core.Extensions
             {
                 return Activator.CreateInstance(type);
             }
-            
+
             if ((type.IsClass) && (contructIfClass))
             {
                 if (type.GetConstructors().Any(c => !c.GetParameters().Any()))

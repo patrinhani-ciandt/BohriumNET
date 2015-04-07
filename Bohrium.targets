@@ -12,39 +12,11 @@
     <CIBuildNumber Condition=" '$(CIBuildNumber)' == '' ">0</CIBuildNumber>
     <DoxyGenPath>$(BuildFolder)\Doxygen</DoxyGenPath>
     <DoxyGenBin>$(DoxyGenPath)\bin</DoxyGenBin>
-    <NUnitToolHomePath>$(MSBuildProjectDirectory)\packages\NUnit.Runners.2.6.3\tools</NUnitToolHomePath>
-    <NUnitConsoleTool>$(NUnitToolHomePath)\nunit-console.exe</NUnitConsoleTool>
-    <OpenCoverMSBuildTasksPath>$(MSBuildProjectDirectory)\packages\OpenCover.4.5.3522\MSBuild</OpenCoverMSBuildTasksPath>
-    <OpenCoverHomePath>$(MSBuildProjectDirectory)\packages\OpenCover.4.5.3522</OpenCoverHomePath>
-    <OpenCoverConsoleTool>$(OpenCoverHomePath)\OpenCover.Console.exe</OpenCoverConsoleTool>
-    <OpenCoverReportGeneratorHomePath>$(MSBuildProjectDirectory)\packages\ReportGenerator.2.0.3.0</OpenCoverReportGeneratorHomePath>
-    <OpenCoverReportGeneratorTool>$(OpenCoverReportGeneratorHomePath)\ReportGenerator.exe</OpenCoverReportGeneratorTool>
     <DoxyGenBaseOutputPath>$(DoxyGenPath)\$(DocsOutputPath)</DoxyGenBaseOutputPath>
     <DocOutputHtmlPath>$(DoxyGenBaseOutputPath)\html</DocOutputHtmlPath>
   </PropertyGroup>
 
-  <Import Project="$(MSBuildProjectDirectory)\Build\MSBuild\MSBuildExtensionPack_3.5.14.0\MSBuild.ExtensionPack.tasks" />
-  <Import Project="$(OpenCoverMSBuildTasksPath)\OpenCover.targets" />
-
-  <UsingTask TaskName="ReportGenerator" AssemblyFile="$(OpenCoverReportGeneratorTool)" />
-
-  <Target Name="run-code-coverage" DependsOnTargets="deploy-compile">
-  
-    <MakeDir Condition="!Exists($(BuildArtifactsFolder))" Directories="$(BuildArtifactsFolder)" />
-    
-    <OpenCover ToolPath="$(OpenCoverHomePath)"
-               ToolExe="$(OpenCoverConsoleTool)"
-               Target="$(NUnitConsoleTool)"
-               TargetArgs="$(MSBuildProjectDirectory)\test\Bohrium.Core.Test\bin\Release\Bohrium.Core.Test.dll /xml=$(BuildArtifactsFolder)\NUnitReport.xml /noshadow"
-               MergeByHash="True"
-               Filter="+[Bohrium.Core*]*
-                       -[Bohrium.Core.Test*]*" 
-               Output="$(BuildArtifactsFolder)\CoverageReport.xml" />
-  
-    <ReportGenerator ReportFiles="$(BuildArtifactsFolder)\CoverageReport.xml"
-                     TargetDirectory="$(BuildArtifactsFolder)\CoverageReport"
-                     ReportTypes="Html;XmlSummary" />
-  </Target>
+  <Import Project="$(MSBuildProjectDirectory)\packages\MSBuild.Extension.Pack.1.5.0\tools\net40\MSBuild.ExtensionPack.tasks" />
 
   <Target Name="generate-docs">
     

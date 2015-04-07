@@ -8,7 +8,7 @@
         /// <summary>
         /// Copies all files from one directory to another.
         /// <remarks>
-        /// Contributed by Christian Liensberger, 
+        /// Contributed by Christian Liensberger,
         /// http://www.liensberger.it/
         /// </remarks>
         /// </summary>
@@ -22,9 +22,9 @@
             {
                 throw new ArgumentNullException("destination");
             }
-            
+
             var target = new DirectoryInfo(destination);
-            
+
             if (!source.Exists)
             {
                 throw new DirectoryNotFoundException("Source directory not found: " + source.FullName);

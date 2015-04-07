@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bohrium.Ext.ICSharpCode.ILSpy", "src\Bohrium.Ext.ICSharpCode.ILSpy\Bohrium.Ext.ICSharpCode.ILSpy.csproj", "{AE08F977-8041-459E-AD2A-E3A45625FACC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".msbuild", ".msbuild", "{6AF5E11F-3C4B-48EA-A218-E188C9B3A63A}"
+	ProjectSection(SolutionItems) = preProject
+		Bohrium.Ext.ICSharpCode.ILSpy.msbuild = Bohrium.Ext.ICSharpCode.ILSpy.msbuild
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuspec", ".nuspec", "{60C73B71-8A6D-4F28-B333-128DC65F9BD2}"
+	ProjectSection(SolutionItems) = preProject
+		Build\NuspecFiles\Bohrium.Ext.ICSharpCode.ILSpy.nuspec = Build\NuspecFiles\Bohrium.Ext.ICSharpCode.ILSpy.nuspec
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AE08F977-8041-459E-AD2A-E3A45625FACC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE08F977-8041-459E-AD2A-E3A45625FACC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE08F977-8041-459E-AD2A-E3A45625FACC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE08F977-8041-459E-AD2A-E3A45625FACC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

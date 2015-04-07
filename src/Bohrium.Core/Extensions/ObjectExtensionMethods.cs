@@ -13,15 +13,18 @@ namespace Bohrium.Core.Extensions
     using System.Runtime.Serialization.Formatters.Binary;
     using System.Text;
     using System.Xml.Serialization;
+
 #if !SILVERLIGHT
 
 #endif
+
     /// <summary>
     /// Class with extension methods for an object
     /// </summary>
     public static class ObjectExtensionMethods
     {
 #if !SILVERLIGHT
+
         /// <summary>
         /// Can convert a serializable object to an simple byte[] or to a compressed one
         /// </summary>
@@ -46,6 +49,7 @@ namespace Bohrium.Core.Extensions
 
             return ret;
         }
+
 #endif
 
         /// <summary>
@@ -109,10 +113,10 @@ namespace Bohrium.Core.Extensions
                     return (T)obj;
 #endif
                 }
-                
+
                 return (T)obj;
             }
-            
+
             return default(T);
         }
 
@@ -130,12 +134,12 @@ namespace Bohrium.Core.Extensions
         /// <summary>
         /// Takes an object and turns it into a dictionary. Each public property is
         /// added to the dictionary, with the name of the property being the dictionary key,
-        /// and its value being the dictionary value.      
+        /// and its value being the dictionary value.
         /// </summary>
         /// <remarks>
         /// Particularly useful for dealing with anonymous type decleration passed as objects
         /// to a method.
-        /// </remarks>      
+        /// </remarks>
         public static Dictionary<string, object> ToDictionary(this object obj)
         {
             var properties = obj.GetType().GetProperties();
@@ -175,7 +179,7 @@ namespace Bohrium.Core.Extensions
                     return new Guid(value.ToString());
                 if (value is Guid)
                     return (Guid)value;
-                
+
                 return new Guid(value.ToString());
             }
             catch
@@ -185,6 +189,7 @@ namespace Bohrium.Core.Extensions
         }
 
 #if !SILVERLIGHT
+
         /// <summary>
         /// Computes the MD5 hash data for an object.
         /// </summary>
@@ -208,12 +213,13 @@ namespace Bohrium.Core.Extensions
 
             return objHash.ToHex();
         }
+
 #endif
 
         #region ToStringDescriptionDetails
 
         /// <summary>
-        /// Retorno os detalhes do objeto em formato de 
+        /// Retorno os detalhes do objeto em formato de
         /// string para gerações de Log, Debug, etc...
         /// </summary>
         /// <param name="obj"></param>
@@ -224,7 +230,7 @@ namespace Bohrium.Core.Extensions
         }
 
         /// <summary>
-        /// Retorno os detalhes do objeto em formato de 
+        /// Retorno os detalhes do objeto em formato de
         /// string para gerações de Log, Debug, etc...
         /// </summary>
         /// <param name="obj"></param>
@@ -482,7 +488,7 @@ namespace Bohrium.Core.Extensions
         /// Creates a deep clone of the specified object using XML serialization
         /// </summary>
         /// <remarks>
-        /// The object to be cloned should be decorated with the 
+        /// The object to be cloned should be decorated with the
         /// <see cref="SerializableAttribute"/>, or implement the <see cref="ISerializable"/> interface.
         /// </remarks>
         /// <param name="source">The object to deep clone</param>
@@ -510,7 +516,7 @@ namespace Bohrium.Core.Extensions
         /// </see>
         /// </summary>
         /// <remarks>
-        /// The object to be serialized should be decorated with the 
+        /// The object to be serialized should be decorated with the
         /// <see cref="SerializableAttribute"/>, or implement the <see cref="ISerializable"/> interface.
         /// </remarks>
         /// <param name="source">The object to serialize</param>
@@ -524,7 +530,7 @@ namespace Bohrium.Core.Extensions
         /// Serializes the object into an XML string
         /// </summary>
         /// <remarks>
-        /// The object to be serialized should be decorated with the 
+        /// The object to be serialized should be decorated with the
         /// <see cref="SerializableAttribute"/>, or implement the <see cref="ISerializable"/> interface.
         /// </remarks>
         /// <param name="source">The object to serialize</param>
@@ -562,7 +568,7 @@ namespace Bohrium.Core.Extensions
         /// <typeparam name="T">Type to return.</typeparam>
         /// <param name="value">Source value.</param>
         /// <param name="alternative">Alternate value.</param>
-        /// <returns>Source value or alternate value if source 
+        /// <returns>Source value or alternate value if source
         /// is DBNull.Value.</returns>
         public static T CoalesceDBNull<T>(
             this object value,
@@ -577,7 +583,7 @@ namespace Bohrium.Core.Extensions
         /// </summary>
         /// <typeparam name="T">Type to return.</typeparam>
         /// <param name="value">Source value.</param>
-        /// <returns>Source value or default(T) if source 
+        /// <returns>Source value or default(T) if source
         /// is DBNull.Value.</returns>
         public static T CoalesceDBNull<T>(
             this object value)
@@ -625,10 +631,10 @@ namespace Bohrium.Core.Extensions
         }
 
         /// <summary>
-        /// This method calls the MemberwiseClone method to perform a shallow copy operation creating a new object, 
-        /// and then copying the nonstatic fields of the current object to the new object. 
-        /// If a field is a value type, a bit-by-bit copy of the field is performed. 
-        /// If a field is a reference type, the reference is copied but the referred object is not; 
+        /// This method calls the MemberwiseClone method to perform a shallow copy operation creating a new object,
+        /// and then copying the nonstatic fields of the current object to the new object.
+        /// If a field is a value type, a bit-by-bit copy of the field is performed.
+        /// If a field is a reference type, the reference is copied but the referred object is not;
         /// therefore, the original object and its clone refer to the same object.
         /// </summary>
         /// <param name="source">Object to be copied.</param>

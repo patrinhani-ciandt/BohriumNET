@@ -10,6 +10,7 @@ namespace Bohrium.Core.Test.Extensions
         /* Test is covering the methods bellow:
          * byte[] ToByteArray(this object value, bool compress = false)
          */
+
         [Test]
         public void should_be_able_to_convert_an_object_to_byte_array()
         {
@@ -28,6 +29,7 @@ namespace Bohrium.Core.Test.Extensions
          * bool IsNull(this object value)
          * bool IsNotNull(this object value)
          */
+
         [Test]
         public void test_for_IsNull_IsNotNull()
         {
@@ -43,6 +45,7 @@ namespace Bohrium.Core.Test.Extensions
         /* Test is covering the methods bellow:
          * byte[] ComputeMD5Hash(this object obj)
          */
+
         [Test]
         public void should_be_able_to_compute_the_MD5_hash_for_a_serializable_type_and_compare_different_instances()
         {
@@ -61,6 +64,7 @@ namespace Bohrium.Core.Test.Extensions
         /* Test is covering the methods bellow:
          * string ToMD5HashString(this object obj)
          */
+
         [Test]
         public void should_be_able_to_compute_the_MD5_hash_and_get_MD5_string_representation_for_a_serializable_type_and_compare_different_instances()
         {

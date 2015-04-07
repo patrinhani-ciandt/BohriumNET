@@ -1,7 +1,7 @@
-﻿using System;
-using ICSharpCode.Decompiler;
+﻿using ICSharpCode.Decompiler;
 using ICSharpCode.ILSpy;
 using Mono.Cecil;
+using System;
 
 namespace Bohrium.Ext.ICSharpCode.ILSpy.Extensions
 {

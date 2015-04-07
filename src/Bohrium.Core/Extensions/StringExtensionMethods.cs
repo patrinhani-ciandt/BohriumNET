@@ -131,7 +131,7 @@
         }
 
         /// <summary>
-        /// Returns a string array containing the substrings from the current string 
+        /// Returns a string array containing the substrings from the current string
         /// object that are delimited by the given separator.
         /// </summary>
         public static string[] Split(this string s, string separator)
@@ -142,7 +142,7 @@
 #if !SILVERLIGHT
 
         /// <summary>
-        /// Returns a Dictionary instance created from the current string 
+        /// Returns a Dictionary instance created from the current string
         /// object if it contains a format like "firstkey=value1|second=Val2|...".
         /// </summary>
         public static Dictionary<string, string> ToDictionary(this string s)
@@ -151,8 +151,8 @@
         }
 
         /// <summary>
-        /// Returns a Dictionary instance created from the current string 
-        /// object if it contains a format like 
+        /// Returns a Dictionary instance created from the current string
+        /// object if it contains a format like
         /// "firstkey=value1[separator]second=Val2[separator]...".
         /// </summary>
         public static Dictionary<string, string> ToDictionary(this string s, string separator)
@@ -160,7 +160,7 @@
             var dic = new Dictionary<string, string>();
 
             var collection = ToNameValueCollection(s, separator);
-            
+
             foreach (var key in collection.AllKeys)
                 dic.Add(key, collection[key]);
 
@@ -168,7 +168,7 @@
         }
 
         /// <summary>
-        /// Returns a NameValueCollection instance created from the current string 
+        /// Returns a NameValueCollection instance created from the current string
         /// object if it contains a format like "firstkey=value1|second=Val2|...".
         /// </summary>
         public static NameValueCollection ToNameValueCollection(this string s)
@@ -177,8 +177,8 @@
         }
 
         /// <summary>
-        /// Returns a NameValueCollection instance created from the current string 
-        /// object if it contains a format like 
+        /// Returns a NameValueCollection instance created from the current string
+        /// object if it contains a format like
         /// "firstkey=value1[separator]second=Val2[separator]...".
         /// </summary>
         public static NameValueCollection ToNameValueCollection(this string s, string separator)
@@ -203,9 +203,10 @@
 
             return collection;
         }
+
 #else
         /// <summary>
-        /// Returns a Dictionary instance created from the current string 
+        /// Returns a Dictionary instance created from the current string
         /// object if it contains a format like "firstkey=value1|second=Val2|...".
         /// </summary>
         public static Dictionary<string, string> ToDictionary(this string s)
@@ -214,8 +215,8 @@
         }
 
         /// <summary>
-        /// Returns a Dictionary instance created from the current string 
-        /// object if it contains a format like 
+        /// Returns a Dictionary instance created from the current string
+        /// object if it contains a format like
         /// "firstkey=value1[separator]second=Val2[separator]...".
         /// </summary>
         public static Dictionary<string, string> ToDictionary(this string s, string separator)
@@ -264,6 +265,7 @@
         }
 
 #if !SILVERLIGHT
+
         /// <summary>
         /// Returns a MD5 representation of the current string object.
         /// </summary>
@@ -275,6 +277,7 @@
 
             return returnValue;
         }
+
 #endif
 
         /// <summary>
@@ -317,32 +320,32 @@
 
             // TODO: I'm sure this can be improved further..
             /*
-             & (ampersand character) 
-             &amp; 
-             Must be used both for attribute values and for content of an element. 
-             
-            > (greater-than character) 
-             &gt; 
-             Must be used for attribute value, but > is acceptable as the content of an element so long as < does not precede it. 
-             
-            < (less-than character) 
-             &lt; 
-             Must be used for attribute value, but < is acceptable as the content of an element so long as > does not follow it. 
-             
-            " (double quote character) 
-             &quot; 
-             Must be used for attribute value, but " is acceptable as the content of an element. Note that attribute values themselves may be enclosed either by ' or "; whichever character appears first will define the attribute value enclosure, and the alternative quote can then be used as a literal within the value. 
-             
-            ' (single quote character) 
-             &apos; 
-             Must be used for attribute value, but ' is acceptable as the content of an element. Note that attribute values themselves may be enclosed either by ' or "; whichever character appears first will define the attribute value enclosure, and the alternative quote can then be used as a literal within the value. 
-             
-            (numeric character mappings) 
-             &#[integer]; or &#x[hex]; 
-             XAML supports numeric character mappings into the encoding that is active. 
-             
-            (nonbreaking space) 
-             &#160; (assuming UTF-8 encoding) 
+             & (ampersand character)
+             &amp;
+             Must be used both for attribute values and for content of an element.
+
+            > (greater-than character)
+             &gt;
+             Must be used for attribute value, but > is acceptable as the content of an element so long as < does not precede it.
+
+            < (less-than character)
+             &lt;
+             Must be used for attribute value, but < is acceptable as the content of an element so long as > does not follow it.
+
+            " (double quote character)
+             &quot;
+             Must be used for attribute value, but " is acceptable as the content of an element. Note that attribute values themselves may be enclosed either by ' or "; whichever character appears first will define the attribute value enclosure, and the alternative quote can then be used as a literal within the value.
+
+            ' (single quote character)
+             &apos;
+             Must be used for attribute value, but ' is acceptable as the content of an element. Note that attribute values themselves may be enclosed either by ' or "; whichever character appears first will define the attribute value enclosure, and the alternative quote can then be used as a literal within the value.
+
+            (numeric character mappings)
+             &#[integer]; or &#x[hex];
+             XAML supports numeric character mappings into the encoding that is active.
+
+            (nonbreaking space)
+             &#160; (assuming UTF-8 encoding)
              For flow document elements, or elements that take text such as TextBox, nonbreaking spaces are not normalized out of the markup, even for xml
              */
 

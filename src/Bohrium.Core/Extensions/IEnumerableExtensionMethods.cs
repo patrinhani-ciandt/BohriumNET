@@ -6,14 +6,15 @@
     using System.Data;
     using System.Linq;
     using System.Reflection;
+
 #if !SILVERLIGHT
 
 #endif
 
     public static class IEnumerableExtensionMethods
     {
-
 #if !SILVERLIGHT
+
         public static DataTable ToDataTable<T>(this IEnumerable<T> enumerable)
         {
             return ToDataTable(enumerable, null);
@@ -22,44 +23,45 @@
         public static DataTable ToDataTable<T>(this IEnumerable<T> enumerable, Func<IEnumerable<PropertyInfo>, IEnumerable<PropertyInfo>> filterPropertiesDelegate)
         {
             var table = new DataTable();
-            
+
             IEnumerable<PropertyInfo> props = typeof(T).GetProperties();
-            
+
             if (filterPropertiesDelegate != null)
                 props = filterPropertiesDelegate(props);
-            
+
             foreach (PropertyInfo prop in props)
                 table.Columns.Add(prop.Name, prop.PropertyType);
-            
+
             foreach (T t in enumerable)
             {
                 var row = table.NewRow();
-                
+
                 foreach (PropertyInfo prop in props)
                     row[prop.Name] = prop.GetValue(t, null);
 
                 table.Rows.Add(row);
             }
-            
+
             return table;
         }
+
 #endif
 
         public static IEnumerable<T> Distinct<T>(this IEnumerable<T> source, Func<T, T, bool> equalityComparer)
         {
             var sourceCount = source.Count();
-            
+
             for (int i = 0; i < sourceCount; i++)
             {
                 bool found = false;
-            
+
                 for (int j = 0; j < i; j++)
                     if (equalityComparer(source.ElementAt(i), source.ElementAt(j))) // In some cases, it's better to convert source in List<T> (before first for)
                     {
                         found = true;
                         break;
                     }
-                
+
                 if (!found)
                     yield return source.ElementAt(i);
             }
@@ -80,6 +82,7 @@
                 action(enumerator.Current);
             }
         }
+
         /// <summary>
         /// Performs the specified action on each element of the list and includes
         /// an index value (starting at 0)
@@ -97,9 +100,10 @@
                 action(enumerator.Current, count++);
             }
         }
+
         /// <summary>
         /// Validates that the predicate is true for each element of the list
-        /// </summary>      
+        /// </summary>
         public static bool TrueForAll<T>(this IEnumerable<T> list, Predicate<T> predicate)
         {
             if (predicate == null)
@@ -116,9 +120,10 @@
             }
             return true;
         }
+
         /// <summary>
         /// Retuns a list of all items matching the predicate
-        /// </summary>      
+        /// </summary>
         public static List<T> FindAll<T>(this IEnumerable<T> list, Predicate<T> predicate)
         {
             if (predicate == null)
@@ -136,9 +141,10 @@
             }
             return found;
         }
+
         /// <summary>
         /// Retuns the first matching item
-        /// </summary>      
+        /// </summary>
         public static T Find<T>(this IEnumerable<T> list, Predicate<T> predicate)
         {
             if (predicate == null)
@@ -155,9 +161,10 @@
             }
             return default(T);
         }
+
         /// <summary>
         /// Finds the index of an item
-        /// </summary>      
+        /// </summary>
         public static int Index<T>(this IEnumerable<T> list, Predicate<T> predicate)
         {
             if (predicate == null)
@@ -174,9 +181,10 @@
             }
             return -1;
         }
+
         /// <summary>
         /// Determines whether or not the item exists
-        /// </summary>      
+        /// </summary>
         public static bool Exists<T>(this IEnumerable<T> list, Predicate<T> predicate)
         {
             return list.Index(predicate) > -1;
