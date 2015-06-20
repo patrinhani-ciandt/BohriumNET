@@ -1,14 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
   <PropertyGroup>
     <BohriumBuildTargetSolution>Bohrium.sln</BohriumBuildTargetSolution>
     <DocsOutputPath>Output_BohriumCore</DocsOutputPath>
-	<DocOutputHtmlZipFileName>BohriumNET_BohriumCore_HtmlDoc</DocOutputHtmlZipFileName>
+    <DocOutputHtmlZipFileName>BohriumNET_BohriumCore_HtmlDoc</DocOutputHtmlZipFileName>
   </PropertyGroup>
 
-  <Import Project="$(MSBuildProjectDirectory)\Bohrium.targets" />
-  <Import Project="$(MSBuildProjectDirectory)\CodeQuality.targets" />
- 
+  <Import Project="$(MSBuildProjectDirectory)\Bohrium.targets" Condition=" '$(Bohrium_TargetsImported)' == '' "/>
+  <PropertyGroup>
+    <Bohrium_TargetsImported>true</Bohrium_TargetsImported>
+  </PropertyGroup>
+
+  <Import Project="$(MSBuildProjectDirectory)\CodeQuality.targets" Condition=" '$(CodeQuality_TargetsImported)' == '' "/>
+  <PropertyGroup>
+    <CodeQuality_TargetsImported>true</CodeQuality_TargetsImported>
+  </PropertyGroup>
+
+  <Import Project="$(MSBuildProjectDirectory)\Bohrium.Quality.msbuild" Condition=" '$(BohriumQuality_TargetsImported)' == '' "/>
+  <PropertyGroup>
+    <BohriumQuality_TargetsImported>true</BohriumQuality_TargetsImported>
+  </PropertyGroup>
+
   <Target Name="deploy-generate-packages">
 
     <GetAssemblyIdentity AssemblyFiles="$(MSBuildProjectDirectory)\src\Bohrium.Core\bin\Release\Bohrium.Core.dll">
@@ -22,5 +35,4 @@
     <!-- NuGet packaging -->
     <Exec WorkingDirectory="$(NugetToolFolder)" Command="nuget.exe Pack -version $(MajorMinorVersionBohriumCore).$(CIBuildNumber).0 $(NuspecFilesFolder)\Bohrium.Core.nuspec /o $(DeployArtifactsFolder)" />
   </Target>
-
 </Project>

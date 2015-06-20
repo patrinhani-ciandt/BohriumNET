@@ -38,6 +38,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".msbuild", ".msbuild", "{990AE4CD-20EE-4DAB-85A3-5312868FF424}"
 	ProjectSection(SolutionItems) = preProject
 		Bohrium.msbuild = Bohrium.msbuild
+		Bohrium.Quality.msbuild = Bohrium.Quality.msbuild
 		Bohrium.targets = Bohrium.targets
 		CodeQuality.targets = CodeQuality.targets
 	EndProjectSection
