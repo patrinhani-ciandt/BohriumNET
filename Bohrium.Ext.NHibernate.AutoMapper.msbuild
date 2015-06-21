@@ -19,7 +19,7 @@
     </PropertyGroup>
 
     <!-- NuGet packaging -->
-    <Exec WorkingDirectory="$(NugetToolFolder)" Command="nuget.exe Pack -version $(MajorMinorVersionBohriumCore).$(CIBuildNumber).0 $(NuspecFilesFolder)\Bohrium.Ext.NHibernate.AutoMapper.nuspec /o $(DeployArtifactsFolder)" />
+    <Exec WorkingDirectory="$(NugetToolFolder)" Command="nuget.exe Pack -version $(MajorMinorVersionBohriumCore).$(CI_BUILD_NUMBER).0 $(NuspecFilesFolder)\Bohrium.Ext.NHibernate.AutoMapper.nuspec /o $(DeployArtifactsFolder)" />
   </Target>
 
 </Project>
