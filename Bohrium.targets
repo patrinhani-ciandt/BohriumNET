@@ -10,11 +10,18 @@
     <NugetToolFolder>$(MSBuildProjectDirectory)\.nuget</NugetToolFolder>
     <NuspecFilesFolder>$(BuildFolder)\NuspecFiles</NuspecFilesFolder>
     <PatternMajorMinorVersion>(\d+)\.(\d+)</PatternMajorMinorVersion>
-    <CIBuildNumber Condition=" '$(CIBuildNumber)' == '' ">0</CIBuildNumber>
     <DoxyGenPath>$(BuildFolder)\Doxygen</DoxyGenPath>
     <DoxyGenBin>$(DoxyGenPath)\bin</DoxyGenBin>
     <DoxyGenBaseOutputPath>$(DoxyGenPath)\$(DocsOutputPath)</DoxyGenBaseOutputPath>
     <DocOutputHtmlPath>$(DoxyGenBaseOutputPath)\html</DocOutputHtmlPath>
+	
+    <CI_BUILD_NUMBER Condition=" '$(CI_BUILD_NUMBER)' == '' ">0</CI_BUILD_NUMBER>
+	<CI_REPO_COMMIT></CI_REPO_COMMIT>
+	<CI_REPO_BRANCH></CI_REPO_BRANCH>
+	<CI_REPO_COMMIT_AUTHOR></CI_REPO_COMMIT_AUTHOR>
+	<CI_REPO_COMMIT_AUTHOR_EMAIL></CI_REPO_COMMIT_AUTHOR_EMAIL>
+	<CI_REPO_COMMIT_MESSAGE></CI_REPO_COMMIT_MESSAGE>
+	<CI_JOB_ID></CI_JOB_ID>
   </PropertyGroup>
 
   <Import Project="$(MSBuildProjectDirectory)\packages\MSBuild.Extension.Pack.1.6.0\build\net40\MSBuild.Extension.Pack.targets" Condition=" '$(MSBuildExtensionPack_TargetsImported)' == '' "/>
