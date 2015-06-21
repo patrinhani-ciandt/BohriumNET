@@ -1,39 +1,68 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
   <PropertyGroup>
-    <NUnitToolHomePath>$(MSBuildProjectDirectory)\packages\NUnit.Runners.2.6.3\tools</NUnitToolHomePath>
+    <NUnitToolHomePath>$(MSBuildProjectDirectory)\packages\NUnit.Runners.2.6.4\tools</NUnitToolHomePath>
     <NUnitConsoleTool>$(NUnitToolHomePath)\nunit-console.exe</NUnitConsoleTool>
-    <OpenCoverMSBuildTasksPath>$(MSBuildProjectDirectory)\packages\OpenCover.4.5.3522\MSBuild</OpenCoverMSBuildTasksPath>
-    <OpenCoverHomePath>$(MSBuildProjectDirectory)\packages\OpenCover.4.5.3522</OpenCoverHomePath>
+
+    <CoverallsToolHomePath>$(MSBuildProjectDirectory)\packages\coveralls.net.0.5.0</CoverallsToolHomePath>
+    <CoverallsConsoleTool>$(CoverallsToolHomePath)\csmacnz.Coveralls.exe</CoverallsConsoleTool>
+    <CoverallsRepoToken>RnzdFCiNXtB15avTBBntBL3S6PNkeqhPl</CoverallsRepoToken>
+
+    <OpenCoverMSBuildTasksPath>$(MSBuildProjectDirectory)\packages\OpenCover.4.5.3723\MSBuild</OpenCoverMSBuildTasksPath>
+
+    <OpenCoverHomePath>$(MSBuildProjectDirectory)\packages\OpenCover.4.5.3723</OpenCoverHomePath>
+
     <OpenCoverConsoleTool>$(OpenCoverHomePath)\OpenCover.Console.exe</OpenCoverConsoleTool>
-    <OpenCoverReportGeneratorHomePath>$(MSBuildProjectDirectory)\packages\ReportGenerator.2.0.3.0</OpenCoverReportGeneratorHomePath>
+
+    <OpenCoverReportGeneratorHomePath>$(MSBuildProjectDirectory)\packages\ReportGenerator.2.1.7.0\tools</OpenCoverReportGeneratorHomePath>
     <OpenCoverReportGeneratorTool>$(OpenCoverReportGeneratorHomePath)\ReportGenerator.exe</OpenCoverReportGeneratorTool>
+    <OpenCoverReportGeneratorSrcDir>$(MSBuildProjectDirectory)</OpenCoverReportGeneratorSrcDir>
+
+    <OpenCoverGroupNameDir Condition=" '$(OpenCoverGroupName)' != '' ">$(OpenCoverGroupName)</OpenCoverGroupNameDir>
+
+    <OpenCoverArtifactsFolder>$(BuildArtifactsFolder)\OpenCover\$(OpenCoverGroupNameDir)</OpenCoverArtifactsFolder>
   </PropertyGroup>
 
-  <Import Project="$(MSBuildProjectDirectory)\packages\MSBuild.Extension.Pack.1.5.0\tools\net40\MSBuild.ExtensionPack.tasks" />
-  <Import Project="$(OpenCoverMSBuildTasksPath)\OpenCover.targets" />
+  <Import Project="$(MSBuildProjectDirectory)\packages\MSBuild.Extension.Pack.1.6.0\build\net40\MSBuild.Extension.Pack.targets" Condition=" '$(MSBuildExtensionPack_TargetsImported)' == '' "/>
+  <PropertyGroup>
+    <MSBuildExtensionPack_TargetsImported>true</MSBuildExtensionPack_TargetsImported>
+  </PropertyGroup>
+
+  <Import Project="$(OpenCoverMSBuildTasksPath)\OpenCover.targets" Condition=" '$(OpenCover_TargetsImported)' == '' "/>
+  <PropertyGroup>
+    <OpenCover_TargetsImported>true</OpenCover_TargetsImported>
+  </PropertyGroup>
 
   <UsingTask TaskName="ReportGenerator" AssemblyFile="$(OpenCoverReportGeneratorTool)" />
 
-  <Target Name="run-code-coverage" DependsOnTargets="deploy-compile">
+  <Target Name="run-code-coverage">
 
-    <MakeDir Condition="!Exists($(BuildArtifactsFolder))" Directories="$(BuildArtifactsFolder)" />
+    <MakeDir Condition="!Exists($(OpenCoverArtifactsFolder))" Directories="$(OpenCoverArtifactsFolder)" />
 
     <OpenCover ToolPath="$(OpenCoverHomePath)"
                ToolExe="$(OpenCoverConsoleTool)"
                Target="$(NUnitConsoleTool)"
-               TargetArgs="$(MSBuildProjectDirectory)\test\Bohrium.Core.Test\bin\Release\Bohrium.Core.Test.dll /xml=$(BuildArtifactsFolder)\NUnitReport.xml /noshadow"
+               TargetArgs="$(TestAssemblies) /xml=$(OpenCoverArtifactsFolder)\NUnitReport.xml /noshadow"
                MergeByHash="True"
-               Filter="+[Bohrium.Core*]*
-                       -[Bohrium.Core.Test*]*"
-               Output="$(BuildArtifactsFolder)\CoverageReport.xml" />
+               Filter="$([MSBuild]::Unescape($(OpenCoverCoverageFilter)))"
+               Output="$(OpenCoverArtifactsFolder)\CoverageReport.xml" />
 
-    <ReportGenerator ReportFiles="$(BuildArtifactsFolder)\CoverageReport.xml"
-                     TargetDirectory="$(BuildArtifactsFolder)\CoverageReport"
+	<CallTarget Targets="run-code-coverage-report" Condition=" '$(GenerateCoverageReport)' == 'true' "/>
+  </Target>
+
+  <Target Name="upload-code-coverage">
+  	 <Exec Command='$(CoverallsConsoleTool) --opencover -i $(OpenCoverArtifactsFolder)\CoverageReport.xml --repoToken $(CoverallsRepoToken)' />
+  </Target>
+  
+  <Target Name="run-code-coverage-report">
+    <ReportGenerator ReportFiles="$(OpenCoverArtifactsFolder)\CoverageReport.xml"
+                     TargetDirectory="$(OpenCoverArtifactsFolder)\CoverageReport"
+					 SourceDirectories="$(OpenCoverReportGeneratorSrcDir)"
                      ReportTypes="Html;XmlSummary" />
   </Target>
 
   <Target Name="run-quality-static-analysis">
   </Target>
-  
+
 </Project>

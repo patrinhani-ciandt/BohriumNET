@@ -38,6 +38,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".msbuild", ".msbuild", "{990AE4CD-20EE-4DAB-85A3-5312868FF424}"
 	ProjectSection(SolutionItems) = preProject
 		Bohrium.msbuild = Bohrium.msbuild
+		Bohrium.Quality.msbuild = Bohrium.Quality.msbuild
 		Bohrium.targets = Bohrium.targets
 		CodeQuality.targets = CodeQuality.targets
 	EndProjectSection
@@ -46,6 +47,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuspec", ".nuspec", "{7495
 	ProjectSection(SolutionItems) = preProject
 		Build\NuspecFiles\Bohrium.Core.nuspec = Build\NuspecFiles\Bohrium.Core.nuspec
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NHibernate", "NHibernate", "{77A99E84-E45E-4BB4-90C6-BEA078AF30CF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AutoMapper", "AutoMapper", "{158472DD-7B1E-4048-B436-3C7E2D3F886B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ext.NHibernate.AutoMapper", "src\Ext.NHibernate.AutoMapper\Ext.NHibernate.AutoMapper.csproj", "{9FB2F29A-5433-48D9-A526-B3BAF4F6C714}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Network", "Network", "{035F91D4-276E-499A-9C6D-D09A894D1383}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bohrium.Network.DownloadManagement", "src\Bohrium.Network.DownloadManagement\Bohrium.Network.DownloadManagement.csproj", "{B43C95BE-275A-46B8-82F9-63030A40A37B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bohrium.Network.DownloadManagement.TestConsoleApp", "test\Bohrium.Network.DownloadManagement.TestConsoleApp\Bohrium.Network.DownloadManagement.TestConsoleApp.csproj", "{E78D5771-D91B-4B7E-8C0F-F3C01A4A07D5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +82,18 @@ Global
 		{AE08F977-8041-459E-AD2A-E3A45625FACC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE08F977-8041-459E-AD2A-E3A45625FACC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE08F977-8041-459E-AD2A-E3A45625FACC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FB2F29A-5433-48D9-A526-B3BAF4F6C714}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FB2F29A-5433-48D9-A526-B3BAF4F6C714}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FB2F29A-5433-48D9-A526-B3BAF4F6C714}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FB2F29A-5433-48D9-A526-B3BAF4F6C714}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B43C95BE-275A-46B8-82F9-63030A40A37B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B43C95BE-275A-46B8-82F9-63030A40A37B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B43C95BE-275A-46B8-82F9-63030A40A37B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B43C95BE-275A-46B8-82F9-63030A40A37B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E78D5771-D91B-4B7E-8C0F-F3C01A4A07D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E78D5771-D91B-4B7E-8C0F-F3C01A4A07D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E78D5771-D91B-4B7E-8C0F-F3C01A4A07D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E78D5771-D91B-4B7E-8C0F-F3C01A4A07D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -82,5 +107,10 @@ Global
 		{5B265FB9-A90A-4179-A272-DB3DFA505162} = {63167D4E-A951-4A8B-8159-4FB6C6045FFD}
 		{8886C9CA-5698-494F-A821-96DB98C0494A} = {5B265FB9-A90A-4179-A272-DB3DFA505162}
 		{AE08F977-8041-459E-AD2A-E3A45625FACC} = {8886C9CA-5698-494F-A821-96DB98C0494A}
+		{77A99E84-E45E-4BB4-90C6-BEA078AF30CF} = {63167D4E-A951-4A8B-8159-4FB6C6045FFD}
+		{158472DD-7B1E-4048-B436-3C7E2D3F886B} = {77A99E84-E45E-4BB4-90C6-BEA078AF30CF}
+		{9FB2F29A-5433-48D9-A526-B3BAF4F6C714} = {158472DD-7B1E-4048-B436-3C7E2D3F886B}
+		{B43C95BE-275A-46B8-82F9-63030A40A37B} = {035F91D4-276E-499A-9C6D-D09A894D1383}
+		{E78D5771-D91B-4B7E-8C0F-F3C01A4A07D5} = {035F91D4-276E-499A-9C6D-D09A894D1383}
 	EndGlobalSection
 EndGlobal

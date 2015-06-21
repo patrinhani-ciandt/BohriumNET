@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+  </PropertyGroup>
+
+  <Import Project="$(MSBuildProjectDirectory)\CodeQuality.targets" Condition=" '$(CodeQuality_TargetsImported)' == '' "/>
+  <PropertyGroup>
+    <CodeQuality_TargetsImported>true</CodeQuality_TargetsImported>
+  </PropertyGroup>
+
+  <Target Name="run-coverage-bohrium-core">
+
+    <ItemGroup>
+      <TestAssembly Include="Bohrium.Core.Test">
+        <Assembly>Bohrium.Core.Test.dll</Assembly>
+        <AssemblyPath>$(MSBuildProjectDirectory)\test\Bohrium.Core.Test\bin\Debug</AssemblyPath>
+      </TestAssembly>
+    </ItemGroup>
+
+    <PropertyGroup>
+      <CodeCoverageFilter>+[Bohrium.Core*]* -[Bohrium.Core.Test*]*</CodeCoverageFilter>
+    </PropertyGroup>
+
+    <PropertyGroup>
+      <TestAssemblies>@(TestAssembly->'%(AssemblyPath)\%(Assembly)',' ')</TestAssemblies>
+    </PropertyGroup>
+
+    <MSBuild Projects="$(MSBuildProjectFile)"
+			Properties='OpenCoverGroupName=Bohrium.Core;TestAssemblies=$(TestAssemblies);Configuration=$(Configuration);OpenCoverCoverageFilter=$(CodeCoverageFilter)'
+			Targets="run-code-coverage;upload-code-coverage"/>
+  </Target>
+
+  <Target Name="run-coverage-bohrium-core-report">
+    <MSBuild Projects="$(MSBuildProjectFile)"
+			Properties='GenerateCoverageReport=true'
+			Targets="run-coverage-bohrium-core"/>
+  </Target>
+</Project>
