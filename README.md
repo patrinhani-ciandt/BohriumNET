@@ -8,9 +8,9 @@ Bohrium .NET Site: http://patrinhani-ciandt.github.io/BohriumNET.
 
 [![Build status](https://ci.appveyor.com/api/projects/status/suvcj6ue5l63lnsc?svg=true)](https://ci.appveyor.com/project/patrinhani-ciandt/bohriumnet)
 
-[![GitHub](http://img.shields.io/github/issues/patrinhani-ciandt/BohriumNET.svg?style=flat-square)](https://huboard.com/patrinhani-ciandt/BohriumNET)
-
 [![Coverage Status](https://coveralls.io/repos/patrinhani-ciandt/BohriumNET/badge.svg)](https://coveralls.io/r/patrinhani-ciandt/BohriumNET)
+
+[![GitHub](http://img.shields.io/github/issues/patrinhani-ciandt/BohriumNET.svg?style=flat-square)](https://huboard.com/patrinhani-ciandt/BohriumNET)
 
 [![MyGet](http://img.shields.io/myget/bohriumnet/v/Bohrium.Core.svg?style=flat-square&label=Bohrium.Core)](https://www.myget.org/F/bohriumnet/)
 [![MyGet](http://img.shields.io/myget/bohriumnet/v/Bohrium.Ext.NHibernate.AutoMapper.svg?style=flat-square&label=Bohrium.Ext.NHibernate.AutoMapper)](https://www.myget.org/F/bohriumnet/)
