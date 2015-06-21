@@ -28,7 +28,7 @@
 
     <MSBuild Projects="$(MSBuildProjectFile)"
 			Properties='OpenCoverGroupName=Bohrium.Core;TestAssemblies=$(TestAssemblies);Configuration=$(Configuration);OpenCoverCoverageFilter=$(CodeCoverageFilter)'
-			Targets="run-code-coverage"/>
+			Targets="run-code-coverage;upload-code-coverage"/>
   </Target>
 
   <Target Name="run-coverage-bohrium-core-report">

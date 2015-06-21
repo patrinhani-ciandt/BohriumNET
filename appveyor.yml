@@ -1,0 +1,21 @@
+version: 1.0.0.{build}
+configuration: Release
+platform: Any CPU
+build_script:
+- msbuild "Bohrium.targets" /t:clean /v:minimal /maxcpucount /nodeReuse:false
+- msbuild "Bohrium.msbuild" /t:deploy /property:"CIBuildNumber=%APPVEYOR_BUILD_NUMBER%" /v:minimal /maxcpucount /nodeReuse:false
+- msbuild "Bohrium.Ext.NHibernate.AutoMapper.msbuild" /t:deploy /property:"CIBuildNumber=%APPVEYOR_BUILD_NUMBER%" /v:minimal /maxcpucount /nodeReuse:false
+- msbuild "Bohrium.Ext.ICSharpCode.ILSpy.msbuild" /t:deploy /property:"CIBuildNumber=%APPVEYOR_BUILD_NUMBER%" /v:minimal /maxcpucount /nodeReuse:false
+- msbuild "Bohrium.Tools.SpecflowReportTool.msbuild" /t:deploy /property:"CIBuildNumber=%APPVEYOR_BUILD_NUMBER%" /v:minimal /maxcpucount /nodeReuse:false
+test:
+  assemblies: test\**\*.Test.dll
+artifacts:
+- path: Build\DeployArtifacts\*.nupkg
+deploy:
+- provider: NuGet
+  server: https://www.myget.org/F/bohriumnet/
+  api_key:
+    secure: YCAelKXv1uPJtHfvC7LCnk1VI4D9jr+retFSRPhw5Qk/nBo6GVTqKTfHBphV35lj
+  skip_symbols: true
+  on:
+    branch: master

@@ -5,6 +5,10 @@
     <NUnitToolHomePath>$(MSBuildProjectDirectory)\packages\NUnit.Runners.2.6.4\tools</NUnitToolHomePath>
     <NUnitConsoleTool>$(NUnitToolHomePath)\nunit-console.exe</NUnitConsoleTool>
 
+    <CoverallsToolHomePath>$(MSBuildProjectDirectory)\packages\coveralls.net.0.5.0</CoverallsToolHomePath>
+    <CoverallsConsoleTool>$(CoverallsToolHomePath)\csmacnz.Coveralls.exe</CoverallsConsoleTool>
+    <CoverallsRepoToken>RnzdFCiNXtB15avTBBntBL3S6PNkeqhPl</CoverallsRepoToken>
+
     <OpenCoverMSBuildTasksPath>$(MSBuildProjectDirectory)\packages\OpenCover.4.5.3723\MSBuild</OpenCoverMSBuildTasksPath>
 
     <OpenCoverHomePath>$(MSBuildProjectDirectory)\packages\OpenCover.4.5.3723</OpenCoverHomePath>
@@ -13,6 +17,7 @@
 
     <OpenCoverReportGeneratorHomePath>$(MSBuildProjectDirectory)\packages\ReportGenerator.2.1.7.0\tools</OpenCoverReportGeneratorHomePath>
     <OpenCoverReportGeneratorTool>$(OpenCoverReportGeneratorHomePath)\ReportGenerator.exe</OpenCoverReportGeneratorTool>
+    <OpenCoverReportGeneratorSrcDir>$(MSBuildProjectDirectory)</OpenCoverReportGeneratorSrcDir>
 
     <OpenCoverGroupNameDir Condition=" '$(OpenCoverGroupName)' != '' ">$(OpenCoverGroupName)</OpenCoverGroupNameDir>
 
@@ -46,9 +51,14 @@
 	<CallTarget Targets="run-code-coverage-report" Condition=" '$(GenerateCoverageReport)' == 'true' "/>
   </Target>
 
+  <Target Name="upload-code-coverage">
+  	 <Exec Command='$(CoverallsConsoleTool) --opencover -i $(OpenCoverArtifactsFolder)\CoverageReport.xml --repoToken $(CoverallsRepoToken)' />
+  </Target>
+  
   <Target Name="run-code-coverage-report">
     <ReportGenerator ReportFiles="$(OpenCoverArtifactsFolder)\CoverageReport.xml"
                      TargetDirectory="$(OpenCoverArtifactsFolder)\CoverageReport"
+					 SourceDirectories="$(OpenCoverReportGeneratorSrcDir)"
                      ReportTypes="Html;XmlSummary" />
   </Target>
 
