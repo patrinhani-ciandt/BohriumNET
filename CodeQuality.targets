@@ -45,6 +45,7 @@
                Target="$(NUnitConsoleTool)"
                TargetArgs="$(TestAssemblies) /xml=$(OpenCoverArtifactsFolder)\NUnitReport.xml /noshadow"
                MergeByHash="True"
+			   Register="True"
                Filter="$([MSBuild]::Unescape($(OpenCoverCoverageFilter)))"
                Output="$(OpenCoverArtifactsFolder)\CoverageReport.xml" />
 
