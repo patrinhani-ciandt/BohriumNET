@@ -14,7 +14,7 @@
     <ItemGroup>
       <TestAssembly Include="Bohrium.Core.Test">
         <Assembly>Bohrium.Core.Test.dll</Assembly>
-        <AssemblyPath>$(MSBuildProjectDirectory)\test\Bohrium.Core.Test\bin\Debug</AssemblyPath>
+        <AssemblyPath>$(MSBuildProjectDirectory)\test\Bohrium.Core.Test\bin\$(Configuration)</AssemblyPath>
       </TestAssembly>
     </ItemGroup>
 

@@ -24,7 +24,7 @@
 
   <Target Name="deploy-generate-packages">
 
-    <GetAssemblyIdentity AssemblyFiles="$(MSBuildProjectDirectory)\src\Bohrium.Core\bin\Release\Bohrium.Core.dll">
+    <GetAssemblyIdentity AssemblyFiles="$(MSBuildProjectDirectory)\src\Bohrium.Core\bin\$(Configuration)\Bohrium.Core.dll">
       <Output TaskParameter="Assemblies" ItemName="BohriumCoreAssemblyInfo"/>
     </GetAssemblyIdentity>
 

@@ -16,12 +16,12 @@
     <DocOutputHtmlPath>$(DoxyGenBaseOutputPath)\html</DocOutputHtmlPath>
 	
     <CI_BUILD_NUMBER Condition=" '$(CI_BUILD_NUMBER)' == '' ">0</CI_BUILD_NUMBER>
-	<CI_REPO_COMMIT></CI_REPO_COMMIT>
-	<CI_REPO_BRANCH></CI_REPO_BRANCH>
-	<CI_REPO_COMMIT_AUTHOR></CI_REPO_COMMIT_AUTHOR>
-	<CI_REPO_COMMIT_AUTHOR_EMAIL></CI_REPO_COMMIT_AUTHOR_EMAIL>
-	<CI_REPO_COMMIT_MESSAGE></CI_REPO_COMMIT_MESSAGE>
-	<CI_JOB_ID></CI_JOB_ID>
+	<CI_REPO_COMMIT Condition=" '$(CI_REPO_COMMIT)' == '' ">0</CI_REPO_COMMIT>
+	<CI_REPO_BRANCH Condition=" '$(CI_REPO_BRANCH)' == '' ">(none)</CI_REPO_BRANCH>
+	<CI_REPO_COMMIT_AUTHOR Condition=" '$(CI_REPO_COMMIT_AUTHOR)' == '' ">Unknown</CI_REPO_COMMIT_AUTHOR>
+	<CI_REPO_COMMIT_AUTHOR_EMAIL Condition=" '$(CI_REPO_COMMIT_AUTHOR_EMAIL)' == '' ">Unknown@Unknown.com</CI_REPO_COMMIT_AUTHOR_EMAIL>
+	<CI_REPO_COMMIT_MESSAGE Condition=" '$(CI_REPO_COMMIT_MESSAGE)' == '' ">(Unknown)</CI_REPO_COMMIT_MESSAGE>
+	<CI_JOB_ID Condition=" '$(CI_JOB_ID)' == '' ">0</CI_JOB_ID>
   </PropertyGroup>
 
   <Import Project="$(MSBuildProjectDirectory)\packages\MSBuild.Extension.Pack.1.6.0\build\net40\MSBuild.Extension.Pack.targets" Condition=" '$(MSBuildExtensionPack_TargetsImported)' == '' "/>
