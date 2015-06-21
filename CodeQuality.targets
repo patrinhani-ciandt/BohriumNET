@@ -43,6 +43,10 @@
                Filter="$([MSBuild]::Unescape($(OpenCoverCoverageFilter)))"
                Output="$(OpenCoverArtifactsFolder)\CoverageReport.xml" />
 
+	<CallTarget Targets="run-code-coverage-report" Condition=" '$(GenerateCoverageReport)' == 'true' "/>
+  </Target>
+
+  <Target Name="run-code-coverage-report">
     <ReportGenerator ReportFiles="$(OpenCoverArtifactsFolder)\CoverageReport.xml"
                      TargetDirectory="$(OpenCoverArtifactsFolder)\CoverageReport"
                      ReportTypes="Html;XmlSummary" />

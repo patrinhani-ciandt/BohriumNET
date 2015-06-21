@@ -11,8 +11,6 @@
 
   <Target Name="run-coverage-bohrium-core">
 
-    <MakeDir Condition="!Exists($(OpenCoverArtifactsFolder))" Directories="$(OpenCoverArtifactsFolder)" />
-
     <ItemGroup>
       <TestAssembly Include="Bohrium.Core.Test">
         <Assembly>Bohrium.Core.Test.dll</Assembly>
@@ -31,5 +29,11 @@
     <MSBuild Projects="$(MSBuildProjectFile)"
 			Properties='OpenCoverGroupName=Bohrium.Core;TestAssemblies=$(TestAssemblies);Configuration=$(Configuration);OpenCoverCoverageFilter=$(CodeCoverageFilter)'
 			Targets="run-code-coverage"/>
+  </Target>
+
+  <Target Name="run-coverage-bohrium-core-report">
+    <MSBuild Projects="$(MSBuildProjectFile)"
+			Properties='GenerateCoverageReport=true'
+			Targets="run-coverage-bohrium-core"/>
   </Target>
 </Project>
