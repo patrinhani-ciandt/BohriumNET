@@ -12,7 +12,7 @@
   <Target Name="run-coverage-bohrium-core">
 
     <ItemGroup>
-      <CoverageTestAssembly Include="$(MSBuildProjectDirectory)\test\Bohrium.*.Test\bin\$(Configuration)\Bohrium.*.Test.dll" />
+      <CoverageTestAssembly Include=".\test\Bohrium.*.Test\bin\$(Configuration)\Bohrium.*.Test.dll" />
     </ItemGroup>
 
     <PropertyGroup>
@@ -20,7 +20,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-      <CoverageTestAssemblies>@(CoverageTestAssembly->'%(FullPath)',' ')</CoverageTestAssemblies>
+      <CoverageTestAssemblies>@(CoverageTestAssembly->'%(Identity)',' ')</CoverageTestAssemblies>
     </PropertyGroup>
 
     <MSBuild Projects="$(MSBuildProjectFile)"
