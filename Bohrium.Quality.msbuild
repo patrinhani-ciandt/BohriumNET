@@ -24,7 +24,7 @@
     </PropertyGroup>
 
     <MSBuild Projects="$(MSBuildProjectFile)"
-			Properties='OpenCoverGroupName=Bohrium.Core;TestAssemblies=$(CoverageTestAssemblies);Configuration=$(Configuration);OpenCoverCoverageFilter=$(CodeCoverageFilter)'
+			Properties="OpenCoverGroupName=Bohrium.Core;TestAssemblies=$(CoverageTestAssemblies);Configuration=$(Configuration);OpenCoverCoverageFilter=$(CodeCoverageFilter)"
 			Targets="run-code-coverage;upload-code-coverage"/>
   </Target>
 
