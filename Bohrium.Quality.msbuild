@@ -28,8 +28,8 @@
     <CallTarget Targets="run-code-coverage"/>
 
     <MSBuild Projects="$(MSBuildProjectFullPath)"
-             Properties="OpenCoverGroupName=Bohrium.Core;TestAssemblies=$(CoverageTestAssemblies);Configuration=$(Configuration);OpenCoverCoverageFilter=$(CodeCoverageFilter)"
- 			 Targets="run-code-coverage;upload-code-coverage"/>
+             Properties='OpenCoverGroupName=Bohrium.Core;TestAssemblies=$(CoverageTestAssemblies);Configuration=$(Configuration);OpenCoverCoverageFilter=$(CodeCoverageFilter)'
+ 			 Targets="run-code-coverage"/>
    
   </Target>
 
