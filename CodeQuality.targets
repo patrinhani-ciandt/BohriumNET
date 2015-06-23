@@ -43,7 +43,7 @@
     <OpenCover ToolPath="$(OpenCoverHomePath)"
                ToolExe="$(OpenCoverConsoleTool)"
                Target="$(NUnitConsoleTool)"
-               TargetArgs="$(TestAssemblies) /xml=$(OpenCoverArtifactsFolder)\NUnitReport.xml /noshadow"
+               TargetArgs="$(CoverageTestAssemblies) /xml=$(OpenCoverArtifactsFolder)\NUnitReport.xml /noshadow"
 			   TargetWorkingDir="$(MSBuildProjectDirectory)"
                MergeByHash="True"
                Filter="$([MSBuild]::Unescape($(OpenCoverCoverageFilter)))"

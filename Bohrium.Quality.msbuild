@@ -21,14 +21,12 @@
 
     <PropertyGroup>
       <OpenCoverGroupName>Bohrium.Core</OpenCoverGroupName>
-      <CoverageTestAssemblies>$(MSBuildProjectDirectory)\test\Bohrium.Core.Test\bin\Debug\Bohrium.Core.Test.dll</CoverageTestAssemblies>
+      <CoverageTestAssemblies>@(CoverageTestAssembly -> '%(FullPath)', ' ')</CoverageTestAssemblies>
       <OpenCoverCoverageFilter>$(CodeCoverageFilter)</OpenCoverCoverageFilter>
     </PropertyGroup>
 
-    <CallTarget Targets="run-code-coverage"/>
-
     <MSBuild Projects="$(MSBuildProjectFullPath)"
-             Properties='OpenCoverGroupName=Bohrium.Core;TestAssemblies=$(CoverageTestAssemblies);Configuration=$(Configuration);OpenCoverCoverageFilter=$(CodeCoverageFilter)'
+             Properties='OpenCoverGroupName=$(OpenCoverGroupName);CoverageTestAssemblies=$(CoverageTestAssemblies);Configuration=$(Configuration);OpenCoverCoverageFilter=$(CodeCoverageFilter)'
  			 Targets="run-code-coverage"/>
    
   </Target>
