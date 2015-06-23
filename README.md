@@ -6,9 +6,9 @@ Bohrium .NET Site: http://patrinhani-ciandt.github.io/BohriumNET.
 
 [![Join the chat at https://gitter.im/patrinhani-ciandt/BohriumNET](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/patrinhani-ciandt/BohriumNET?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-[![Build status](https://img.shields.io/appveyor/ci/patrinhani-ciandt/bohriumnet.svg?style=flat-square)](https://ci.appveyor.com/project/patrinhani-ciandt/bohriumnet)
+[![Build status](https://img.shields.io/appveyor/ci/patrinhani-ciandt/bohriumnet.svg?style=flat-square&label=Build status)](https://ci.appveyor.com/project/patrinhani-ciandt/bohriumnet)
 
-[![Coverage Status](https://img.shields.io/coveralls/patrinhani-ciandt/BohriumNET.svg?style=flat-square)](https://coveralls.io/r/patrinhani-ciandt/BohriumNET)
+[![Coverage Status](https://img.shields.io/coveralls/patrinhani-ciandt/BohriumNET.svg?style=flat-square&label=Coverage Status)](https://coveralls.io/r/patrinhani-ciandt/BohriumNET)
 
 [![GitHub](http://img.shields.io/github/issues/patrinhani-ciandt/BohriumNET.svg?style=flat-square)](https://huboard.com/patrinhani-ciandt/BohriumNET)
 
