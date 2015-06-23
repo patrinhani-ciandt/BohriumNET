@@ -8,7 +8,7 @@ Bohrium .NET Site: http://patrinhani-ciandt.github.io/BohriumNET.
 
 [![Build status](https://img.shields.io/appveyor/ci/patrinhani-ciandt/bohriumnet.svg?style=flat-square&label=Build status)](https://ci.appveyor.com/project/patrinhani-ciandt/bohriumnet)
 
-[![Coverage Status](https://img.shields.io/coveralls/patrinhani-ciandt/BohriumNET.svg?style=flat-square&label=Coverage Status)](https://coveralls.io/r/patrinhani-ciandt/BohriumNET)
+[![Coverage Status](https://img.shields.io/coveralls/patrinhani-ciandt/BohriumNET/master.svg?style=flat-square&label=Coverage Status - master)](https://coveralls.io/r/patrinhani-ciandt/BohriumNET)
 
 [![GitHub](http://img.shields.io/github/issues/patrinhani-ciandt/BohriumNET.svg?style=flat-square)](https://huboard.com/patrinhani-ciandt/BohriumNET)
 
