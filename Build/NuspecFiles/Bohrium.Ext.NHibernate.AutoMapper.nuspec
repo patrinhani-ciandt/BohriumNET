@@ -4,7 +4,7 @@
         <id>Bohrium.Ext.NHibernate.AutoMapper</id>
         <version>1.0.0.0</version>
         <title>Bohrium.Ext.NHibernate.AutoMapper</title>
-        <authors>CI&amp;T</authors>
+        <authors>V.P. Community</authors>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Bohrium.Ext.NHibernate.AutoMapper</description>
         <dependencies>
