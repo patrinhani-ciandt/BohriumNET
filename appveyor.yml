@@ -4,13 +4,11 @@ platform: Any CPU
 
 build_script:
 - msbuild "Bohrium.targets" /t:clean /v:n /maxcpucount /nodeReuse:false
-- msbuild "Bohrium.msbuild" /t:deploy /property:"CI_BUILD_NUMBER=%APPVEYOR_BUILD_NUMBER%" /v:n /maxcpucount /nodeReuse:false
-- msbuild "Bohrium.Ext.NHibernate.AutoMapper.msbuild" /t:deploy /property:"CI_BUILD_NUMBER=%APPVEYOR_BUILD_NUMBER%" /v:n /maxcpucount /nodeReuse:false
-- msbuild "Bohrium.Ext.ICSharpCode.ILSpy.msbuild" /t:deploy /property:"CI_BUILD_NUMBER=%APPVEYOR_BUILD_NUMBER%" /v:n /maxcpucount /nodeReuse:false
 - msbuild "Bohrium.msbuild" /t:compile /property:"Configuration=Debug;CI_BUILD_NUMBER=%APPVEYOR_BUILD_NUMBER%" /v:n /maxcpucount /nodeReuse:false
-- msbuild "Bohrium.msbuild" /t:run-coverage-bohrium-core /property:"Configuration=Debug;CI_BUILD_NUMBER=%APPVEYOR_BUILD_NUMBER%;CI_REPO_COMMIT=%APPVEYOR_REPO_COMMIT%;CI_REPO_BRANCH=%APPVEYOR_REPO_BRANCH%;CI_REPO_COMMIT_AUTHOR=%APPVEYOR_REPO_COMMIT_AUTHOR%;CI_REPO_COMMIT_AUTHOR_EMAIL=%APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL%;CI_REPO_COMMIT_MESSAGE=%APPVEYOR_REPO_COMMIT_MESSAGE%;CI_JOB_ID=%APPVEYOR_JOB_ID%" /v:diag /maxcpucount /nodeReuse:false
+- msbuild "Bohrium.msbuild" /t:compile /property:"Configuration=Release;CI_BUILD_NUMBER=%APPVEYOR_BUILD_NUMBER%" /v:n /maxcpucount /nodeReuse:false
 
 test_script:
+- msbuild "Bohrium.msbuild" /t:run-coverage-bohrium-core /property:"Configuration=Debug;CI_BUILD_NUMBER=%APPVEYOR_BUILD_NUMBER%;CI_REPO_COMMIT=%APPVEYOR_REPO_COMMIT%;CI_REPO_BRANCH=%APPVEYOR_REPO_BRANCH%;CI_REPO_COMMIT_AUTHOR=%APPVEYOR_REPO_COMMIT_AUTHOR%;CI_REPO_COMMIT_AUTHOR_EMAIL=%APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL%;CI_REPO_COMMIT_MESSAGE=%APPVEYOR_REPO_COMMIT_MESSAGE%;CI_JOB_ID=%APPVEYOR_JOB_ID%" /v:diag /maxcpucount /nodeReuse:false
 
 artifacts:
 - path: Build\DeployArtifacts\*.nupkg
