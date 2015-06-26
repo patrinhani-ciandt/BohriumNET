@@ -18,10 +18,6 @@
     <OpenCoverReportGeneratorHomePath>$(MSBuildProjectDirectory)\packages\ReportGenerator.2.1.7.0\tools</OpenCoverReportGeneratorHomePath>
     <OpenCoverReportGeneratorTool>$(OpenCoverReportGeneratorHomePath)\ReportGenerator.exe</OpenCoverReportGeneratorTool>
     <OpenCoverReportGeneratorSrcDir>$(MSBuildProjectDirectory)</OpenCoverReportGeneratorSrcDir>
-
-    <OpenCoverGroupNameDir Condition=" '$(OpenCoverGroupName)' != '' ">$(OpenCoverGroupName)</OpenCoverGroupNameDir>
-
-    <OpenCoverArtifactsFolder>$(BuildArtifactsFolder)\OpenCover\$(OpenCoverGroupNameDir)</OpenCoverArtifactsFolder>
   </PropertyGroup>
 
   <Import Project="$(MSBuildProjectDirectory)\packages\MSBuild.Extension.Pack.1.6.0\build\net40\MSBuild.Extension.Pack.targets" Condition=" '$(MSBuildExtensionPack_TargetsImported)' == '' "/>
@@ -37,6 +33,11 @@
   <UsingTask TaskName="ReportGenerator" AssemblyFile="$(OpenCoverReportGeneratorTool)" />
 
   <Target Name="run-code-coverage">
+
+	<PropertyGroup>
+		<OpenCoverGroupNameDir Condition=" '$(OpenCoverGroupName)' != '' ">$(OpenCoverGroupName)</OpenCoverGroupNameDir>
+		<OpenCoverArtifactsFolder>$(BuildArtifactsFolder)\OpenCover\$(OpenCoverGroupNameDir)</OpenCoverArtifactsFolder>
+	</PropertyGroup>
 
     <MakeDir Condition="!Exists($(OpenCoverArtifactsFolder))" Directories="$(OpenCoverArtifactsFolder)" />
 

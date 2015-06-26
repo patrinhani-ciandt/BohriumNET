@@ -9,27 +9,27 @@
     <CodeQuality_TargetsImported>true</CodeQuality_TargetsImported>
   </PropertyGroup>
 
-  <Target Name="discover-coverage-bohrium-core-assemblies">
+  <Target Name="prepare-coverage-bohrium-core-assemblies">
     <ItemGroup>
       <CoverageTestAssembly Include="$(MSBuildProjectDirectory)\test\Bohrium.Core.Test\bin\$(Configuration)\Bohrium.Core.Test.dll" />
     </ItemGroup>
 
     <PropertyGroup>
       <CoverageTestAssemblies>@(CoverageTestAssembly -> '%(FullPath)', ' ')</CoverageTestAssemblies>
-    </PropertyGroup>
-  </Target>
-
-  <Target Name="run-coverage-bohrium-core" DependsOnTargets="discover-coverage-bohrium-core-assemblies">
-
-    <PropertyGroup>
       <OpenCoverGroupName>Bohrium.Core</OpenCoverGroupName>
       <OpenCoverCoverageFilter>+[Bohrium.Core*]* -[Bohrium.Core.Test*]*</OpenCoverCoverageFilter>
     </PropertyGroup>
+  </Target>
 
-    <MSBuild Projects="$(MSBuildProjectFullPath)" Targets="run-code-coverage"/>    
+  <Target Name="run-coverage-bohrium-core" DependsOnTargets="prepare-coverage-bohrium-core-assemblies">
+
+	<MSBuild Projects="$(MSBuildProjectFullPath)" Targets="run-code-coverage;upload-code-coverage"/>    
+
   </Target>
 
   <Target Name="run-coverage-bohrium-core-report">
-    <MSBuild Projects="$(MSBuildProjectFullPath)" Properties='GenerateCoverageReport=true' Targets="run-coverage-bohrium-core"/>
+
+	<MSBuild Projects="$(MSBuildProjectFullPath)" Properties='GenerateCoverageReport=true' Targets="run-coverage-bohrium-core"/>
+  
   </Target>
 </Project>
