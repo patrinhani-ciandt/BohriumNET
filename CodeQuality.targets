@@ -54,7 +54,7 @@
   </Target>
 
   <Target Name="upload-code-coverage">
-  	 <Exec Command='$(CoverallsConsoleTool) --opencover -i $(OpenCoverArtifactsFolder)\CoverageReport.xml --repoToken $(CoverallsRepoToken) --commitId "$(CI_REPO_COMMIT)" --commitBranch "$(CI_REPO_BRANCH)" --commitAuthor "$(CI_REPO_COMMIT_AUTHOR)" --commitEmail "$(CI_REPO_COMMIT_AUTHOR_EMAIL)" --commitMessage "$(CI_REPO_COMMIT_MESSAGE)" --jobId "$(CI_JOB_ID)"' />
+  	 <Exec Command='$(CoverallsConsoleTool) --opencover -i $(OpenCoverArtifactsFolder)\CoverageReport.xml --repoToken $(CoverallsRepoToken) --commitId "$(CI_REPO_COMMIT)" --commitBranch "$(CI_REPO_BRANCH)" --commitAuthor "$(CI_REPO_COMMIT_AUTHOR)" --commitEmail "$(CI_REPO_COMMIT_AUTHOR_EMAIL)" --commitMessage "$(CI_REPO_COMMIT_MESSAGE)" --jobId "$(CI_BUILD_NUMBER)" --serviceName "$(CI_SERVICE_NAME) - $(CI_JOB_ID)"' />
   </Target>
   
   <Target Name="run-code-coverage-report">
